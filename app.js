@@ -1,9 +1,44 @@
+/*************************** REQUIRES ***************************/
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+const session = require('express-session');
+const path = require('path');
 const { environment } = require("./config");
 
+const usersRouter = require('./routes/users');
+const gamesRouter = require('./routes/games');
+const myGamesRouter = require('./routes/mygames');
+
+
+/*************************** APP SETUP ***************************/
 const app = express();
+
+app.use(morgan("dev"));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
+
+app.set('view engine', 'pug');
+
+/*************************** MIDDLEWARE ***************************/
+
+
+
+
+/*************************** ROUTES ***************************/
+
+// ROUTES TO ROUTERS
+app.use('/users', usersRouter)
+app.use('/games', gamesRouter)
+app.use('/mygames', myGamesRouter)
+
+
+
+
+
+
+// ERRORS
 
 // Catch unhandled requests and forward to error handler.
 app.use((req, res, next) => {
@@ -47,4 +82,7 @@ app.use((err, req, res, next) => {
   });
 });
 
+
+
+/*************************** EXPORTS ***************************/
 module.exports = app;
