@@ -16,6 +16,20 @@ const loginReq = (req, res, next) => {
 };
 
 
+const playedStatus = (played) => {
+  let status = '';
+
+  if (played === 1 ) {
+    status = 'Played'
+  } else if (played === 2) {
+    status = 'Currently Playing'
+  } else {
+    status = 'Want to play'
+  }
+
+  return status;
+}
+
 const handleValidationErrors = (req,res,next)=>{
   const validationErrors = validationResult(req)
   if(!validationErrors.isEmpty()){
