@@ -2,41 +2,44 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-const session = require('express-session');
-const path = require('path');
-const { environment } = require("./config");
-
-const usersRouter = require('./routes/users');
-const gamesRouter = require('./routes/games');
-const myGamesRouter = require('./routes/mygames');
-
+const session = require("express-session");
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const { sequelize } = require("./models");
+const path = require("path");
+const { environment, secret } = require("./config");
+const usersRouter = require("./routes/users");
+const gamesRouter = require("./routes/games");
+const myGamesRouter = require("./routes/mygames");
 
 /*************************** APP SETUP ***************************/
 const app = express();
 
 app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.set('view engine', 'pug');
+app.set("view engine", "pug");
+
+const store = new SequelizeStore({ db: sequelize });
+store.sync();
+
+app.use(
+  session({
+    secret,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 /*************************** MIDDLEWARE ***************************/
-
-
-
 
 /*************************** ROUTES ***************************/
 
 // ROUTES TO ROUTERS
-app.use('/users', usersRouter)
-app.use('/games', gamesRouter)
-app.use('/mygames', myGamesRouter)
-
-
-
-
-
+app.use("/users", usersRouter);
+app.use("/games", gamesRouter);
+app.use("/mygames", myGamesRouter);
 
 // ERRORS
 
@@ -81,8 +84,6 @@ app.use((err, req, res, next) => {
     stack: isProduction ? null : err.stack,
   });
 });
-
-
 
 /*************************** EXPORTS ***************************/
 module.exports = app;
