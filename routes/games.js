@@ -7,46 +7,142 @@ const { Game, Review } = require('./models')
 const router = express.Router();
 
 /*************************** MIDDLEWARE ***************************/
-const { asyncHandler, handleValidationErrors } = require('../utils.js')
+const { csrfProtection, asyncHandler, handleValidationErrors } = require('../utils.js')
 
-const validateReview = [
+const validateReviewOrRating = [
     check('body')
-        .isLength({max: 280})
-        .withMessage('Tweet cannot be longer than 280 characters')
-]
-
-
-const validateRating = [
+        .custom((body, { req } ) => {
+            const { overall } = req.body;
+            if (!body.length && !overall.length) {
+                throw new Error('Please provide either a review or rating');
+            }
+            return true;
+        }),
     check('overall')
-        .exists({checkFalsy: true})
-        .withMessage('Message cannot be empty'),
+        .custom((overall, { req } ) => {
+            const { body } = req.body;
+            if (!body.length && !overall.length) {
+                throw new Error('Please provide either a review or rating');
+            }
+            return true;
+        }),
 ]
 
 /*************************** ROUTES ***************************/
 
-router.get('/', (req,res)=>{
-    const games = Game.findAll({order:[['title']]});
+router.get('/', asyncHandler(async(req,res)=>{
+    // Finds all games from the database
+    const games = await Game.findAll({order:[['title']]});
+
+    // Renders games page with list of all games from A-Z
     res.render('games', {title: 'All Games', games});
-})
+}));
 
-router.get('/:id', (req,res)=>{
-    const id = req.params.id
-    const game = Game.findOne({where:{id}});
-    res.render('game', {title:game.title, game});
-})
+// Game Not Found FUNCTION
+const gameNotFoundError = (id) => {
+    const error = new Error(`Game with ${id} could not be found`);
+    error.title = "Game not found"
+    error.status = 404;
+    return error;
+};
 
-router.post('/:id/reviews', (req,res)=>{
-    const id = req.params.id
-    const { body } = req.body.body
-    const review = Review.build()
+router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res)=>{
+    // Defines variables
+    const gameId = req.params.id
 
-})
+    // Finds game with the above id
+    const game = await Game.findByPk(gameId);
+    const review = await Review.findAll({
+        where:{gameId:id},
+    })
 
-router.post('/:id/ratings', (req,res)=>{
-    const id = req.params.id
-    const game = Game.findOne({where:{id}});
-    res.render('games', {title: 'Games', games});
-})
+    if(game) {
+        // Renders game page with specific game info
+        res.render('game', {title:game.title, game, csrfToken:req.csrfToken()});
+    } else {
+        // Throws error if tweet not found
+        next(gameNotFoundError(id));
+    }
+}))
+
+router.post('/:id(\\d+)/add', validateReviewOrRating, handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
+    // Defines variables
+    const gameId = req.params.id
+    const userId = req.session.user
+    const { overall, body } = req.body
+
+    // Creates review instance with above variables
+    if (body.length){
+        const review = await Review.create({
+            body,
+            userId,
+            gameId
+        })
+    }
+    if (rating.length){
+        const rating = await Rating.create({
+            overall,
+            userId,
+            gameId
+        })
+    }
+
+    // Grabs all reviews
+    const reviews = await Review.findAll({
+        where: {gameId},
+        include: [{ model: User, as: "user", attributes: ["username"] }]
+    })
+
+    // Sends response with review, and reviews
+    res.json({review, reviews})
+
+}))
+
+router.put('/:id(\\d+)/add', validateReviewOrRating, handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
+    // Defines variables
+    const gameId = req.params.id
+    const { rating, body, userId } = req.body
+
+    // Creates review instance with above variables
+    const review = await Review.create({
+        body,
+        userId,
+        gameId
+    })
+
+    // Grabs all reviews
+    const reviews = await Review.findAll({
+        where: {gameId},
+        include: [{ model: User, as: "user", attributes: ["username"] }]
+    })
+
+    // Sends response with review, and reviews
+    res.json({review, reviews})
+
+}))
+
+router.delete('/:id(\\d+)/add', handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
+    // Defines variables
+    const gameId = req.params.id
+    const { rating, body, userId } = req.body.body
+
+    // Creates review instance with above variables
+    const review = await Review.create({
+        body,
+        userId,
+        gameId
+    })
+
+    // Grabs all reviews
+    const reviews = await Review.findAll({
+        where: {gameId},
+        include: [{ model: User, as: "user", attributes: ["username"] }]
+    })
+
+    // Sends response with review, and reviews
+    res.json({review, reviews})
+
+}))
 
 
 
