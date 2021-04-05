@@ -10,7 +10,35 @@ module.exports = (sequelize, DataTypes) => {
     imageHref: DataTypes.STRING
   }, {});
   Game.associate = function(models) {
-    // associations can be defined here
+    Game.belongsToMany(models.User, {
+      through: 'Rating',
+      otherKey: 'userId',
+      foreignKey: 'gameId'
+    });
+
+    Game.belongsToMany(models.User, {
+      through: 'Review',
+      otherKey: 'userId',
+      foreignKey: 'gameId'
+    });
+
+    Game.belongsToMany(models.User, {
+      through: 'My_game',
+      otherKey: 'userId',
+      foreignKey: 'gameId'
+    });
+
+    Game.belongsToMany(models.Library, {
+      through: 'Library_game',
+      otherKey: 'libraryId',
+      foreignKey: 'gameId'
+    });
+
+    Game.belongsToMany(models.Console, {
+      through: 'Game_console',
+      otherKey: 'consoleId',
+      foreignKey: 'gameId'
+    });
   };
   return Game;
 };

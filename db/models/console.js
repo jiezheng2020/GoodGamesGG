@@ -4,7 +4,18 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING
   }, {});
   Console.associate = function(models) {
-    // associations can be defined here
+    Console.belongsToMany(models.Game, {
+      through: 'Game_console',
+      otherKey: 'gameId',
+      foreignKey: 'consoleId'
+    });
+
+    Console.belongsToMany(models.User, {
+      through: 'User_console',
+      otherKey: 'userId',
+      foreignKey: 'consoleId'
+    });
+
   };
   return Console;
 };

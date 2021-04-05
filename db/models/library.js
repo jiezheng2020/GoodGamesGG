@@ -5,7 +5,15 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER
   }, {});
   Library.associate = function(models) {
-    // associations can be defined here
+    Library.belongsTo(models.User, {  foreignKey: 'userId' });
+
+    Library.belongsToMany(models.Game, {
+      through: 'Library_game',
+      otherKey: 'gameId',
+      foreignKey: 'libraryId'
+    });
+
+
   };
   return Library;
 };
