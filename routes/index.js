@@ -1,7 +1,7 @@
 /*************************** REQUIRES ***************************/
 const express = require("express");
 const { loginReq, csrfProtection, asyncHandler } = require("../utils");
-const { User, Games } = require("../db/models");
+const { User, Game } = require("../db/models");
 const { validationResult } = require("express-validator");
 const { check} = require('express-validator');
 const bcrypt = require('bcrypt')
@@ -43,7 +43,7 @@ const userValidator = [
 router.get(
   "/",
   asyncHandler(async (req, res) => {
-    const games = Games.findall();
+    const games = Game.findall();
     res.render("unauthorized", { games });
   })
 );
@@ -52,7 +52,7 @@ router.get(
   "/authorized",
   loginReq,
   asyncHandler(async (req, res) => {
-    const games = Games.findall();
+    const games = Game.findall();
     res.render("authorized", { games, user: req.session.user });
   })
 );
