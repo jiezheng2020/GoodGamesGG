@@ -9,13 +9,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       played: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Users' }
       },
       gameId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Games' }
       },
       createdAt: {
         allowNull: false,
