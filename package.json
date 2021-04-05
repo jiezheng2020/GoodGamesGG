@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "connect-session-sequelize": "^7.0.4",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

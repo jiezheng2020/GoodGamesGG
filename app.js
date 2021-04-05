@@ -10,6 +10,7 @@ const { environment, secret } = require("./config");
 const usersRouter = require("./routes/users");
 const gamesRouter = require("./routes/games");
 const myGamesRouter = require("./routes/mygames");
+const indexRouter = require("./routes/index");
 
 /*************************** APP SETUP ***************************/
 const app = express();
@@ -40,6 +41,7 @@ app.use(
 app.use("/users", usersRouter);
 app.use("/games", gamesRouter);
 app.use("/mygames", myGamesRouter);
+app.use("/", indexRouter);
 
 // ERRORS
 
