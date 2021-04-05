@@ -99,7 +99,7 @@ router.post("/signup", userValidator, asyncHandler(async (req,res) => {
 router.post("/login", loginReq, (req, res) => {
     const {userName, password} = req.body;
     const user = await User.findOne({where: {userName}})
-    const isPassword = bcrypt.compare(password,user.password)
+    const isPassword = bcrypt.compare(password,user.hashedPassword)
 
     if(isPassword) {
       req.session.user = {
