@@ -1,5 +1,7 @@
+/*************************** REQUIRES ***************************/
 const csrf = require("csurf");
 
+/*************************** MIDDLEWARE ***************************/
 const csrfProtection = csrf({ cookie: true });
 
 const asyncHandler = (handler) => (req, res, next) =>
@@ -12,6 +14,7 @@ const loginReq = (req, res, next) => {
     next();
   }
 };
+
 
 const playedStatus = (played) => {
   let status = '';
@@ -27,8 +30,24 @@ const playedStatus = (played) => {
   return status;
 }
 
+const handleValidationErrors = (req,res,next)=>{
+  const validationErrors = validationResult(req)
+  if(!validationErrors.isEmpty()){
+      const errors = validationErrors.array().map((error)=>error.msg)
+      const err = Error('Bad request.')
+      err.status = 400
+      err.title = 'Very bad request.'
+      err.errors = errors
+      return next(err)
+  }
+  next()
+}
+
+/*************************** MIDDLEWARE ***************************/
+
 module.exports = {
-  loginReq,
   csrfProtection,
   asyncHandler,
+  loginReq,
+  handleValidationErrors
 };
