@@ -7,9 +7,8 @@ const router = express.Router();
 /*************************** MIDDLEWARE ***************************/
 
 /*************************** ROUTES ***************************/
-// /mygames/ get all mygames
-// /mygames/ fetch for shelves
-// /mygames/ post,delete,put
-
+// root / -- authorized and non authorized
+// log in -- form fields
+// sign up -- button
 /*************************** EXPORTS ***************************/
 module.exports = router;
