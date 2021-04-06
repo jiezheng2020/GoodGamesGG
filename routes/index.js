@@ -1,6 +1,6 @@
 /*************************** REQUIRES ***************************/
 const express = require("express");
-const { loginReq, csrfProtection, asyncHandler } = require("../utils");
+const { csrfProtection, asyncHandler } = require("../utils");
 const { User, Game } = require("../db/models");
 const { validationResult } = require("express-validator");
 const { check } = require("express-validator");
@@ -32,29 +32,43 @@ const userValidator = [
     .withMessage("Please provide a value for username")
     .isLength({ max: 50 }),
 ];
+
+const loginReq = (req, res, next) => {
+  if (req.session.user) {
+    res.redirect("/authorized");
+  } else {
+    next();
+  }
+};
 /*************************** ROUTES ***************************/
-// root / -- authorized and non authorized
-// log in -- form fields
-// sign up -- button
 router.get(
   "/",
+  loginReq,
   asyncHandler(async (req, res) => {
-    const games = Game.findall();
-    res.render("unauthorized", { games });
+    const games = await Game.findAll();
+    res.render("unauthorized", { title: "Home Page", games });
   })
 );
 
 router.get(
   "/authorized",
-  loginReq,
   asyncHandler(async (req, res) => {
-    const games = Game.findall();
-    res.render("authorized", { games, user: req.session.user });
+    if (req.session.user) {
+      const games = await Game.findAll();
+      res.render("authorized", {
+        title: "Home Page",
+        games,
+        user: req.session.user,
+      });
+    } else {
+      res.redirect("/");
+    }
   })
 );
 
 router.get("/signup", loginReq, (req, res) => {
   res.render("signup", {
+    title: "Sign Up",
     user: {
       firstName: "",
       lastName: "",
@@ -74,7 +88,7 @@ router.post(
     if (validResults.length > 0) {
       const user = { password, email, userName, firstName, lastName };
       res.status = 403;
-      res.render("signup", { user });
+      res.render("signup", { title: "Sign Up" }, { user });
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await User.create({
@@ -96,7 +110,14 @@ router.post(
   })
 );
 
-<<<<<<< HEAD
+router.get(
+  "/login",
+  loginReq,
+  asyncHandler(async (req, res) => {
+    res.render("login", { title: "Log in" });
+  })
+);
+
 router.post(
   "/login",
   loginReq,
@@ -104,12 +125,6 @@ router.post(
     const { userName, password } = req.body;
     const user = await User.findOne({ where: { userName } });
     const isPassword = bcrypt.compare(password, user.hashedPassword);
-=======
-router.post("/login", loginReq, async(req, res) => {
-    const {userName, password} = req.body;
-    const user = await User.findOne({where: {userName}})
-    const isPassword = bcrypt.compare(password,user.hashedPassword)
->>>>>>> main
 
     if (isPassword) {
       req.session.user = {
@@ -119,7 +134,7 @@ router.post("/login", loginReq, async(req, res) => {
       };
       res.redirect("/authorized");
     } else {
-      res.render("unauthorized");
+      res.redirect("login", { title: "Log In" });
     }
   })
 );
