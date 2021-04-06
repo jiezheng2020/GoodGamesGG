@@ -1,9 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Console = sequelize.define('Console', {
-    name: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   }, {});
-  Console.associate = function(models) {
+  Console.associate = function (models) {
     Console.belongsToMany(models.Game, {
       through: 'Game_console',
       otherKey: 'gameId',
