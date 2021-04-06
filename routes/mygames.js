@@ -7,7 +7,11 @@ const { csrfProtection, asyncHandler, loginReq } = require("../utils");
 const router = express.Router();
 
 /*************************** MIDDLEWARE ***************************/
+<<<<<<< HEAD
 // router.use(loginReq());
+=======
+// router.use(loginReq())
+>>>>>>> main
 /*************************** ROUTES ***************************/
 // /mygames/ get all mygames
 router.get(
@@ -35,12 +39,18 @@ router.get(
 // /mygames/ post,delete,put
 
 //add to overall mygames list
-router.post(
-  "/mygames/:gameId(\\d+)/add",
-  csrfProtection,
+router.post('/mygames/:gameId(\\d+)/add', csrfProtection,
   asyncHandler(async (req, res) => {
     const gameId = parseInt(req.params.gameId, 10);
-    const game = await db.Game.findByPk(gameId);
+    const game = await db.Game.findByPk(gameId)
+
+    const gameStatus = game.played
+
+
+    // const game = await db.My_games.create({
+
+    // })
+}));
 
     const gameStatus = game.played;
 

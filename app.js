@@ -2,6 +2,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const { sequelize } = require("./db/models");
 const path = require("path");

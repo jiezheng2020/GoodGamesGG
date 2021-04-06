@@ -2,7 +2,11 @@
 const express = require("express");
 const { check, validationResult } = require("express-validator");
 
+<<<<<<< HEAD
 const { Game, Review } = require("../db/models");
+=======
+const { Game, Rating, User } = require("../db/models")
+>>>>>>> main
 /*************************** ROUTER SETUP ***************************/
 const router = express.Router();
 
@@ -32,11 +36,18 @@ const validateReviewOrRating = [
 
 /*************************** ROUTES ***************************/
 
+<<<<<<< HEAD
 router.get(
   "/",
   asyncHandler(async (req, res) => {
     // Finds all games from the database
     const games = await Game.findAll({ order: [["title"]] });
+=======
+// All Games Page
+router.get('/', asyncHandler(async(req,res)=>{
+    // Finds all games from the database
+    const games = await Game.findAll();
+>>>>>>> main
 
     // Renders games page with list of all games from A-Z
     res.render("games", { title: "All Games", games });
@@ -51,6 +62,7 @@ const gameNotFoundError = (id) => {
   return error;
 };
 
+<<<<<<< HEAD
 router.get(
   "/:id(\\d+)",
   csrfProtection,
@@ -71,10 +83,28 @@ router.get(
         game,
         csrfToken: req.csrfToken(),
       });
+=======
+// Specific Games Page
+router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res)=>{
+    // Defines variables
+    const gameId = req.params.id
+    const userId = 1;
+
+    // Finds game with the above id
+    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
+
+    // const reviews = await Review.findAll({where:{gameId}});
+    // const ratings = await Rating.findall({where:{gameId}});
+
+    if(game) {
+        // Renders game page with specific game info
+        res.render('game', {title:game.title, game, csrfToken:req.csrfToken()});
+>>>>>>> main
     } else {
       // Throws error if tweet not found
       next(gameNotFoundError(id));
     }
+<<<<<<< HEAD
   })
 );
 
@@ -149,11 +179,70 @@ router.delete(
   handleValidationErrors,
   csrfProtection,
   asyncHandler(async (req, res) => {
+=======
+}))
+
+
+// Create review or rating on game
+router.post('/:id(\\d+)', asyncHandler(async(req,res)=>{
+    console.log('test')
+    // Defines variables
+    const gameId = req.params.id
+    const userId = 1;
+    const { overall, body } = req.body
+
+    // Creates review instance with above variables
+    const rating = await Rating.create({
+        overall,
+        body,
+        userId,
+        gameId
+    })
+
+    // Grabs all reviews
+    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
+    const {user_ratings} = game
+
+    // Sends response with review, and reviews
+    res.json({user_ratings})
+
+}))
+
+
+// Edit review or rating on game
+router.put('/:id(\\d+)', validateReviewOrRating, handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
+    // Defines variables
+    const gameId = req.params.id
+    const userId = 1;
+    const { overall, body } = req.body
+
+    // Creates review instance with above variables
+    const review = await Rating.create({
+        overall,
+        body,
+        userId,
+        gameId
+    })
+
+    // Grabs all reviews
+    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
+    const {user_ratings} = game
+
+    // Sends response with review, and reviews
+    res.json({user_ratings})
+
+}))
+
+
+// Delete review or rating on game
+router.delete('/:id(\\d+)', handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
+>>>>>>> main
     // Defines variables
     const gameId = req.params.id;
     const { rating, body, userId } = req.body.body;
 
     // Creates review instance with above variables
+<<<<<<< HEAD
     const review = await Review.create({
       body,
       userId,
@@ -170,6 +259,24 @@ router.delete(
     res.json({ review, reviews });
   })
 );
+=======
+    const review = await Rating.create({
+        body,
+        userId,
+        gameId
+    })
+
+    // Grabs all reviews
+    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
+    const {user_ratings} = game
+
+    // Sends response with review, and reviews
+    res.json({user_ratings})
+
+}))
+
+
+>>>>>>> main
 
 /*************************** EXPORTS ***************************/
 module.exports = router;

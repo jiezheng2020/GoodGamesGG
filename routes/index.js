@@ -96,6 +96,7 @@ router.post(
   })
 );
 
+<<<<<<< HEAD
 router.post(
   "/login",
   loginReq,
@@ -103,6 +104,12 @@ router.post(
     const { userName, password } = req.body;
     const user = await User.findOne({ where: { userName } });
     const isPassword = bcrypt.compare(password, user.hashedPassword);
+=======
+router.post("/login", loginReq, async(req, res) => {
+    const {userName, password} = req.body;
+    const user = await User.findOne({where: {userName}})
+    const isPassword = bcrypt.compare(password,user.hashedPassword)
+>>>>>>> main
 
     if (isPassword) {
       req.session.user = {
