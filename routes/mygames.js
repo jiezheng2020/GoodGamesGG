@@ -7,11 +7,7 @@ const { csrfProtection, asyncHandler, loginReq } = require("../utils");
 const router = express.Router();
 
 /*************************** MIDDLEWARE ***************************/
-<<<<<<< HEAD
-// router.use(loginReq());
-=======
 // router.use(loginReq())
->>>>>>> main
 /*************************** ROUTES ***************************/
 // /mygames/ get all mygames
 router.get(
