@@ -28,7 +28,7 @@ router.get('/mygames/:userId(\\d+)/libraries', csrfProtection,
 }));
 // /mygames/ post,delete,put
 
-//NEED TO FINISH add to overall mygames list
+// add to overall mygames list
 router.post('/mygames/:userId(\\d+)/:gameId(\\d+)/add', csrfProtection,
   asyncHandler(async (req, res) => {
     const gameId = parseInt(req.params.gameId, 10);
