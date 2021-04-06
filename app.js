@@ -11,7 +11,7 @@ const usersRouter = require("./routes/users");
 const gamesRouter = require("./routes/games");
 const myGamesRouter = require("./routes/mygames");
 const indexRouter = require("./routes/index");
-
+const cookieParser = require("cookie-parser");
 /*************************** APP SETUP ***************************/
 const app = express();
 
@@ -38,10 +38,10 @@ app.use(
 /*************************** ROUTES ***************************/
 
 // ROUTES TO ROUTERS
+app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/games", gamesRouter);
 app.use("/mygames", myGamesRouter);
-app.use("/", indexRouter);
 
 // ERRORS
 

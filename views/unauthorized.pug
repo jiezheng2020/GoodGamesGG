@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    div
+        each game in games
+            div
+                div
+                    img(src=game.imageHref)
+                div
+                    label #{game.title}
