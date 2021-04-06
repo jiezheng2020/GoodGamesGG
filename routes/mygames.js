@@ -7,7 +7,7 @@ const { csrfProtection, asyncHandler, loginReq } = require("../utils");
 const router = express.Router();
 
 /*************************** MIDDLEWARE ***************************/
-router.use(loginReq())
+// router.use(loginReq())
 /*************************** ROUTES ***************************/
 // /mygames/ get all mygames
 router.get('/mygames/:userId(\\d+)', csrfProtection,
@@ -106,11 +106,6 @@ router.delete('/mygames/:userId(\\d+)/libraries/:libraryId(\\d+)/:gameId(\\d+)/d
     mygame.destroy();
     res.status(204).end();
 }))
-
-
-
-
-
 
 
 /*************************** EXPORTS ***************************/
