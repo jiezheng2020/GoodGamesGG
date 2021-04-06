@@ -41,10 +41,10 @@ app.use(
 /*************************** ROUTES ***************************/
 
 // ROUTES TO ROUTERS
+app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/games", gamesRouter);
 app.use("/mygames", myGamesRouter);
-app.use("/", indexRouter);
 
 // ERRORS
 

@@ -1,13 +1,17 @@
 /*************************** REQUIRES ***************************/
 const express = require("express");
-const { check, validationResult } = require('express-validator')
+const { check, validationResult } = require("express-validator");
 
 const { Game, Rating, User } = require("../db/models")
 /*************************** ROUTER SETUP ***************************/
 const router = express.Router();
 
 /*************************** MIDDLEWARE ***************************/
-const { csrfProtection, asyncHandler, handleValidationErrors } = require('../utils.js')
+const {
+  csrfProtection,
+  asyncHandler,
+  handleValidationErrors,
+} = require("../utils.js");
 
 const validateReviewOrRating = [
     check('body')
@@ -38,15 +42,16 @@ router.get('/', asyncHandler(async(req,res)=>{
     const games = await Game.findAll();
 
     // Renders games page with list of all games from A-Z
-    res.render('games', {title: 'All Games', games});
-}));
+    res.render("games", { title: "All Games", games });
+  })
+);
 
 // Game Not Found FUNCTION
 const gameNotFoundError = (id) => {
-    const error = new Error(`Game with ${id} could not be found`);
-    error.title = "Game not found"
-    error.status = 404;
-    return error;
+  const error = new Error(`Game with ${id} could not be found`);
+  error.title = "Game not found";
+  error.status = 404;
+  return error;
 };
 
 // Specific Games Page
@@ -65,8 +70,8 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res)=>{
         // Renders game page with specific game info
         res.render('game', {title:game.title, game, csrfToken:req.csrfToken()});
     } else {
-        // Throws error if tweet not found
-        next(gameNotFoundError(id));
+      // Throws error if tweet not found
+      next(gameNotFoundError(id));
     }
 }))
 
