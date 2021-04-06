@@ -54,8 +54,15 @@ const gameNotFoundError = (id) => {
   return error;
 };
 
+const ratingExists = () =>{
+    const error = new Error(`Review for game with ${id} already exists`);
+    error.title = "Ratings already exists";
+    error.status = 400;
+    return error;
+}
+
 // Specific Games Page
-router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res)=>{
+router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
     // Defines variables
     const gameId = req.params.id
     const userId = 1;
@@ -71,13 +78,13 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res)=>{
         res.render('game', {title:game.title, game, csrfToken:req.csrfToken()});
     } else {
       // Throws error if tweet not found
-      next(gameNotFoundError(id));
+      next(gameNotFoundError(gameId));
     }
 }))
 
 
 // Create review or rating on game
-router.put('/:id(\\d+)', asyncHandler(async(req,res)=>{
+router.post('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
     // Defines variables
     const gameId = req.params.id
     const userId = 1;
@@ -86,7 +93,7 @@ router.put('/:id(\\d+)', asyncHandler(async(req,res)=>{
     let rating = await Rating.findOne({where:{gameId, userId}})
 
     if(rating){
-        res.json({error: 'Comment exists'})
+        next(ratingExists(gameId))
     } else {
         // Creates review instance with above variables
         rating = await Rating.create({
@@ -108,11 +115,11 @@ router.put('/:id(\\d+)', asyncHandler(async(req,res)=>{
 
 
 // Edit review or rating on game
-router.post('/:id(\\d+)', asyncHandler(async(req,res)=>{
+router.put('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
     // Defines variables
     const gameId = req.params.id
     const userId = 1;
-    const { overall, body } = req.body.body
+    const { overall, body } = req.body
 
     // Creates rating instance with above variables
     let rating = await Rating.findOne({where:{gameId, userId}})
@@ -123,43 +130,30 @@ router.post('/:id(\\d+)', asyncHandler(async(req,res)=>{
 
         await rating.save()
 
+        res.json({overall, body})
+
     } else {
-        res.json({error: "Rating does not exist"})
+        next(gameNotFoundError(gameId))
     }
 
 }))
 
 
 // Delete review or rating on game
-router.delete('/:id(\\d+)', asyncHandler(async(req,res)=>{
+router.delete('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
     // Defines variables
     const gameId = req.params.id
     const userId = 1;
-    const { overall, body } = req.body.body
 
     // Creates rating instance with above variables
     let rating = await Rating.findOne({where:{gameId, userId}})
 
     if(rating){
-        rating.overall = overall
-        rating.body = body
+        await rating.destroy()
+        res.status(204).end()
 
-        await rating.save()
     } else {
-        // Creates review instance with above variables
-        rating = await Rating.create({
-            overall,
-            body,
-            userId,
-            gameId
-        });
-
-        // Grabs all reviews
-        const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
-        const {user_ratings} = game;
-
-        // Sends response with review, and reviews
-        res.json({game});
+        next(gameNotFoundError(gameId))
     }
 
 }))
