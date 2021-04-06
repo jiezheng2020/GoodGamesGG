@@ -28,6 +28,7 @@ const validateReviewOrRating = [
         }),
 ]
 
+// comment
 /*************************** ROUTES ***************************/
 
 // All Games Page
