@@ -2,11 +2,8 @@
 const express = require("express");
 const { check, validationResult } = require("express-validator");
 
-<<<<<<< HEAD
-const { Game, Review } = require("../db/models");
-=======
+
 const { Game, Rating, User } = require("../db/models")
->>>>>>> main
 /*************************** ROUTER SETUP ***************************/
 const router = express.Router();
 
