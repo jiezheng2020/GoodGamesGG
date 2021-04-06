@@ -1,25 +1,33 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Game = sequelize.define('Game', {
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please provide a title.'
+        }
+      }
+    },
     publisher: DataTypes.STRING,
     developer: DataTypes.STRING,
     releaseDate: DataTypes.DATE,
     description: DataTypes.TEXT,
-    overallRating: DataTypes.DECIMAL,
+    overallRating: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      validate: {
+        min: 1.0,
+        max: 5.0,
+      }
+    },
     imageHref: DataTypes.STRING
   }, {});
-  Game.associate = function(models) {
+  Game.associate = function (models) {
     Game.belongsToMany(models.User, {
       through: 'Rating',
       as: 'user_ratings',
-      otherKey: 'userId',
-      foreignKey: 'gameId'
-    });
-
-    Game.belongsToMany(models.User, {
-      through: 'Review',
-      as: 'user_reviews',
       otherKey: 'userId',
       foreignKey: 'gameId'
     });
