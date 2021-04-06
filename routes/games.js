@@ -30,16 +30,10 @@ const validateReviewOrRating = [
 
 /*************************** ROUTES ***************************/
 
+// All Games Page
 router.get('/', asyncHandler(async(req,res)=>{
     // Finds all games from the database
-    const games = await Game.findByPk(1,{
-        include:[{
-            model:User,
-            as:'reviews'
-        }]
-    });
-    const reviews = await Review.findAll()
-    console.log(games.reviews)
+    const games = await Game.findAll();
 
     // Renders games page with list of all games from A-Z
     res.render('games', {title: 'All Games', games});
@@ -53,15 +47,17 @@ const gameNotFoundError = (id) => {
     return error;
 };
 
+// Specific Games Page
 router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res)=>{
     // Defines variables
     const gameId = req.params.id
+    const userId = 1;
 
     // Finds game with the above id
-    const game = await Game.findByPk(gameId);
-    const review = await Review.findAll({
-        where:{gameId:id},
-    })
+    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_reviews'}]});
+
+    // const reviews = await Review.findAll({where:{gameId}});
+    // const ratings = await Rating.findall({where:{gameId}});
 
     if(game) {
         // Renders game page with specific game info
@@ -72,7 +68,9 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res)=>{
     }
 }))
 
-router.post('/:id(\\d+)/add', validateReviewOrRating, handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
+
+// Create review or rating on game
+router.post('/:id(\\d+)', validateReviewOrRating, handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
     // Defines variables
     const gameId = req.params.id
     const userId = req.session.user
@@ -97,7 +95,7 @@ router.post('/:id(\\d+)/add', validateReviewOrRating, handleValidationErrors, cs
     // Grabs all reviews
     const reviews = await Review.findAll({
         where: {gameId},
-        include: [{ model: User, as: "user", attributes: ["username"] }]
+        // include: [{ model: User, as: "user", attributes: ["username"] }]
     })
 
     // Sends response with review, and reviews
@@ -105,7 +103,9 @@ router.post('/:id(\\d+)/add', validateReviewOrRating, handleValidationErrors, cs
 
 }))
 
-router.put('/:id(\\d+)/add', validateReviewOrRating, handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
+
+// Edit review or rating on game
+router.put('/:id(\\d+)', validateReviewOrRating, handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
     // Defines variables
     const gameId = req.params.id
     const { rating, body, userId } = req.body
@@ -128,7 +128,9 @@ router.put('/:id(\\d+)/add', validateReviewOrRating, handleValidationErrors, csr
 
 }))
 
-router.delete('/:id(\\d+)/add', handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
+
+// Delete review or rating on game
+router.delete('/:id(\\d+)', handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
     // Defines variables
     const gameId = req.params.id
     const { rating, body, userId } = req.body.body

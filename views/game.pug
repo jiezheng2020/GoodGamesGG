@@ -1,4 +1,8 @@
 extends layout.pug
 block content
     h1=game.title
-    h2=
+    h2=game.publisher
+    h2=game.developer
+    ul
+        each user in game.user_reviews
+            li #{user.Review.body} #{user.Review.createdAt}
