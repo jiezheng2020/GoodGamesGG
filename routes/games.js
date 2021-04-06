@@ -2,7 +2,7 @@
 const express = require("express");
 const { check, validationResult } = require('express-validator')
 
-const { Game, Review } = require('./models')
+const { Game, Review, User } = require("../db/models")
 /*************************** ROUTER SETUP ***************************/
 const router = express.Router();
 
@@ -32,7 +32,14 @@ const validateReviewOrRating = [
 
 router.get('/', asyncHandler(async(req,res)=>{
     // Finds all games from the database
-    const games = await Game.findAll({order:[['title']]});
+    const games = await Game.findByPk(1,{
+        include:[{
+            model:User,
+            as:'reviews'
+        }]
+    });
+    const reviews = await Review.findAll()
+    console.log(games.reviews)
 
     // Renders games page with list of all games from A-Z
     res.render('games', {title: 'All Games', games});

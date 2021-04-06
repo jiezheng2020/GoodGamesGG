@@ -93,6 +93,7 @@ module.exports = (sequelize, DataTypes) => {
 
     User.belongsToMany(models.Game, {
       through: 'Review',
+      as: 'reviews',
       otherKey: 'gameId',
       foreignKey: 'userId' });
 
