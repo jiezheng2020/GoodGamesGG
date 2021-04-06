@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    userName:  {
+    userName: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
@@ -84,23 +84,19 @@ module.exports = (sequelize, DataTypes) => {
     }
 
   }, {});
-  User.associate = function(models) {
+  User.associate = function (models) {
     User.belongsToMany(models.Game, {
       through: 'Rating',
       as: 'user_ratings',
       otherKey: 'gameId',
-      foreignKey: 'userId' });
-
-    User.belongsToMany(models.Game, {
-      through: 'Review',
-      as: 'user_reviews',
-      otherKey: 'gameId',
-      foreignKey: 'userId' });
+      foreignKey: 'userId'
+    });
 
     User.belongsToMany(models.Game, {
       through: 'My_game',
       otherKey: 'gameId',
-      foreignKey: 'userId' });
+      foreignKey: 'userId'
+    });
 
     User.hasMany(models.Library, { foreignKey: 'userId' });
 
