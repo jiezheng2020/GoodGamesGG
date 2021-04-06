@@ -1,28 +1,28 @@
 /*************************** REQUIRES ***************************/
 const express = require("express");
 // const csrf = require('csurf');
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
 const db = require('../db/models');
-const { csrfProtection, asyncHandler, loginReq } = require("../utils");
+const { loginReq, asyncHandler } = require('../utils');
 /*************************** ROUTER SETUP ***************************/
 const router = express.Router();
 
 /*************************** MIDDLEWARE ***************************/
 // router.use(loginReq())
-router.use(cookieParser())
+// router.use(cookieParser())
 /*************************** ROUTES ***************************/
 // /mygames/ get all mygames
-router.get('/:userId(\\d+)', csrfProtection,
+router.get('/:userId(\\d+)',
   asyncHandler(async (req, res) => {
-    const games = await db.My_games.find()
+    const games = await db.My_game.findAll()
     res.json({games})
     // res.render('mygames', {games, csrfToken: req.csrfToken()})
 }));
 // /mygames/ fetch for shelves
-router.get('/:userId(\\d+)/libraries', csrfProtection,
+router.get('/:userId(\\d+)/libraries',
   asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.userId, 10)
-    const libraries = await db.Libraries.findall({
+    const libraries = await db.Library.findAll({
         where: {
             userId: userId
         }
@@ -33,63 +33,92 @@ router.get('/:userId(\\d+)/libraries', csrfProtection,
 // /mygames/ post,delete,put
 
 // add to overall mygames list
-router.post('/:userId(\\d+)/:gameId(\\d+)/add', csrfProtection,
+router.post('/:userId(\\d+)/:gameId(\\d+)/add',
   asyncHandler(async (req, res) => {
     const gameId = parseInt(req.params.gameId, 10);
     const userId = parseInt(req.params.userId, 10);
-    let gameStatus = req.body.played;
+    const exists = await db.My_game.findOne({
+        where: {
+            gameId: gameId,
+            userId: userId
+        }
+    })
+
+    if (exists) {
+        res.json({exists})
+        // res.redirect('/:userId(\\d+)')
+        return
+    }
+
+    let { played } = req.body;
     // const game = await db.Game.findByPk(gameId);
-    if (!gameStatus) {
-        gameStatus = 0
+    if (!played) {
+        played = 0;
     }
     
-    const mygame = await db.My_games.create({gameStatus, userId, gameId});
-    res.jason({mygame})
-    // res.redirect('/mygames/:userId(\\d+)');
+    const mygame = await db.My_game.create({played, userId, gameId});
+    res.json({ mygame });
+    // res.redirect('/:userId(\\d+)');
 }));
 
 // add a library
 router.post('/:userId(\\d+)/libraries/add',
   asyncHandler(async (req, res) => {
-      console.log("hi")
       const userId = parseInt(req.params.userId, 10);
       const { name } = req.body
 
       const library = await db.Library.create({name, userId});
       res.json({ library })
-    //   res.redirect('/mygames/:userId(\\d+)/libraries');
+    //   res.redirect('/:userId(\\d+)/libraries');
   }));
 
   // add a game to a library
-router.post('/:userId(\\d+)/libraries/:libraryId(\\+)/gameId(\\+)/add', csrfProtection, 
+router.post('/:userId(\\d+)/libraries/:libraryId(\\d+)/:gameId(\\d+)/add', 
   asyncHandler(async (req, res) => {
         // const userId = parseInt(req.params.userId, 10);
     const libraryId = parseInt(req.params.libraryId, 10);
     const gameId = parseInt(req.params.gameId, 10);
-
-    const libraryGame = await Library_game.create({libraryId, gameId});
-      res.json({ libraryGame })
-    // res.redirect('/mygames/:userId(\\d+)/libraries/:libraryId(\\+)');
+    const exists = await db.Library_game.findOne({
+        where: {
+            gameId: gameId,
+            libraryId: libraryId
+        }
+    })
+    // console.log(exists)
+    if (exists) {
+        res.json({exists})
+        return
+    }
+    
+    const libraryGame = await db.Library_game.create({libraryId, gameId});
+      res.json({ libraryGame });
+    // res.redirect('/:userId(\\d+)/libraries/:libraryId(\\+)');
 }));
 
 // change played status
-router.put('/:gameId(\\d+)', csrfProtection, 
+router.put('/:userId(\\d+)/:gameId(\\d+)/played',
   asyncHandler(async (req, res) => {
-    const gameId = parseInt(req.params.id, 10);
-    const mygame = await Mygame.findByPk(gameId)
-    const { played } = req.body
+      const gameId = parseInt(req.params.gameId, 10);
+      const mygame = await db.My_game.findOne(
+          {
+              where: {
+                  gameId: gameId
+                }
+            })
+            const { played } = req.body
+            console.log(mygame)
 
     const newPlayed = await mygame.update({ played })
-      res.json({ newPlayed })
-    // res.redirect('/mygames/:userId(\\d+)')
+      res.json({ newPlayed });
+    // res.redirect('/:userId(\\d+)')
 }));
 
 // remove game from mygames
-router.delete('/mygames/:userId(\\d+)/:gameId(\\d+)/delete', csrfProtection,
+router.delete('/:userId(\\d+)/:gameId(\\d+)/delete',
   asyncHandler(async (req, res) => {
-    const userId = parseInt(req.params.id, 10);
-    const gameId = parseInt(req.params.id, 10)
-    const mygame = await My_games.findAll({
+    const userId = parseInt(req.params.userId, 10);
+    const gameId = parseInt(req.params.gameId, 10)
+    const mygame = await db.My_game.findOne({
         where: {
             gameId: gameId,
             userId: userId
@@ -102,10 +131,10 @@ router.delete('/mygames/:userId(\\d+)/:gameId(\\d+)/delete', csrfProtection,
 
 // remove game from library
 router.delete('/:userId(\\d+)/libraries/:libraryId(\\d+)/:gameId(\\d+)/delete', 
-  csrfProtection, asyncHandler(async (req, res) => {
-    const libraryId = parseInt(req.params.id, 10);
-    const gameId = parseInt(req.params.id, 10)
-    const mygame = await Library_games.findAll({
+  asyncHandler(async (req, res) => {
+    const libraryId = parseInt(req.params.libraryId, 10);
+    const gameId = parseInt(req.params.gameId, 10)
+    const mygame = await db.Library_game.findOne({
         where: {
             gameId: gameId,
             libraryId: libraryId
@@ -115,6 +144,21 @@ router.delete('/:userId(\\d+)/libraries/:libraryId(\\d+)/:gameId(\\d+)/delete',
     mygame.destroy();
     res.status(204).end();
 }))
+
+// remove library
+router.delete('/:userId(\\d+)/libraries/:libraryId(\\d+)/delete',
+  asyncHandler(async (req, res) => {
+    const libraryId = parseInt(req.params.libraryId, 10);
+    const userId = parseInt(req.params.userId, 10);
+    const library = await db.Library.findOne({
+        where: {
+            userId: userId,
+            id: libraryId
+        }
+    })
+    library.destroy();
+    res.status(204).end();
+  }))
 
 
 /*************************** EXPORTS ***************************/
