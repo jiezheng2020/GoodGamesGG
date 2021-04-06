@@ -18,6 +18,7 @@ const validateReviewOrRating = [
             }
             return true;
         }),
+
     check('overall')
         .custom((overall, { req } ) => {
             const { body } = req.body;
@@ -72,48 +73,54 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res)=>{
 
 // Create review or rating on game
 router.post('/:id(\\d+)', asyncHandler(async(req,res)=>{
-    console.log('test')
     // Defines variables
     const gameId = req.params.id
-    const userId = 1;
+    const userId = 2;
     const { overall, body } = req.body
 
-    // Creates review instance with above variables
-    const rating = await Rating.create({
-        overall,
-        body,
-        userId,
-        gameId
-    })
+    let rating = await Rating.findOne({where:{gameId, userId}})
 
-    // Grabs all reviews
-    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
-    const {user_ratings} = game
+    if(rating){
+        res.json({error: 'Comment exists'})
+    } else {
+        console.log('test')
+        // Creates review instance with above variables
+        rating = await Rating.create({
+            overall,
+            body,
+            userId,
+            gameId
+        });
 
-    // Sends response with review, and reviews
-    res.json({user_ratings})
+        // Grabs all reviews
+        const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
+        const {user_ratings} = game;
 
-}))
+        // Sends response with review, and reviews
+        res.json({game});
+    }
+
+    }))
 
 
 // Edit review or rating on game
-router.put('/:id(\\d+)', validateReviewOrRating, handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
+router.put('/:id(\\d+)', asyncHandler(async(req,res)=>{
     // Defines variables
     const gameId = req.params.id
     const userId = 1;
     const { overall, body } = req.body
 
     // Creates review instance with above variables
-    const review = await Rating.create({
-        overall,
-        body,
-        userId,
-        gameId
-    })
+    const rating = await Rating.findByPK(gameId)
+
+    rating.overall = overall
+    rating.body = body
+
+    rating.save()
 
     // Grabs all reviews
     const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
-    const {user_ratings} = game
+    const {user_ratings} = game;
 
     // Sends response with review, and reviews
     res.json({user_ratings})
@@ -122,7 +129,7 @@ router.put('/:id(\\d+)', validateReviewOrRating, handleValidationErrors, csrfPro
 
 
 // Delete review or rating on game
-router.delete('/:id(\\d+)', handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
+router.delete('/:id(\\d+)', asyncHandler(async(req,res)=>{
     // Defines variables
     const gameId = req.params.id
     const { rating, body, userId } = req.body.body
