@@ -1,17 +1,16 @@
 /*************************** REQUIRES ***************************/
 const express = require("express");
 const morgan = require("morgan");
-const cors = require("cors");
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
-const { sequelize } = require("./models");
+const { sequelize } = require("./db/models");
 const path = require("path");
 const { environment, secret } = require("./config");
 const usersRouter = require("./routes/users");
 const gamesRouter = require("./routes/games");
 const myGamesRouter = require("./routes/mygames");
 const indexRouter = require("./routes/index");
-
+const cookieParser = require("cookie-parser");
 /*************************** APP SETUP ***************************/
 const app = express();
 
@@ -38,10 +37,10 @@ app.use(
 /*************************** ROUTES ***************************/
 
 // ROUTES TO ROUTERS
+app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/games", gamesRouter);
 app.use("/mygames", myGamesRouter);
-app.use("/", indexRouter);
 
 // ERRORS
 
