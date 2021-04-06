@@ -9,8 +9,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       overall: {
-        allowNull: false,
-        type: Sequelize.DECIMAL(2, 1)
+        type: Sequelize.INTEGER
+      },
+      body: {
+        type: Sequelize.TEXT
       },
       userId: {
         allowNull: false,

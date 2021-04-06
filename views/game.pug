@@ -4,5 +4,5 @@ block content
     h2=game.publisher
     h2=game.developer
     ul
-        each user in game.user_reviews
-            li #{user.Review.body} #{user.Review.createdAt}
+        each user in game.user_ratings
+            li #{user.Rating.overall} #{user.Rating.createdAt}

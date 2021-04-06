@@ -2,7 +2,7 @@
 const express = require("express");
 const { check, validationResult } = require('express-validator')
 
-const { Game, Review, User } = require("../db/models")
+const { Game, Rating, User } = require("../db/models")
 /*************************** ROUTER SETUP ***************************/
 const router = express.Router();
 
@@ -54,7 +54,7 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res)=>{
     const userId = 1;
 
     // Finds game with the above id
-    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_reviews'}]});
+    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
 
     // const reviews = await Review.findAll({where:{gameId}});
     // const ratings = await Rating.findall({where:{gameId}});
@@ -70,36 +70,27 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res)=>{
 
 
 // Create review or rating on game
-router.post('/:id(\\d+)', validateReviewOrRating, handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
+router.post('/:id(\\d+)', asyncHandler(async(req,res)=>{
+    console.log('test')
     // Defines variables
     const gameId = req.params.id
-    const userId = req.session.user
+    const userId = 1;
     const { overall, body } = req.body
 
     // Creates review instance with above variables
-    if (body.length){
-        const review = await Review.create({
-            body,
-            userId,
-            gameId
-        })
-    }
-    if (rating.length){
-        const rating = await Rating.create({
-            overall,
-            userId,
-            gameId
-        })
-    }
-
-    // Grabs all reviews
-    const reviews = await Review.findAll({
-        where: {gameId},
-        // include: [{ model: User, as: "user", attributes: ["username"] }]
+    const rating = await Rating.create({
+        overall,
+        body,
+        userId,
+        gameId
     })
 
+    // Grabs all reviews
+    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
+    const {user_ratings} = game
+
     // Sends response with review, and reviews
-    res.json({review, reviews})
+    res.json({user_ratings})
 
 }))
 
@@ -108,23 +99,23 @@ router.post('/:id(\\d+)', validateReviewOrRating, handleValidationErrors, csrfPr
 router.put('/:id(\\d+)', validateReviewOrRating, handleValidationErrors, csrfProtection, asyncHandler(async(req,res)=>{
     // Defines variables
     const gameId = req.params.id
-    const { rating, body, userId } = req.body
+    const userId = 1;
+    const { overall, body } = req.body
 
     // Creates review instance with above variables
-    const review = await Review.create({
+    const review = await Rating.create({
+        overall,
         body,
         userId,
         gameId
     })
 
     // Grabs all reviews
-    const reviews = await Review.findAll({
-        where: {gameId},
-        include: [{ model: User, as: "user", attributes: ["username"] }]
-    })
+    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
+    const {user_ratings} = game
 
     // Sends response with review, and reviews
-    res.json({review, reviews})
+    res.json({user_ratings})
 
 }))
 
@@ -136,20 +127,18 @@ router.delete('/:id(\\d+)', handleValidationErrors, csrfProtection, asyncHandler
     const { rating, body, userId } = req.body.body
 
     // Creates review instance with above variables
-    const review = await Review.create({
+    const review = await Rating.create({
         body,
         userId,
         gameId
     })
 
     // Grabs all reviews
-    const reviews = await Review.findAll({
-        where: {gameId},
-        include: [{ model: User, as: "user", attributes: ["username"] }]
-    })
+    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
+    const {user_ratings} = game
 
     // Sends response with review, and reviews
-    res.json({review, reviews})
+    res.json({user_ratings})
 
 }))
 
