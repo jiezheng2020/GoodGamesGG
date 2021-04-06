@@ -42,7 +42,7 @@ router.get('/', asyncHandler(async(req,res)=>{
     const games = await Game.findAll();
 
     // Renders games page with list of all games from A-Z
-    res.render("games", { title: "All Games", games });
+    res.render("allgames", { title: "All Games", games });
   })
 );
 
