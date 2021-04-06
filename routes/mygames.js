@@ -1,9 +1,10 @@
 /*************************** REQUIRES ***************************/
 const express = require("express");
-// const csrf = require('csurf');
-// const cookieParser = require("cookie-parser");
+const csrf = require('csurf');
+const cookieParser = require("cookie-parser");
 const db = require('../db/models');
 const { loginReq, asyncHandler } = require('../utils');
+
 /*************************** ROUTER SETUP ***************************/
 const router = express.Router();
 
@@ -12,6 +13,7 @@ const router = express.Router();
 // router.use(cookieParser())
 /*************************** ROUTES ***************************/
 // /mygames/ get all mygames
+
 router.get('/:userId(\\d+)',
   asyncHandler(async (req, res) => {
     const games = await db.My_game.findAll()
@@ -30,6 +32,7 @@ router.get('/:userId(\\d+)/libraries',
     res.json({libraries})
     // res.render('libraries', {libraries, csrfToken: csrfToken()})
 }));
+
 // /mygames/ post,delete,put
 
 // add to overall mygames list
@@ -159,7 +162,6 @@ router.delete('/:userId(\\d+)/libraries/:libraryId(\\d+)/delete',
     library.destroy();
     res.status(204).end();
   }))
-
 
 /*************************** EXPORTS ***************************/
 module.exports = router;

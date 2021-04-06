@@ -11,6 +11,8 @@ const usersRouter = require("./routes/users");
 const gamesRouter = require("./routes/games");
 const myGamesRouter = require("./routes/mygames");
 const indexRouter = require("./routes/index");
+// const bodyParser = require('body-parser');
+
 
 /*************************** APP SETUP ***************************/
 const app = express();
@@ -18,6 +20,7 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
 app.use(cookieParser());
 
 app.set("view engine", "pug");
@@ -38,10 +41,10 @@ app.use(
 /*************************** ROUTES ***************************/
 
 // ROUTES TO ROUTERS
+app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/games", gamesRouter);
 app.use("/mygames", myGamesRouter);
-app.use("/", indexRouter);
 
 // ERRORS
 
