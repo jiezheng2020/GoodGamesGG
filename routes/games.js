@@ -72,10 +72,10 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res)=>{
 
 
 // Create review or rating on game
-router.post('/:id(\\d+)', asyncHandler(async(req,res)=>{
+router.put('/:id(\\d+)', asyncHandler(async(req,res)=>{
     // Defines variables
     const gameId = req.params.id
-    const userId = 2;
+    const userId = 1;
     const { overall, body } = req.body
 
     let rating = await Rating.findOne({where:{gameId, userId}})
@@ -83,7 +83,6 @@ router.post('/:id(\\d+)', asyncHandler(async(req,res)=>{
     if(rating){
         res.json({error: 'Comment exists'})
     } else {
-        console.log('test')
         // Creates review instance with above variables
         rating = await Rating.create({
             overall,
@@ -100,30 +99,28 @@ router.post('/:id(\\d+)', asyncHandler(async(req,res)=>{
         res.json({game});
     }
 
-    }))
+}))
 
 
 // Edit review or rating on game
-router.put('/:id(\\d+)', asyncHandler(async(req,res)=>{
+router.post('/:id(\\d+)', asyncHandler(async(req,res)=>{
     // Defines variables
     const gameId = req.params.id
     const userId = 1;
-    const { overall, body } = req.body
+    const { overall, body } = req.body.body
 
-    // Creates review instance with above variables
-    const rating = await Rating.findByPK(gameId)
+    // Creates rating instance with above variables
+    let rating = await Rating.findOne({where:{gameId, userId}})
 
-    rating.overall = overall
-    rating.body = body
+    if(rating){
+        rating.overall = overall
+        rating.body = body
 
-    rating.save()
+        await rating.save()
 
-    // Grabs all reviews
-    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
-    const {user_ratings} = game;
-
-    // Sends response with review, and reviews
-    res.json({user_ratings})
+    } else {
+        res.json({error: "Rating does not exist"})
+    }
 
 }))
 
@@ -132,21 +129,33 @@ router.put('/:id(\\d+)', asyncHandler(async(req,res)=>{
 router.delete('/:id(\\d+)', asyncHandler(async(req,res)=>{
     // Defines variables
     const gameId = req.params.id
-    const { rating, body, userId } = req.body.body
+    const userId = 1;
+    const { overall, body } = req.body.body
 
-    // Creates review instance with above variables
-    const review = await Rating.create({
-        body,
-        userId,
-        gameId
-    })
+    // Creates rating instance with above variables
+    let rating = await Rating.findOne({where:{gameId, userId}})
 
-    // Grabs all reviews
-    const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
-    const {user_ratings} = game
+    if(rating){
+        rating.overall = overall
+        rating.body = body
 
-    // Sends response with review, and reviews
-    res.json({user_ratings})
+        await rating.save()
+    } else {
+        // Creates review instance with above variables
+        rating = await Rating.create({
+            overall,
+            body,
+            userId,
+            gameId
+        });
+
+        // Grabs all reviews
+        const game = await Game.findByPk(gameId,{include:[{model:User, as:'user_ratings'}]});
+        const {user_ratings} = game;
+
+        // Sends response with review, and reviews
+        res.json({game});
+    }
 
 }))
 
