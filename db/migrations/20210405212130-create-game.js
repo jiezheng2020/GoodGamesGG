@@ -30,7 +30,7 @@ module.exports = {
       },
       overallRating: {
         allowNull: false,
-        type: Sequelize.DECIMAL(3, 1)
+        type: Sequelize.DECIMAL(2, 1)
       },
       imageHref: {
         allowNull: false,

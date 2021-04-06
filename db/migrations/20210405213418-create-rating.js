@@ -10,7 +10,7 @@ module.exports = {
       },
       overall: {
         allowNull: false,
-        type: Sequelize.DECIMAL(3, 1)
+        type: Sequelize.DECIMAL(2, 1)
       },
       userId: {
         allowNull: false,
