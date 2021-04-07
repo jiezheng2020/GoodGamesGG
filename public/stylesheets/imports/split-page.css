@@ -18,17 +18,6 @@
     overflow: auto;
 }
 
-.main__sidebar-stars{
-    display: flex;
-
-}
-
-.main__sidebar-star:hover:before{
-    content: "\2605";
-    position: absolute;
-}
-
-
 .main__games{
     grid-area: right;
     border: 2px solid black;

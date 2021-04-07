@@ -13,7 +13,12 @@
     border: 2px solid rgba(0, 0, 0, 0.5);
 }
 
-
+.main__sidebar-stars{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: relative;
+}
 
 .main__sidebar-img{
     width: 100%;
