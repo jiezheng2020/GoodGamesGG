@@ -94,6 +94,7 @@ module.exports = (sequelize, DataTypes) => {
 
     User.belongsToMany(models.Game, {
       through: 'My_game',
+      as: 'user_mygames',
       otherKey: 'gameId',
       foreignKey: 'userId'
     });
