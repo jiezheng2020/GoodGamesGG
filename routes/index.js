@@ -1,7 +1,7 @@
 /*************************** REQUIRES ***************************/
 const express = require("express");
 const { csrfProtection, asyncHandler } = require("../utils");
-const { User, Game, Console } = require("../db/models");
+const { User, Game, Console, User_console } = require("../db/models");
 const { validationResult } = require("express-validator");
 const { check } = require("express-validator");
 const bcrypt = require("bcrypt");
@@ -38,6 +38,25 @@ const loginReq = (req, res, next) => {
     res.redirect("/authorized");
   } else {
     next();
+  }
+};
+
+const consolePreference = async (req, user) => {
+  if (req.body.PC) {
+    await User_console.create({ userId: user.id, consoleId: 3 });
+    console.log("this worked");
+  }
+  if (req.body["Playstation 4"]) {
+    await User_console.create({ userId: user.id, consoleId: 1 });
+    console.log("this worked");
+  }
+  if (req.body["Xbox One"]) {
+    await User_console.create({ userId: user.id, consoleId: 2 });
+    console.log("this worked");
+  }
+  if (req.body["Nintendo Switch"]) {
+    await User_console.create({ userId: user.id, consoleId: 4 });
+    console.log("this worked");
   }
 };
 /*************************** ROUTES ***************************/
@@ -90,7 +109,7 @@ router.post(
   "/signup",
   userValidator,
   asyncHandler(async (req, res) => {
-    const { userName, email, password, firstName, lastName } = req.body;
+    const { userName, email, password, firstName, lastName, PC } = req.body;
     let validatorErrors = validationResult(req).errors;
     const consoles = await Console.findAll();
     if (validatorErrors.length > 0) {
@@ -108,6 +127,8 @@ router.post(
         hashedPassword,
         userName,
       });
+
+      consolePreference(req, user);
 
       req.session.user = {
         id: user.id,
