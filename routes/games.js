@@ -39,7 +39,7 @@ const validateReviewOrRating = [
 // All Games Page
 router.get('/', asyncHandler(async(req,res)=>{
     // Finds all games from the database
-    const games = await Game.findAll();
+    const games = await Game.findAll({limit:24});
 
     // Renders games page with list of all games from A-Z
     res.render("allgames", { title: "All Games", games });

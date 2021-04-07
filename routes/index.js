@@ -1,7 +1,7 @@
 /*************************** REQUIRES ***************************/
 const express = require("express");
 const { csrfProtection, asyncHandler } = require("../utils");
-const { User, Game } = require("../db/models");
+const { User, Game, Console } = require("../db/models");
 const { validationResult } = require("express-validator");
 const { check } = require("express-validator");
 const bcrypt = require("bcrypt");
@@ -27,7 +27,7 @@ const userValidator = [
     .withMessage("Please provide a value for password")
     .isLength({ min: 6 })
     .withMessage("Password must be longer than 6 characters"),
-  check("username")
+  check("userName")
     .exists({ checkFalsy: true })
     .withMessage("Please provide a value for username")
     .isLength({ max: 50 }),
@@ -66,29 +66,39 @@ router.get(
   })
 );
 
-router.get("/signup", loginReq, (req, res) => {
-  res.render("signup", {
-    title: "Sign Up",
-    user: {
-      firstName: "",
-      lastName: "",
-      userName: "",
-      email: "",
-      password: "",
-    },
-  });
-});
+router.get(
+  "/signup",
+  loginReq,
+  asyncHandler(async (req, res) => {
+    const consoles = await Console.findAll();
+
+    res.render("signup", {
+      consoles,
+      title: "Sign Up",
+      user: {
+        firstName: "",
+        lastName: "",
+        userName: "",
+        email: "",
+        password: "",
+      },
+    });
+  })
+);
 
 router.post(
   "/signup",
   userValidator,
   asyncHandler(async (req, res) => {
     const { userName, email, password, firstName, lastName } = req.body;
-    let validResults = validationResult(req).errors;
-    if (validResults.length > 0) {
+    let validatorErrors = validationResult(req).errors;
+    const consoles = await Console.findAll();
+    if (validatorErrors.length > 0) {
       const user = { password, email, userName, firstName, lastName };
       res.status = 403;
-      res.render("signup", { title: "Sign Up" }, { user });
+      const errors = validatorErrors.map((error) => error.msg);
+
+      res.render("signup", { title: "Sign Up", user, consoles, errors });
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await User.create({
