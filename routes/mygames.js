@@ -42,14 +42,15 @@ router.get('/',
     // if (!user) {
     //   next(userNotFound(userId))
     // } else {
-      const userId = 2
-      const mygames = await db.My_game.findAll({
-        where: {
-          userId: userId
-        }
+      const userId = 3
+      const user = await db.User.findByPk(userId,
+      {
+        include: [{model: db.Game, as: "user_mygames"}]
       })
-      // res.json({mygames})
-      res.render('mygames', { title: "My Games", mygames} )
+
+      const { user_mygames: games } = user;
+      // res.json({games})
+      res.render('mygames', { title: "My Games", games} )
     // }
 }));
 
@@ -75,14 +76,20 @@ router.get('/libraries',
 // get specific library
 router.get('/libraries/:libraryId(\\d+)',
   asyncHandler(async (req, res) => {
-    console.log("hi")
+    // console.log("hi")
     const libraryId = parseInt(req.params.libraryId, 10);
-    const library = await db.Library.findByPk(libraryId)
-    if(!library) {
-      next(libraryNotFound(libreryId))
-    } else {
-      console.log('hi')
-      res.json({library})
+    const library = await db.Library.findByPk(libraryId,
+      {
+        include: [{ model: db.Game, as: "library_games" }]
+      })
+
+      if(!library) {
+        next(libraryNotFound(libreryId))
+      } else {
+        const { library_games: games } = library;
+        res.render('mygames', {title: 'My Games', games})
+        // res.json({library})
+
     }
 }))
 
@@ -118,7 +125,7 @@ router.post('/:gameId(\\d+)/add',
 // add a library
 router.post('/libraries/add',
   asyncHandler(async (req, res) => {
-      const userId = parseInt(req.params.userId, 10);
+      const userId = 1
       const { name } = req.body
 
       const library = await db.Library.create({name, userId});

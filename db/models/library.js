@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Library.belongsToMany(models.Game, {
       through: 'Library_game',
+      as: 'library_games',
       otherKey: 'gameId',
       foreignKey: 'libraryId'
     });
