@@ -1,0 +1,36 @@
+/********* Imports *********/
+@import "./imports/game-container.css";
+@import "./imports/split-page.css";
+
+/********* Main Section *********/
+
+.main__organizer ul{
+    padding: 0px 3px;
+    font-size: 20px;
+
+}
+
+.main__organizer li{
+    padding: 5px 10px;
+    font-size: 18px;
+    list-style: none;
+    color: blue;
+    /* border: .5px solid grey; */
+}
+
+.main__organizer li:hover{
+    text-decoration: underline;
+    cursor: pointer;
+    color: white;
+    background: grey;
+}
+
+
+/********* Games Section *********/
+
+.main__games-list{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 10px;
+}

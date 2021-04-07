@@ -1,5 +1,17 @@
 extends layout.pug
+
+append head
+    link(rel='stylesheet' href='./stylesheets/allgames.css')
+
 block content
-    ul
-        each game in games
-            li: a(href=`/games/${game.id}`)=game.title
+    div(class='main')
+        div(class='main__organizer')
+            ul(class='main__organizer-order') Order:
+                li(class='main__organizer-order--alpha') Alphabetical
+                li(class='main__organizer-order--rating') Rating
+            ul(class='main__organizer-filter') Filter:
+                li(class='main__organizer-filter--rating') Rating
+                li(class='main__organizer-filter--console') Console
+        div(class='main__games')
+            ul(class='main__games-list')
+                include includes/game-container.pug
