@@ -1,16 +1,19 @@
 'use strict';
 
+const fetch = require('node-fetch');
+
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
 
-    // const data = await fetch('http://api.rawg.io/api/games?key=db5497722d9845ee89d93908ec7b8afa');
-    // console.log(data);
+    const data = await fetch('http://api.rawg.io/api/games?key=db5497722d9845ee89d93908ec7b8afa');
+    const { results } = await data.json()
+    // console.log(gamesApi);
 
 
 
-
-    return queryInterface.bulkInsert('Games', [
+    const games = [
       { title: 'God of War', publisher: 'Sony Interactive Entertainment', developer: 'Santa Monica Studio', releaseDate: '2018-04-20', description: 'A man ventures out on a quest to become a God.....of war.', overallRating: 5.0, imageHref: './images/GOW-OG-image.png', createdAt: new Date(), updatedAt: new Date() },
       { title: 'Final Fantasy XV', publisher: 'Square Enix', developer: 'Square Enix Business Division', releaseDate: '2016-11-29', description: 'A group of friends must do a bunch of endless sidequests and fight monsters so that they can save their kingdom.', overallRating: 4.2, imageHref: './images/finalfantasy.png', createdAt: new Date(), updatedAt: new Date() },
       { title: 'Ghost of Tsushima', publisher: 'Sony Interactive Entertainment', developer: 'Sucker Punch Productions', releaseDate: '2020-07-17', description: 'A disgraced Samurai from fuedal era Japan must stave off a Mongolian invasion with his trusty sword and the help of a few scoundrels along the way.', overallRating: 5.0, imageHref: './images/220px-Ghost_of_Tsushima.png', createdAt: new Date(), updatedAt: new Date() },
@@ -34,7 +37,22 @@ module.exports = {
       { title: 'Final Fantasy VII Remake', publisher: 'Square Enix', developer: 'Square Enix', releaseDate: new Date(2020, 4, 10), description: 'Final Fantasy VII', overallRating: 4, createdAt: new Date(), updatedAt: new Date(), },
       { title: 'Pokemon Sword', publisher: 'Nintendo, The Pokemon Company', developer: 'Game Freak', releaseDate: new Date(2019, 11, 15), description: 'Pokemon Sword', overallRating: 2, createdAt: new Date(), updatedAt: new Date(), },
       { title: 'Animal Crossing: New Horizons', publisher: 'Nintendo', developer: 'Nintendo', releaseDate: new Date(2020, 3, 20), description: 'Animal Crossing', overallRating: 5, createdAt: new Date(), updatedAt: new Date(), },
-    ], {});
+    ]
+
+    const newGames = results.map((game) => {
+      return {
+        title: game.name,
+        publisher: 'Sony Interactive Entertainment',
+        developer: 'bleh',
+        releaseDate: game.released,
+        description: game.name,
+        overallRating: game.rating,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    })
+    games.push(...newGames)
+    return queryInterface.bulkInsert('Games', games, {});
   },
 
   down: (queryInterface, Sequelize) => {

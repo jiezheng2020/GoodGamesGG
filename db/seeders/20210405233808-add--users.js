@@ -16,20 +16,20 @@ module.exports = {
       { firstName: 'Demo', lastName: 'User', userName: 'DemoUser', email: 'Demo@User.net', hashedPassword: password, createdAt: new Date(), updatedAt: new Date() },
     ];
 
-    // const randoms = 28;
+    const randoms = 28;
 
-    // for (let i = 7; i < randoms; i++) {
-    //   let newUser = {
-    //     firstName: faker.name.firstName(),
-    //     lastName: faker.name.lastName(),
-    //     userName: faker.internet.userName(),
-    //     email: faker.internet.email(),
-    //     hashedPassword: bcrypt.hashSync('password', 10),
-    //     createdAt: new Date(),
-    //     updatedAt: new Date()
-    //   };
-    //   users.push(newUser);
-    // }
+    for (let i = 7; i < randoms; i++) {
+      let newUser = {
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        userName: faker.internet.userName(),
+        email: faker.internet.email(),
+        hashedPassword: bcrypt.hashSync('password', 10),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      users.push(newUser);
+    }
 
 
     return queryInterface.bulkInsert('Users', users, {});
