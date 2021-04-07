@@ -1,0 +1,21 @@
+.main__games-info{
+    display: grid;
+    grid-template-rows: 200px 10% 40%;
+    margin: 10px;
+    width: 200px;
+    height: 300px;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    /* transition: .2s; */
+}
+
+.main__games-info:hover{
+    transform: scale(1.05,1.05);
+    transition-duration: .5s;
+}
+
+.main__games-img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}

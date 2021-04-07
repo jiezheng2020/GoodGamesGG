@@ -14,8 +14,4 @@ block content
                 li(class='main__organizer-filter--console') Console
         div(class='main__games')
             ul(class='main__games-list')
-                each game in games
-                    div(class='main__games-info')
-                        img(class='main__games-img' src=`${game.imageHref}`)
-                        a(class='main__games-name' href=`/games/${game.id}`)=game.title
-                        p(class='main__games-body') #{game.description}
+                include includes/game-container.pug

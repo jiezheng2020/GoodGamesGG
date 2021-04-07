@@ -1,26 +1,8 @@
+/********* Imports *********/
+@import "./imports/game-container.css";
+@import "./imports/split-page.css";
+
 /********* Main Section *********/
-.main{
-    margin: 0px 100px;
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    grid-template-rows: auto;
-    grid-template-areas:
-    "left right";
-}
-
-
-/********* Organizer Section *********/
-.main__organizer{
-    grid-area: left;
-    display: flex;
-    flex-direction: column;
-    border: 2px solid black;
-    margin: 0;
-    padding: 0;
-    background-color: #f1f1f1;
-    overflow: auto;
-
-}
 
 .main__organizer ul{
     padding: 0px 3px;
@@ -45,51 +27,10 @@
 
 
 /********* Games Section *********/
-.main__games{
-    grid-area: right;
-    border: 2px solid black;
-    background-color: #f1f1f1;
-}
 
 .main__games-list{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     padding: 10px;
-}
-
-.main__games-info{
-    display: grid;
-    grid-template-rows: 200px 10% 40%;
-    margin: 10px;
-    width: 200px;
-    height: 300px;
-    border: 2px solid rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-    /* transition: .2s; */
-
-}
-
-.main__games-info:hover{
-    transform: scale(1.05,1.05);
-    transition-duration: .5s;
-}
-
-
-.main__games-img{
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-}
-
-.main__games-img{
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-}
-
-.main__games-body{
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
 }

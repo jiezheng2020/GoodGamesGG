@@ -1,0 +1,26 @@
+.main{
+    margin: 0px 100px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+    "left right";
+}
+
+.main__organizer{
+    grid-area: left;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+    overflow: auto;
+
+}
+
+.main__games{
+    grid-area: right;
+    border: 2px solid black;
+    background-color: #f1f1f1;
+}
