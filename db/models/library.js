@@ -24,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'libraryId'
     });
 
-
   };
   return Library;
 };
