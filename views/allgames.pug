@@ -5,13 +5,13 @@ append head
 
 block content
     div(class='main')
-        div(class='main__organizer')
-            ul(class='main__organizer-order') Order:
-                li(class='main__organizer-order--alpha') Alphabetical
-                li(class='main__organizer-order--rating') Rating
-            ul(class='main__organizer-filter') Filter:
-                li(class='main__organizer-filter--rating') Rating
-                li(class='main__organizer-filter--console') Console
+        div(class='main__sidebar')
+            ul(class='main__sidebar-order') Order:
+                li(class='main__sidebar-order--alpha') Alphabetical
+                li(class='main__sidebar-order--rating') Rating
+            ul(class='main__sidebar-filter') Filter:
+                li(class='main__sidebar-filter--rating') Rating
+                li(class='main__sidebar-filter--console') Console
         div(class='main__games')
             ul(class='main__games-list')
                 include includes/game-container.pug

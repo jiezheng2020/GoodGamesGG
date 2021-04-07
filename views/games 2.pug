@@ -1,0 +1,5 @@
+extends layout.pug
+block content
+    ul
+        each game in games
+            li: a(href=`/games/${game.id}`)=game.title
