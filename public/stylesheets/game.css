@@ -1,0 +1,18 @@
+/********* Imports *********/
+@import "./imports/split-page.css";
+
+/********* Main Section *********/
+.main__games{
+    padding: 10px;
+}
+
+.main__game_organizer{
+    display: grid;
+    grid-template-rows: 200px 10% 40%;
+    margin: 10px;
+    width: 200px;
+    height: 300px;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    /* transition: .2s; */
+}
