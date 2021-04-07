@@ -4,13 +4,13 @@
 
 /********* Main Section *********/
 
-.main__organizer ul{
+.main__sidebar ul{
     padding: 0px 3px;
     font-size: 20px;
 
 }
 
-.main__organizer li{
+.main__sidebar li{
     padding: 5px 10px;
     font-size: 18px;
     list-style: none;
@@ -18,7 +18,7 @@
     /* border: .5px solid grey; */
 }
 
-.main__organizer li:hover{
+.main__sidebar li:hover{
     text-decoration: underline;
     cursor: pointer;
     color: white;
