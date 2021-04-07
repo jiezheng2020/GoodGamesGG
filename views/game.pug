@@ -1,11 +1,27 @@
 extends layout.pug
+
+append head
+    link(rel='stylesheet' type="text/css" href='/stylesheets/game.css')
+    script(type="application/javascript" src='/js/game.js')
+
 block content
-    h1=game.title
-    h2=game.publisher
-    h2=game.developer
-    ul
-        each user in game.user_ratings
-            li #{user.Rating.overall} #{user.Rating.createdAt}
-    form(method="post" action=`/games/${game.id}`)
-        input(name='overall' placeholder='overall')
-        button(type="submit") Submit
+    div(class='main')
+        div(class='main__sidebar')
+            img(class='main__sidebar-img' src=`.${game.imageHref}`)
+            p Overall Rating Goes Here
+        div(class='main__games')
+            div(class='main__game-info')
+                h3=game.title
+                li=game.publisher
+                li=game.developer
+                li=game.releaseDate
+                p=game.description
+            div(class='main__game-ratings') Reviews
+                div(class='main__game-ratings--add')
+                    div(class='main__game-ratings--stars') Add Stars Here
+                    div(class='main__game-ratings--review') Add Review Here
+                div(class='main__game-ratings-all')
+                    div(class='main__game-ratings-single')
+                        div(class='main__game-ratings--stars') Single Existing Start
+                        div(class='main__game-ratings--review') Single Existing Review
+                    //- each rating in ratings
