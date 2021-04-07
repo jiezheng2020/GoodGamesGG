@@ -1,0 +1,79 @@
+body {
+  background-image: url("../images/19187755.jpg");
+  background-size: cover;
+}
+.main__container {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(0, 0, 0);
+}
+form {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.sub__container {
+  margin: auto;
+  margin-top: 50px;
+  width: 600px;
+  background-color: rgb(255, 255, 255);
+}
+
+.form__container {
+  font-size: 15px;
+  padding: 25px;
+  display: flex;
+  margin: auto;
+  width: 300px;
+  flex-direction: column;
+}
+
+.form__labels {
+  text-align: left;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  text-align: left;
+  width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+input[type="checkbox"] {
+  margin-top: 25px;
+  margin-left: 10px;
+}
+
+.signup {
+  font-size: 18px;
+  font-weight: bold;
+  background-color: rgb(10, 119, 13);
+  color: white;
+  padding: 5px 10px;
+  margin: 30px 0;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.5s;
+}
+.signup:hover {
+  opacity: 1;
+}
+
+.errors {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.alert.alert-danger {
+  background-color: red;
+  opacity: 0.9;
+  width: 300px;
+}
