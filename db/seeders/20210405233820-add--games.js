@@ -1,7 +1,14 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+  up: async (queryInterface, Sequelize) => {
+
+
+    // const data = await fetch('http://api.rawg.io/api/games?key=db5497722d9845ee89d93908ec7b8afa');
+    // console.log(data);
+
+
+
 
     return queryInterface.bulkInsert('Games', [
       { title: 'God of War', publisher: 'Sony Interactive Entertainment', developer: 'Santa Monica Studio', releaseDate: '2018-04-20', description: 'A man ventures out on a quest to become a God.....of war.', overallRating: 5.0, imageHref: './images/GOW-OG-image.png', createdAt: new Date(), updatedAt: new Date() },
