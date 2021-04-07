@@ -1,0 +1,53 @@
+.main{
+    margin: 0px 100px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+    "left right";
+}
+
+.main__organizer{
+    grid-area: left;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+
+}
+
+.main__organizer ul{
+    padding: 10px;
+    font-size: 20px;
+
+}
+
+.main__organizer li{
+    font-size: 18px;
+    list-style: none;
+    color: blue;
+    border: .5px solid grey;
+}
+
+.main__organizer li:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.main__games{
+    grid-area: right;
+    border: 2px solid black;
+}
+
+.main__games-list{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.main__games-info{
+    margin: 10px;
+    width: 200px;
+    height: 300px;
+    border: 2px solid black;
+}
