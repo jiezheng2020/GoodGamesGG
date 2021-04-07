@@ -6,3 +6,6 @@ block content
     ul
         each user in game.user_ratings
             li #{user.Rating.overall} #{user.Rating.createdAt}
+    form(method="post" action=`/games/${game.id}`)
+        input(name='overall' placeholder='overall')
+        button(type="submit") Submit

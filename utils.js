@@ -15,33 +15,32 @@ const loginReq = (req, res, next) => {
   }
 };
 
-
 const playedStatus = (played) => {
-  let status = '';
+  let status = "";
 
-  if (played === 1 ) {
-    status = 'Played'
+  if (played === 1) {
+    status = "Played";
   } else if (played === 2) {
-    status = 'Currently Playing'
+    status = "Currently Playing";
   } else {
-    status = 'Want to play'
+    status = "Want to play";
   }
 
   return status;
-}
+};
 
-const handleValidationErrors = (req,res,next)=>{
-  const validationErrors = validationResult(req)
-  if(!validationErrors.isEmpty()){
-      const errors = validationErrors.array().map((error)=>error.msg)
-      const err = Error('Bad request.')
-      err.status = 400
-      err.title = 'Very bad request.'
-      err.errors = errors
-      return next(err)
+const handleValidationErrors = (req, res, next) => {
+  const validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty()) {
+    const errors = validationErrors.array().map((error) => error.msg);
+    const err = Error("Bad request.");
+    err.status = 400;
+    err.title = "Very bad request.";
+    err.errors = errors;
+    return next(err);
   }
-  next()
-}
+  next();
+};
 
 /*************************** MIDDLEWARE ***************************/
 
@@ -49,5 +48,5 @@ module.exports = {
   csrfProtection,
   asyncHandler,
   loginReq,
-  handleValidationErrors
+  handleValidationErrors,
 };
