@@ -54,8 +54,8 @@ router.get('/',
     //     userId: userId
     //   }
     // })
-      res.json({games})
-      // res.render('mygames', { title: "My Games", games, libraries} )
+      // res.json({games})
+      res.render('mygames', { title: "My Games", games, libraries} )
     // }
 }));
 
@@ -110,6 +110,7 @@ router.get('/libraries/:libraryId(\\d+)',
 // add to overall mygames list
 router.post('/:gameId(\\d+)/add',
   asyncHandler(async (req, res) => {
+    console.log('test')
     const gameId = parseInt(req.params.gameId, 10);
     const userId = 1
     const exists = await db.My_game.findOne({
@@ -130,7 +131,7 @@ router.post('/:gameId(\\d+)/add',
     if (!played) {
         played = 0;
     }
-    
+
     const mygame = await db.My_game.create({played, userId, gameId});
     res.json({ mygame });
     // res.redirect('/:userId(\\d+)');
@@ -139,7 +140,7 @@ router.post('/:gameId(\\d+)/add',
 // add a library
 router.post('/libraries/add',
   asyncHandler(async (req, res) => {
-    console.log("===============================================")
+    console.log("test")
       const userId = 1
       const { name } = req.body
       console.log(name)
@@ -166,7 +167,7 @@ router.post('/libraries/:libraryId(\\d+)/:gameId(\\d+)/add',
         res.json({exists})
         return
     }
-    
+
     const libraryGame = await db.Library_game.create({libraryId, gameId});
       res.json({ libraryGame });
     // res.redirect('/:userId(\\d+)/libraries/:libraryId(\\+)');
@@ -182,7 +183,7 @@ router.put('/:gameId(\\d+)/played',
                   gameId: gameId
                 }
             })
-      
+
       if (!mygame) {
         next(gameNotFound(mygame))
       } else {
@@ -215,7 +216,7 @@ router.delete('/:userId(\\d+)/:gameId(\\d+)/delete',
 }))
 
 // remove game from library
-router.delete('/libraries/:libraryId(\\d+)/:gameId(\\d+)/delete', 
+router.delete('/libraries/:libraryId(\\d+)/:gameId(\\d+)/delete',
   asyncHandler(async (req, res, next) => {
     const libraryId = parseInt(req.params.libraryId, 10);
     const gameId = parseInt(req.params.gameId, 10)
@@ -268,10 +269,9 @@ router.put('/libraries/:libraryId(\\d+)/edit',
       res.json({ newLibrary })
       //   res.redirect('/:userId(\\d+)/libraries');
     }
-  
+
   }));
 
 
 /*************************** EXPORTS ***************************/
 module.exports = router;
-

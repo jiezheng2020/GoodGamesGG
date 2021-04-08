@@ -77,7 +77,7 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
     const gameId = req.params.id
     const userId = 1;
 
-    let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings", }]})
+    let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings"},{ model:Library, as: "user_ratings", }]})
 
     if(game) {
         // Makes rating array to populate
@@ -119,7 +119,7 @@ router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
 
     if(!validationErrors.isEmpty()){
         const errors = validationErrors.array().map((error)=>error.msg)
-        res.status(500).send(new Error('Error!'))
+        res.status(500).send({errors})
         return
     }
 
@@ -154,7 +154,7 @@ router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
         await game.save();
 
         // Sends response with review, and reviews
-        res.json({rating, username:user.userName});
+        res.json({rating, username:user.userName, overallRating:game.overallRating});
     }
 
 }))
@@ -184,10 +184,9 @@ router.put('/:id(\\d+)', asyncHandler(async (req, res, next) => {
         })
 
         game.overallRating = ((game.overallRating*(users.length-1)+overall)/users.length).toFixed(1)
-
         await game.save();
 
-        res.json({ rating, username:user.userName })
+        res.json({rating, username:user.userName, overallRating:game.overallRating});
 
     } else {
         next(gameNotFoundError(gameId))
@@ -206,8 +205,15 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     let rating = await Rating.findOne({ where: { gameId, userId } })
 
     if (rating) {
+
+        const game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings", }]})
+        const { user_ratings:users } = game
+
+        game.overallRating = ((game.overallRating*users.length-rating.overall)/(users.length-1)).toFixed(1)
+        await game.save();
+
         await rating.destroy()
-        res.status(204).end()
+        res.json({overallRating:game.overallRating})
 
     } else {
         next(gameNotFoundError(gameId))

@@ -6,9 +6,8 @@ mixin validationErrorSummary(errors)
         each error in errors
           li= error
 
-mixin createStars(string, numberOfStars)
-    div(class=`main__${string}-ratings-stars`) Rating:
-        each _ in Array(Math.round(numberOfStars))
-            span(class=`main__${string}-ratings-filled-stars`) ★
-        each _ in Array(5-Math.round(numberOfStars))
-            span(class=`main__${string}-ratings-unfilled-stars`) ☆
+mixin createImg(game, string)
+  if game.imageHref
+      img(class=string src=`${game.imageHref}`)
+  else
+      img(class=string src=`/images/not-found.png`)

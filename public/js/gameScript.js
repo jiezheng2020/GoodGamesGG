@@ -1,6 +1,6 @@
-
 /***************************** FUNCTIONS *****************************/
 function hideAddCreateEdit(rating, username){
+
     const addRatingDiv = document.querySelector('.main__game-ratings-add')
     addRatingDiv.classList.add('main__game--hidden');
 
@@ -18,6 +18,25 @@ function hideAddCreateEdit(rating, username){
             </div>
         </div>
         <div class="main__game-ratings-review">${rating.body}</div>`
+}
+
+function loadStarRating(numberOfStars){
+    const stars = document.querySelector('.main__game-ratings-add-stars')
+    let string = '<span id="main__game-ratings-error"></span>';
+
+    for(let i=5;i>0;i--){
+        if(i<=numberOfStars){
+            string+=`<span class='main__game-ratings-add-star${i}' style='color:black'>★</span>`
+        } else {
+            string+=`<span class='main__game-ratings-add-star${i}'>★</span>`
+        }
+    }
+    stars.innerHTML = string
+}
+
+function updateOverallRating(overallRating){
+    const starRating = document.querySelector('.main__ratings-stars-full')
+    starRating.style = `width:${((overallRating/5).toFixed(1))*100}%`
 }
 
 const stars = document.querySelector('.main__game-ratings-add-stars')
@@ -43,17 +62,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
 
         if(num.match(/\d+/)){
             num = parseInt(num)
-            let string = '<span id="main__game-ratings-error"></span>';
-
-            for(let i=5;i>0;i--){
-                if(i<=num){
-                    string+=`<span class='main__game-ratings-add-star${i}' style='color:black'>★</span>`
-                } else {
-                    string+=`<span class='main__game-ratings-add-star${i}'>★</span>`
-                }
-            }
-
-            stars.innerHTML = string
+            loadStarRating(num)
         }
     })
 
@@ -71,7 +80,6 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
                 body: JSON.stringify({overall, body}),
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("TWITTER_LITE_ACCESS_TOKEN")}`
                 }
             })
 
@@ -80,15 +88,25 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
             }
 
 
-            const {rating,username}= await res.json()
+            const {rating,username, overallRating}= await res.json()
 
             // console.log(rating, username)
 
             hideAddCreateEdit(rating, username)
 
+            updateOverallRating(overallRating)
+
+
         } catch(err){
-            let error = err.json()
-            console.log(error)
+            const { errors } = await err.json()
+            console.log(errors)
+            const errorSpan = document.querySelector('.main__game-ratings-error')
+            const errorMessage = errors.map((error,i)=>{
+                return `${i+1}.${error}`
+            })
+
+            errorSpan.innerHTML=errorMessage.join("")
+
         }
 
 
@@ -98,16 +116,109 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
     /***************************** Edit a Rating *****************************/
     const editButton = document.querySelector('.main__game-ratings-edit-button')
     editButton.addEventListener('click', async (event)=>{
-        document.querySelector('.main__game-ratings-add-h3').innerHTML = 'Edit Rating/Review'
-        document.querySelector('.main__game-ratings-add').classList.remove('main__game--hidden')
-        document.querySelector('.main__game-ratings-add-button').name = 'PUT'
-        document.querySelector('.main__game-ratings-add-review').value=rating.body
+        const submitHeader = document.querySelector('.main__game-ratings-add-h3')
+        submitHeader.innerHTML = 'Edit Rating/Review'
+
+        const submitRatingDiv = document.querySelector('.main__game-ratings-add')
+        submitRatingDiv.classList.remove('main__game--hidden')
+
+        const submitButton = document.querySelector('.main__game-ratings-add-button')
+        submitButton.name = 'PUT'
+
+        const submitReview = document.querySelector('.main__game-ratings-add-review')
+        submitReview.value=rating.body
 
     })
 
     /***************************** Delete a Rating *****************************/
     const deleteButton = document.querySelector('.main__game-ratings-delete-button')
     deleteButton.addEventListener('click', async (event)=>{
+        try {
+            const res = await fetch(`http://localhost:8080/games/${gameId}`,{
+                method: 'DELETE'
+            })
+
+            if (!res.ok){
+                throw res
+            }
+
+            const {overallRating} = await res.json()
+
+            const review = document.querySelector('.main__game-ratings-add-review')
+            review.value=''
+
+            loadStarRating(0)
+
+            const addRatingDiv = document.querySelector('.main__game-ratings-add')
+            addRatingDiv.classList.remove('main__game--hidden');
+
+            const editRatingDiv = document.querySelector('.main__game-ratings-edit')
+            editRatingDiv.classList.add('main__game--hidden')
+
+            const existingRating = document.querySelector('.main__game-ratings-existing')
+            existingRating.innerHTML =''
+
+            updateOverallRating(overallRating)
+
+        } catch(err){
+            console.log(err)
+        }
+    })
+
+
+
+
+    /***************************** Edit Played Status *****************************/
+    const playedStatus = document.querySelector('.main__sidebar-status')
+    playedStatus.addEventListener('change', async(event)=>{
+        const pStats= {
+            'Played': 2,
+            'Currently Playing': 1,
+            'Want to Play': 0,
+        }
+        const played = pStats[event.target.value]
+
+        if (played){
+            try {
+                let res = await fetch(`http://localhost:8080/mygames/${gameId}/add`,{
+                    method: 'POST',
+                    body: JSON.stringify({played}),
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+
+                const {exists} = await res.json()
+
+                console.log(exists)
+                if (exists){
+                    res = await fetch(`http://localhost:8080/mygames/${gameId}/played`,{
+                        method: 'PUT',
+                        body: JSON.stringify({played}),
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    })
+
+                    const newStatus = await res.json()
+                    console.log(newStatus)
+
+
+                } else {
+                    const newStatus = await res.json()
+                    console.log(newStatus)
+                }
+
+
+            } catch(err){
+                const { errors } = await err.json()
+                console.log(errors)
+            }
+
+        } else {
+            const libraries = event.target.value
+        }
+
 
     })
 
