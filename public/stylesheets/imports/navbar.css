@@ -11,18 +11,16 @@ header
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-
-a
+.navbar  a
 {
-  color: white;
+
   text-decoration: none;
+  color: white;
 }
-
-
 .navbar
 {
-  color: white;
   display: grid;
+  color: white;
   grid-template-columns: repeat(12, 1fr);
 }
 
@@ -34,7 +32,7 @@ a
   grid-column: 2/3;
 }
 
-.games
+.mygames
 {
   text-align: center;
   font-size: 1.1em;
@@ -42,6 +40,7 @@ a
   grid-column: 3/4;
 }
 
+.mygames:hover,
 .games:hover
 {
   font-weight: bold;

@@ -1,11 +1,13 @@
 header
-	if session
+	if user
 		nav#authorizedUser
 			div.navbar
 				div.logo
 					a(href='/') GoodGames
 				div.games
 					a(href='/games') Games
+				div.mygames
+					a(href='/mygames') My Games
 				div.links
 					span.signup_link
 						a(href='signup') Login
