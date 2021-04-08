@@ -1,10 +1,13 @@
 extends layout
 
 block content
-    div
-        each game in games
-            div
-                div
-                    img(src=game.imageHref)
-                div
-                    label #{game.title}
+    div.background
+        h1.welcome Welcome to Good Games
+        main
+            div#top10
+                each game in games
+                    div.imagecontainer
+                        div.images
+                            a(href=`/games/${game.id}`)
+                                img(src=game.imageHref class='img')
+                                a(href=`/games/${game.id}`)=game.title

@@ -32,7 +32,7 @@ module.exports = {
         type: Sequelize.DECIMAL(2, 1)
       },
       imageHref: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(100),
         defaultValue: './images/not-found.png/'
       },
       createdAt: {

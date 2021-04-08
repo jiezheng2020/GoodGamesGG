@@ -90,7 +90,9 @@ router.get(
   "/",
   loginReq,
   asyncHandler(async (req, res) => {
-    const games = await Game.findAll();
+    const games = await Game.findAll({
+      limit: 12
+    });
     res.render("unauthorized", { title: "Home Page", games });
   })
 );
