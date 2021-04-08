@@ -34,6 +34,14 @@ a
   grid-column: 2/3;
 }
 
+.games
+{
+  text-align: center;
+  font-size: 1.1em;
+  padding-top: 5px;
+  grid-column: 3/4;
+}
+
 .games:hover
 {
   font-weight: bold;
