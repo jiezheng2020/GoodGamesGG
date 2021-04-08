@@ -1,0 +1,29 @@
+.main__game-ratings-add-stars{
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.main__game-ratings-add-stars:hover{
+    cursor: pointer;
+}
+
+.main__game-ratings-add-stars span{
+    color: grey;
+    font-size: 22px;
+    transition: .3s;
+}
+
+
+.main__game-ratings-add-stars span:hover{
+    color: black;
+    transition: .3;
+}
+
+.main__game-ratings-add-star1:hover ~ span,
+.main__game-ratings-add-star2:hover ~ span,
+.main__game-ratings-add-star3:hover ~ span,
+.main__game-ratings-add-star4:hover ~ span,
+.main__game-ratings-add-star5:hover ~ span{
+    color: black;
+}

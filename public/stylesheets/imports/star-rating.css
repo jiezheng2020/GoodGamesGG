@@ -1,0 +1,30 @@
+.main__ratings-stars{
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+    color: grey;
+    overflow: hidden;
+}
+
+.main__ratings-stars-full{
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    color: black;
+}
+
+.main__ratings-stars-empty:before,
+.main__ratings-stars-full:before {
+    content:"\2605\2605\2605\2605\2605";
+    font-size: 20px;
+}
+
+.main__ratings-stars-empty:before {
+    -webkit-text-stroke: 1px #848484;
+}
+
+.main__ratings-stars-full:before {
+    -webkit-text-stroke: 1px black;
+}

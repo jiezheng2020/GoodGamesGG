@@ -13,49 +13,31 @@ const {
     handleValidationErrors,
 } = require("../utils.js");
 
-const validateReviewOrRating = [
-    check('body')
-        .custom((body, { req }) => {
-            const { overall } = req.body;
-            if (!body.length && !overall.length) {
-                throw new Error('Please provide either a review or rating');
-            }
-            return true;
-        }),
-
+const validateRating = [
     check('overall')
-        .custom((overall, { req }) => {
-            const { body } = req.body;
-            if (!body.length && !overall.length) {
-                throw new Error('Please provide either a review or rating');
-            }
-            return true;
-        }),
+        .exists({checkFalsy: true})
+        .withMessage('Must provide a rating!')
 ]
 
-const updateOverallRatings = async()=>{
 
-    const games = await Game.findAll({include:[{model:User, as:'user_ratings'}]});
+/*************************** LOADUP FUNCTION ***************************/
+// const updateOverallRatings = async()=>{
+//     const games = await Game.findAll({include:[{model:User, as:'user_ratings'}]});
+//     games.forEach(async(game)=>{
+//         let total = 0;
 
-    games.forEach(async(game)=>{
-        let total = 0;
+//         game.user_ratings.forEach((user)=>{
+//           total+=parseInt(user.Rating.overall)
+//         })
 
-        game.user_ratings.forEach(async(user)=>{
-          // console.log(user.userName)
-          total+=parseInt(user.Rating.overall)
-        })
+//         if(total){game.overallRating=(total/game.user_ratings.length).toFixed(1);}
+//         else {game.overallRating=0;};
 
-        if(total){
-            console.log(total,'/',game.user_ratings.length,'=',total/game.user_ratings.length)
-            game.overallRating=(total/game.user_ratings.length).toFixed(1)
-        } else {
-            game.overallRating=0;
-        }
-        await game.save()
-    })
-}
+//         await game.save()
+//     })
+// }
 
-updateOverallRatings()
+// updateOverallRatings()
 
 // comment
 /*************************** ROUTES ***************************/
@@ -78,11 +60,11 @@ const gameNotFoundError = (id) => {
     return error;
 };
 
-const ratingExists = () => {
-    const error = new Error(`Review for game with ${id} already exists`);
+const ratingExists = (id) =>{
+    const error = new Error(`Rating for game with ${id} already exists`);
     error.title = "Ratings already exists";
     error.status = 400;
-    return error;
+    throw error;
 }
 
 
@@ -90,23 +72,19 @@ const ratingExists = () => {
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 // Specific Games Page
-router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
-    // Defines variables
+router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
+
     const gameId = req.params.id
+    const userId = 1;
 
-    // Finds game with the above id
-    const game = await Game.findByPk(gameId, { include: [{ model: User, as: 'user_ratings' }] });
-
-    // const reviews = await Review.findAll({where:{gameId}});
-    // const ratings = await Rating.findall({where:{gameId}});
-
+    let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings" }]})
 
     if(game) {
         // Makes rating array to populate
         const { user_ratings:users } = game
         const releaseDate = `${months[game.releaseDate.getMonth()]} ${game.releaseDate.getDate()}, ${game.releaseDate.getFullYear()}`
         // res.json(game)
-        // Renders game page with specific game info
+        // Renders game page with specific game info6
         res.render('game', {title:game.title, game, releaseDate, users, csrfToken:req.csrfToken()});
     } else {
         // Throws error if tweet not found
@@ -114,19 +92,44 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
     }
 }))
 
+router.get('/:id(\\d+)/api', csrfProtection, asyncHandler(async(req,res,next)=>{
 
-// Create review or rating on game
-router.post('/:id(\\d+)', asyncHandler(async (req, res, next) => {
-    // Defines variables
     const gameId = req.params.id
     const userId = 1;
-    const { overall, body } = req.body
+
+    let rating = await Rating.findOne({where:{gameId, userId}})
+
+    if(rating){
+        const {overall, body} = rating
+        res.json({overall, body})
+    } else {
+        res.status(400).send({message:'Rating not found'})
+    }
+
+}))
+
+
+// Create review or rating on game
+router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
+    // Defines variables
+
+    const validationErrors = validationResult(req)
+
+    if(!validationErrors.isEmpty()){
+        const errors = validationErrors.array().map((error)=>error.msg)
+        res.status(500).send(new Error('Error!'))
+        return
+    }
+
+    const gameId = req.params.id
+    const userId = 1;
 
     let rating = await Rating.findOne({ where: { gameId, userId } })
 
     if (rating) {
         next(ratingExists(gameId))
     } else {
+        const { overall, body } = req.body
         // Creates review instance with above variables
         rating = await Rating.create({
             overall,
@@ -135,12 +138,11 @@ router.post('/:id(\\d+)', asyncHandler(async (req, res, next) => {
             gameId
         });
 
-        // Grabs all reviews
-        const game = await Game.findByPk(gameId, { include: [{ model: User, as: 'user_ratings' }] });
-        const { user_ratings } = game;
+        let user = await User.findByPk(userId)
+        console.log(user.userName)
 
         // Sends response with review, and reviews
-        res.json({ game });
+        res.json({rating, username:user.userName});
     }
 
 }))
