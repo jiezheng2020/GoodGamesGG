@@ -15,10 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     releaseDate: DataTypes.DATE,
     description: DataTypes.TEXT,
     overallRating: {
-      type: DataTypes.DECIMAL,
-      allowNull: false,
+      type: DataTypes.DECIMAL(2,1),
       validate: {
-        min: 1.0,
+        min: 0.0,
         max: 5.0,
       }
     },
