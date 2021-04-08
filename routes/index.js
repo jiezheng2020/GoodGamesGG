@@ -97,7 +97,7 @@ router.get(
   loginReq,
   asyncHandler(async (req, res) => {
     const games = await Game.findAll({
-      limit: 12
+      limit: 12,
     });
     res.render("unauthorized", { title: "Home Page", games });
   })
@@ -114,17 +114,19 @@ router.get(
 
       const userConsole = userPreference.consoleId;
 
-      const games = await Game.findAll({
-        include: [{ model: Console, as: "game_consoles" }],
-        limit: 1,
+      const gameConsoles = await Game_console.findAll({
+        where: { consoleId: userConsole },
       });
-      res.json(games[0].game_consoles[0].Game_console);
 
-      // res.render("authorized", {
-      //   title: "Home Page",
-      //   games,
-      //   user: req.session.user,
-      // });
+      const gamesId = gameConsoles.map((game) => game.gameId);
+
+      const games = await Game.findAll({ where: { id: gamesId } });
+
+      res.render("authorized", {
+        title: "Home Page",
+        games,
+        user: req.session.user,
+      });
     } else {
       res.redirect("/");
     }
