@@ -106,8 +106,16 @@ router.get(
   asyncHandler(async (req, res) => {
     if (req.session.user) {
       const userId = req.session.user.id;
-      const games = await Game_console.findAll({ include: Game });
-      res.json(games);
+      const userPreference = await User_console.findOne({
+        where: userId,
+      });
+      res.json(userPreference);
+      // const games = await Game.findAll({
+      //   include: [{ model: Console, as: "game_consoles" }],
+      //   limit: 1,
+      // });
+      // res.json(games);
+
       // res.render("authorized", {
       //   title: "Home Page",
       //   games,
