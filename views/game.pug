@@ -1,16 +1,16 @@
 extends layout.pug
 
-include includes/utils.pug
+include includes/stars.pug
 
 append head
     link(rel='stylesheet' type="text/css" href='/stylesheets/game.css')
-    script(type="application/javascript" src='/js/game.js')
+    script(type="application/javascript" src='/js/gameScript.js')
 
 block content
     div(class='main')
         div(class='main__sidebar')
             img(class='main__sidebar-img' src=`${game.imageHref}`)
-            +createStars('sidebar', parseFloat(game.overallRating))
+            +loadStars(game.overallRating, 'Overall Rating: ')
             select(class='main__sidebar-status')
                 option(class='main__sidebar-status-option') -- Played Status --
                 option(class='main__sidebar-status-option') Played
@@ -28,17 +28,19 @@ block content
                 label(for="description") Description:
                 li(class='main__game-info-description' name='description')=game.description
             div(class='main__game-ratings')
-                h3 Add Review
-                div(class='main__game-ratings--add')
-                    +createStars('game', 0)
-                    form(class='main__game-ratings--review')
-                        input(class='main__game-ratings--review' type="textarea" placeholder='Please enter your review here')
-                h3 Reviews
+                div(class='main__game-ratings-add')
+                    h3 Add Rating/Review
+                    +createStars()
+                    textarea(class='main__game-ratings-add-review' placeholder='Please enter your review here')
+                    button(class='main__game-ratings-add-button') Submit
+                div(class='main__game-ratings-edit main__game--hidden')
+                    h3 Your Rating/Review
                 div(class='main__game-ratings-all')
+                    h3 Rating/Reviews
                     each user in users
                         div(class='main__game-ratings-single')
                             p=user.userName
-                            +createStars('game', user.Rating.overall)
-                            div(class='main__game-ratings--review') #{user.Rating.body}
+                            +loadStars(user.Rating.overall)
+                            div(class='main__game-ratings-review') #{user.Rating.body}
 
                     //- each rating in ratings
