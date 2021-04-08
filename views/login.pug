@@ -1,4 +1,27 @@
 extends layout.pug
+include includes/utils.pug
+
+append head
+    link(rel='stylesheet' href='./stylesheets/login.css')
+    link(rel="preconnect" href="https://fonts.gstatic.com")
+    link(href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet")
+
 
 block content
-    p This is Log in
+    div(class="main__container")
+        form(action="/login", method="post")
+            div(class="sub__container")
+                h1 Log In
+                div(class="form__container")
+                    div
+                        div(class='form__labels')
+                            label Username
+                        input(type="text", placeholder="username", name="userName", required)
+                    div
+                        div(class='form__labels')
+                            label Password
+                        input(type="password", placeholder="password", name="password", required)
+                div(class="buttons_container")
+                button(type="submit" class='login') Login
+            div(class="errors")
+                +validationErrorSummary(errors)

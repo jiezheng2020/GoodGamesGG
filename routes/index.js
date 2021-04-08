@@ -1,7 +1,7 @@
 /*************************** REQUIRES ***************************/
 const express = require("express");
 const { csrfProtection, asyncHandler } = require("../utils");
-const { User, Game, Console } = require("../db/models");
+const { User, Game, Console, User_console } = require("../db/models");
 const { validationResult } = require("express-validator");
 const { check } = require("express-validator");
 const bcrypt = require("bcrypt");
@@ -21,7 +21,16 @@ const userValidator = [
     .exists({ checkFalsy: true })
     .withMessage("Please Provide a value for email")
     .isEmail()
-    .withMessage("Email address is not valid email"),
+    .withMessage("Email address is not valid email")
+    .custom((value) => {
+      return User.findOne({ where: { email: value } }).then((user) => {
+        if (user) {
+          return Promise.reject(
+            "The provided email is already in use by another account"
+          );
+        }
+      });
+    }),
   check("password")
     .exists({ checkFalsy: true })
     .withMessage("Please provide a value for password")
@@ -30,7 +39,17 @@ const userValidator = [
   check("userName")
     .exists({ checkFalsy: true })
     .withMessage("Please provide a value for username")
-    .isLength({ max: 50 }),
+    .isLength({ max: 50 })
+    .withMessage("Please make provide a username less than 50 characters long")
+    .custom((value) => {
+      return User.findOne({ where: { userName: value } }).then((user) => {
+        if (user) {
+          return Promise.reject(
+            "The provided username is already in use by another account"
+          );
+        }
+      });
+    }),
 ];
 
 const loginReq = (req, res, next) => {
@@ -38,6 +57,32 @@ const loginReq = (req, res, next) => {
     res.redirect("/authorized");
   } else {
     next();
+  }
+};
+
+const consolePreference = async (req, user) => {
+  if (req.body.PC) {
+    await User_console.create({ userId: user.id, consoleId: 3 });
+  }
+  if (req.body["Playstation 4"]) {
+    await User_console.create({ userId: user.id, consoleId: 1 });
+  }
+  if (req.body["Xbox One"]) {
+    await User_console.create({ userId: user.id, consoleId: 2 });
+  }
+  if (req.body["Nintendo Switch"]) {
+    await User_console.create({ userId: user.id, consoleId: 4 });
+  }
+  if (
+    !req.body.PC &&
+    !req.body["Playstation 4"] &&
+    !req.body["Xbox One"] &&
+    !req.body["Nintendo Switch"]
+  ) {
+    await User_console.create({ userId: user.id, consoleId: 1 });
+    await User_console.create({ userId: user.id, consoleId: 2 });
+    await User_console.create({ userId: user.id, consoleId: 3 });
+    await User_console.create({ userId: user.id, consoleId: 4 });
   }
 };
 /*************************** ROUTES ***************************/
@@ -90,7 +135,7 @@ router.post(
   "/signup",
   userValidator,
   asyncHandler(async (req, res) => {
-    const { userName, email, password, firstName, lastName } = req.body;
+    const { userName, email, password, firstName, lastName, PC } = req.body;
     let validatorErrors = validationResult(req).errors;
     const consoles = await Console.findAll();
     if (validatorErrors.length > 0) {
@@ -109,6 +154,8 @@ router.post(
         userName,
       });
 
+      consolePreference(req, user);
+
       req.session.user = {
         id: user.id,
         firstName: user.firstName,
@@ -124,6 +171,7 @@ router.get(
   "/login",
   loginReq,
   asyncHandler(async (req, res) => {
+    console.log(req.session);
     res.render("login", { title: "Log in" });
   })
 );
@@ -132,10 +180,13 @@ router.post(
   "/login",
   loginReq,
   asyncHandler(async (req, res) => {
+    const errors = [];
     const { userName, password } = req.body;
+    let isPassword;
     const user = await User.findOne({ where: { userName } });
-    const isPassword = bcrypt.compare(password, user.hashedPassword);
-
+    if (user) {
+      isPassword = await bcrypt.compare(password, user.hashedPassword);
+    } else if (!user) errors.push("Username is incorrect");
     if (isPassword) {
       req.session.user = {
         id: user.id,
@@ -143,9 +194,8 @@ router.post(
         lastName: user.lastName,
       };
       res.redirect("/authorized");
-    } else {
-      res.redirect("login", { title: "Log In" });
-    }
+    } else if (!isPassword) errors.push("Password is incorrect");
+    res.render("login", { errors, title: "Log In" });
   })
 );
 
