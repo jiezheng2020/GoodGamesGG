@@ -15,10 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     releaseDate: DataTypes.DATE,
     description: DataTypes.TEXT,
     overallRating: {
-      type: DataTypes.DECIMAL,
-      allowNull: false,
+      type: DataTypes.DECIMAL(2,1),
       validate: {
-        min: 1.0,
+        min: 0.0,
         max: 5.0,
       }
     },
@@ -34,12 +33,14 @@ module.exports = (sequelize, DataTypes) => {
 
     Game.belongsToMany(models.User, {
       through: 'My_game',
+      as: 'user_mygames',
       otherKey: 'userId',
       foreignKey: 'gameId'
     });
 
     Game.belongsToMany(models.Library, {
       through: 'Library_game',
+      as: 'library_games',
       otherKey: 'libraryId',
       foreignKey: 'gameId'
     });

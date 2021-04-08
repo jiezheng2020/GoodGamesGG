@@ -1,0 +1,18 @@
+extends layout.pug
+
+append head
+    link(rel='stylesheet' type="text/css" href='/stylesheets/allgames.css')
+
+block content
+    div(class='main')
+        div(class='main__sidebar')
+            ul(class='main__sidebar-libraries') Libraries:
+                li(class='main__sidebar-library--all') All
+                li(class='main__sidebar-library--played') Played
+                li(class='main__sidebar-library--playing') Currently Playing
+                li(class='main__sidebar-library--not-played') Want to Play
+                    
+            include includes/default-sidebar.pug
+        div(class='main__games')
+            ul(class='main__games-list')
+                include includes/game-container.pug

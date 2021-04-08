@@ -5,3 +5,10 @@ mixin validationErrorSummary(errors)
       ul
         each error in errors
           li= error
+
+mixin createStars(string, numberOfStars)
+    div(class=`main__${string}-ratings-stars`) Rating:
+        each _ in Array(Math.round(numberOfStars))
+            span(class=`main__${string}-ratings-filled-stars`) ★
+        each _ in Array(5-Math.round(numberOfStars))
+            span(class=`main__${string}-ratings-unfilled-stars`) ☆

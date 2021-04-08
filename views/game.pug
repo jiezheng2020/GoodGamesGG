@@ -1,5 +1,7 @@
 extends layout.pug
 
+include includes/utils.pug
+
 append head
     link(rel='stylesheet' type="text/css" href='/stylesheets/game.css')
     script(type="application/javascript" src='/js/game.js')
@@ -7,21 +9,36 @@ append head
 block content
     div(class='main')
         div(class='main__sidebar')
-            img(class='main__sidebar-img' src=`.${game.imageHref}`)
-            p Overall Rating Goes Here
+            img(class='main__sidebar-img' src=`${game.imageHref}`)
+            +createStars('sidebar', parseFloat(game.overallRating))
+            select(class='main__sidebar-status')
+                option(class='main__sidebar-status-option') -- Played Status --
+                option(class='main__sidebar-status-option') Played
+                option(class='main__sidebar-status-option') Currently Playing
+                option(class='main__sidebar-status-option') Want to Play
         div(class='main__games')
             div(class='main__game-info')
-                h3=game.title
-                li=game.publisher
-                li=game.developer
-                li=game.releaseDate
-                p=game.description
-            div(class='main__game-ratings') Reviews
+                h3(class='main__game-info-title')=game.title
+                label(for="publisher") Publisher(s):
+                li(class='main__game-info-publisher' name='publisher')=game.publisher
+                label(for="developer") Developer(s):
+                li(class='main__game-info-developer' name='developer')=game.developer
+                label(for="releaseDate") Release Date:
+                li(class='main__game-info-releaseDate' name='releaseDate')=releaseDate
+                label(for="description") Description:
+                li(class='main__game-info-description' name='description')=game.description
+            div(class='main__game-ratings')
+                h3 Add Review
                 div(class='main__game-ratings--add')
-                    div(class='main__game-ratings--stars') Add Stars Here
-                    div(class='main__game-ratings--review') Add Review Here
+                    +createStars('game', 0)
+                    form(class='main__game-ratings--review')
+                        input(class='main__game-ratings--review' type="textarea" placeholder='Please enter your review here')
+                h3 Reviews
                 div(class='main__game-ratings-all')
-                    div(class='main__game-ratings-single')
-                        div(class='main__game-ratings--stars') Single Existing Start
-                        div(class='main__game-ratings--review') Single Existing Review
+                    each user in users
+                        div(class='main__game-ratings-single')
+                            p=user.userName
+                            +createStars('game', user.Rating.overall)
+                            div(class='main__game-ratings--review') #{user.Rating.body}
+
                     //- each rating in ratings
