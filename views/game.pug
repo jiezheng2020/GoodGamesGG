@@ -16,6 +16,8 @@ block content
                 option(class='main__sidebar-status-option') Played
                 option(class='main__sidebar-status-option') Currently Playing
                 option(class='main__sidebar-status-option') Want to Play
+                each library in libraries
+                    option(class='main__sidebar-status-option') #{library.name}
         div(class='main__games')
             div(class='main__game-info')
                 h3(class='main__game-info-title')=game.title
