@@ -109,12 +109,14 @@ router.get(
       const userPreference = await User_console.findOne({
         where: userId,
       });
-      res.json(userPreference);
-      // const games = await Game.findAll({
-      //   include: [{ model: Console, as: "game_consoles" }],
-      //   limit: 1,
-      // });
-      // res.json(games);
+
+      const userConsole = userPreference.consoleId;
+
+      const games = await Game.findAll({
+        include: [{ model: Console, as: "game_consoles" }],
+        limit: 1,
+      });
+      res.json(games[0].game_consoles[0].Game_console);
 
       // res.render("authorized", {
       //   title: "Home Page",
