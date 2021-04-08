@@ -1,11 +1,17 @@
-body {
+.darkness {
   background-image: url("../images/background.jpg");
   background-size: cover;
 }
+
+.home {
+  background: none;
+}
+
 .main__container {
   font-family: "Roboto", sans-serif;
   color: rgb(0, 0, 0);
 }
+
 form {
   display: flex;
   text-align: center;
