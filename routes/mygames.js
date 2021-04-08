@@ -49,13 +49,13 @@ router.get('/',
       })
 
       const { user_mygames: games } = user;
-    const libraries = await db.Library.findAll({
-      where: {
-        userId: userId
-      }
-    })
-      // res.json({games})
-      res.render('mygames', { title: "My Games", games, libraries} )
+    // const libraries = await db.Library.findAll({
+    //   where: {
+    //     userId: userId
+    //   }
+    // })
+      res.json({games})
+      // res.render('mygames', { title: "My Games", games, libraries} )
     // }
 }));
 
@@ -111,7 +111,7 @@ router.get('/libraries/:libraryId(\\d+)',
 router.post('/:gameId(\\d+)/add',
   asyncHandler(async (req, res) => {
     const gameId = parseInt(req.params.gameId, 10);
-    const userId = parseInt(req.params.userId, 10);
+    const userId = 1
     const exists = await db.My_game.findOne({
         where: {
             gameId: gameId,
@@ -139,12 +139,14 @@ router.post('/:gameId(\\d+)/add',
 // add a library
 router.post('/libraries/add',
   asyncHandler(async (req, res) => {
+    console.log("===============================================")
       const userId = 1
       const { name } = req.body
+      console.log(name)
 
       const library = await db.Library.create({name, userId});
-      res.json({ library })
-    //   res.redirect('/:userId(\\d+)/libraries');
+      // res.json({ library })
+      res.redirect('/mygames');
   }));
 
   // add a game to a library
@@ -272,3 +274,4 @@ router.put('/libraries/:libraryId(\\d+)/edit',
 
 /*************************** EXPORTS ***************************/
 module.exports = router;
+

@@ -1,6 +1,6 @@
 .main__games-info{
     display: grid;
-    grid-template-rows: 200px 10% 40%;
+    grid-template-rows: 200px 10% 10% 20%;
     margin: 10px;
     width: 200px;
     height: 300px;
