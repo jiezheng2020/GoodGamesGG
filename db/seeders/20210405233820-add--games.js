@@ -7,7 +7,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
 
 
-    const data = await fetch('http://api.rawg.io/api/games?key=db5497722d9845ee89d93908ec7b8afa');
+    const data = await fetch('http://api.rawg.io/api/games?key=26ac0f3d2391457087937165a3fbeceb');
     const { results } = await data.json()
     // console.log(gamesApi);
 
