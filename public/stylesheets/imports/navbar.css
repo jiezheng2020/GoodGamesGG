@@ -1,28 +1,29 @@
 header
 {
   border:rgb(10, 8, 8) 1px solid;
-  background-color: black;
   margin-bottom: 5px;
   padding: 10px;
   height: auto;
   width: auto;
   box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.2);
 }
+
 
 a
 {
-  text-decoration: none;
   color: white;
+  text-decoration: none;
 }
 
 
 .navbar
 {
-  position: sticky;
-  top: 3px;
+  color: white;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: auto;
+  grid-template-columns: repeat(12, 1fr);
 }
 
 .games
@@ -36,7 +37,7 @@ a
 .games:hover
 {
   font-weight: bold;
-  background-color: thistle;
+  /* background-color: thistle; */
 }
 
 .links

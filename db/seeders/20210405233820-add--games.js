@@ -47,6 +47,7 @@ module.exports = {
         releaseDate: game.released,
         description: game.name,
         overallRating: game.rating,
+        imageHref: game.background_image,
         createdAt: new Date(),
         updatedAt: new Date()
       }
