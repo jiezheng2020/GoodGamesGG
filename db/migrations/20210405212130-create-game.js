@@ -29,7 +29,6 @@ module.exports = {
         type: Sequelize.TEXT
       },
       overallRating: {
-        allowNull: false,
         type: Sequelize.DECIMAL(2, 1)
       },
       imageHref: {

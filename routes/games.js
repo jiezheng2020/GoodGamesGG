@@ -33,6 +33,30 @@ const validateReviewOrRating = [
         }),
 ]
 
+const updateOverallRatings = async()=>{
+
+    const games = await Game.findAll({include:[{model:User, as:'user_ratings'}]});
+
+    games.forEach(async(game)=>{
+        let total = 0;
+
+        game.user_ratings.forEach(async(user)=>{
+          // console.log(user.userName)
+          total+=parseInt(user.Rating.overall)
+        })
+
+        if(total){
+            console.log(total,'/',game.user_ratings.length,'=',total/game.user_ratings.length)
+            game.overallRating=(total/game.user_ratings.length).toFixed(1)
+        } else {
+            game.overallRating=0;
+        }
+        await game.save()
+    })
+}
+
+updateOverallRatings()
+
 // comment
 /*************************** ROUTES ***************************/
 
@@ -61,11 +85,14 @@ const ratingExists = () => {
     return error;
 }
 
+
+// Variable for Date Change
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 // Specific Games Page
 router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
     // Defines variables
     const gameId = req.params.id
-    const userId = 1;
 
     // Finds game with the above id
     const game = await Game.findByPk(gameId, { include: [{ model: User, as: 'user_ratings' }] });
@@ -73,9 +100,14 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
     // const reviews = await Review.findAll({where:{gameId}});
     // const ratings = await Rating.findall({where:{gameId}});
 
-    if (game) {
+
+    if(game) {
+        // Makes rating array to populate
+        const { user_ratings:users } = game
+        const releaseDate = `${months[game.releaseDate.getMonth()]} ${game.releaseDate.getDate()}, ${game.releaseDate.getFullYear()}`
+        // res.json(game)
         // Renders game page with specific game info
-        res.render('game', { title: game.title, game, csrfToken: req.csrfToken() });
+        res.render('game', {title:game.title, game, releaseDate, users, csrfToken:req.csrfToken()});
     } else {
         // Throws error if tweet not found
         next(gameNotFoundError(gameId));
