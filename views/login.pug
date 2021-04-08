@@ -1,12 +1,15 @@
 extends layout.pug
 include includes/utils.pug
 
-//- append head
-    //- link(rel='stylesheet' href='./stylesheets/signup.css')
+append head
+    link(rel='stylesheet' href='./stylesheets/login.css')
+    link(rel="preconnect" href="https://fonts.gstatic.com")
+    link(href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet")
+
 
 block content
     div(class="main__container")
-        form(action="/signup", method="post")
+        form(action="/login", method="post")
             div(class="sub__container")
                 h1 Log In
                 div(class="form__container")

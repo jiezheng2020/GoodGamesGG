@@ -171,6 +171,7 @@ router.get(
   "/login",
   loginReq,
   asyncHandler(async (req, res) => {
+    console.log(req.session);
     res.render("login", { title: "Log in" });
   })
 );
@@ -179,10 +180,13 @@ router.post(
   "/login",
   loginReq,
   asyncHandler(async (req, res) => {
+    const errors = [];
     const { userName, password } = req.body;
+    let isPassword;
     const user = await User.findOne({ where: { userName } });
-    const isPassword = bcrypt.compare(password, user.hashedPassword);
-
+    if (user) {
+      isPassword = await bcrypt.compare(password, user.hashedPassword);
+    } else if (!user) errors.push("Username is incorrect");
     if (isPassword) {
       req.session.user = {
         id: user.id,
@@ -190,9 +194,8 @@ router.post(
         lastName: user.lastName,
       };
       res.redirect("/authorized");
-    } else {
-      res.redirect("login", { title: "Log In" });
-    }
+    } else if (!isPassword) errors.push("Password is incorrect");
+    res.render("login", { errors, title: "Log In" });
   })
 );
 
