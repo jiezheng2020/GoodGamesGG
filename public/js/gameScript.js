@@ -172,16 +172,54 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
     const playedStatus = document.querySelector('.main__sidebar-status')
     playedStatus.addEventListener('change', async(event)=>{
         const pStats= {
+            '-- Played Status --': 3,
             'Played': 2,
             'Currently Playing': 1,
             'Want to Play': 0,
         }
         const played = pStats[event.target.value]
 
-        if (played){
+        if (played<3 && played>=0){
             try {
                 let res = await fetch(`http://localhost:8080/mygames/${gameId}/add`,{
                     method: 'POST',
+                    body: JSON.stringify({played}),
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+
+                const {exists} = await res.json()
+
+                console.log(exists)
+                if (exists){
+                    res = await fetch(`http://localhost:8080/mygames/${gameId}/played`,{
+                        method: 'PUT',
+                        body: JSON.stringify({played}),
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    })
+
+                    const newStatus = await res.json()
+                    console.log(newStatus)
+
+
+                } else {
+                    const newStatus = await res.json()
+                    console.log(newStatus)
+                }
+
+
+            } catch(err){
+                const { errors } = await err.json()
+                console.log(errors)
+            }
+
+        } else if(played===3){
+            try {
+                let res = await fetch(`http://localhost:8080/mygames/libraries/:libraryId(\\d+)/:gameId(\\d+)/delete`,{
+                    method: 'DELETE',
                     body: JSON.stringify({played}),
                     headers: {
                         "Content-Type": "application/json",

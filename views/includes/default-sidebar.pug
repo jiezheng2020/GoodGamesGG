@@ -1,7 +1,12 @@
 ul(class='main__sidebar-order') Order:
     li(class='main__sidebar-order--alpha') Alphabetical
     li(class='main__sidebar-order--rating') Rating
-ul(class='main__sidebar-filter') Filter:
-    li(class='main__sidebar-filter--rating') Rating
-    li(class='main__sidebar-filter--console') Console
-        
+ul(class='main__sidebar-filter')
+    form(class='main__sidebar-filter-ratings') Ratings
+        li(class='main__sidebar-filter-rating') Above 4 ★
+        li(class='main__sidebar-filter-rating') Above 3 ★
+        li(class='main__sidebar-filter-rating') Above 2 ★
+        li(class='main__sidebar-filter-rating') Above 1 ★
+    div(class='main__sidebar-filter--consoles') Console
+        each console in consoles
+            li(class='main__sidebar-filter--console') #{console.name}
