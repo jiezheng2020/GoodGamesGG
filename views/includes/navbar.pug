@@ -1,21 +1,35 @@
 header
-	nav#unauthorizedUser
-		div.navbar
-			div.logo
-				a(href='/') GoodGames
-			div.games
-				a(href='/games') Games
-			div.links
-				span.signup_link
-					a(href='signup') Login
-				span /
-				span.login_link
-					a(href='login') SignUp
-	//- nav#authorizedUser
-	//- 	div.navbar
-	//- 		div.logo
-	//- 		a(href='/') GoodGames
-	//- 		div
-	//- 			a(href='/mygames') My Games
-	//- 		div
-	//- 			a(href='/games') Games
+	if session
+		nav#authorizedUser
+			div.navbar
+				div.logo
+					a(href='/') GoodGames
+				div.games
+					a(href='/games') Games
+				div.links
+					span.signup_link
+						a(href='signup') Login
+					span /
+					span.login_link
+						a(href='login') SignUp
+	else
+		nav#unauthorizedUser
+			div.navbar
+				div.logo
+					a(href='/') GoodGames
+				div.games
+					a(href='/games') Games
+				div.links
+					span.signup_link
+						a(href='login') Login
+					span /
+					span.login_link
+						a(href='signup') SignUp
+		//- nav#authorizedUser
+		//- 	div.navbar
+		//- 		div.logo
+		//- 		a(href='/') GoodGames
+		//- 		div
+		//- 			a(href='/mygames') My Games
+		//- 		div
+		//- 			a(href='/games') Games
