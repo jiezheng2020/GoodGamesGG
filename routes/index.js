@@ -21,7 +21,16 @@ const userValidator = [
     .exists({ checkFalsy: true })
     .withMessage("Please Provide a value for email")
     .isEmail()
-    .withMessage("Email address is not valid email"),
+    .withMessage("Email address is not valid email")
+    .custom((value) => {
+      return User.findOne({ where: { email: value } }).then((user) => {
+        if (user) {
+          return Promise.reject(
+            "The provided email is already in use by another account"
+          );
+        }
+      });
+    }),
   check("password")
     .exists({ checkFalsy: true })
     .withMessage("Please provide a value for password")
@@ -30,7 +39,17 @@ const userValidator = [
   check("userName")
     .exists({ checkFalsy: true })
     .withMessage("Please provide a value for username")
-    .isLength({ max: 50 }),
+    .isLength({ max: 50 })
+    .withMessage("Please make provide a username less than 50 characters long")
+    .custom((value) => {
+      return User.findOne({ where: { userName: value } }).then((user) => {
+        if (user) {
+          return Promise.reject(
+            "The provided username is already in use by another account"
+          );
+        }
+      });
+    }),
 ];
 
 const loginReq = (req, res, next) => {
@@ -44,19 +63,26 @@ const loginReq = (req, res, next) => {
 const consolePreference = async (req, user) => {
   if (req.body.PC) {
     await User_console.create({ userId: user.id, consoleId: 3 });
-    console.log("this worked");
   }
   if (req.body["Playstation 4"]) {
     await User_console.create({ userId: user.id, consoleId: 1 });
-    console.log("this worked");
   }
   if (req.body["Xbox One"]) {
     await User_console.create({ userId: user.id, consoleId: 2 });
-    console.log("this worked");
   }
   if (req.body["Nintendo Switch"]) {
     await User_console.create({ userId: user.id, consoleId: 4 });
-    console.log("this worked");
+  }
+  if (
+    !req.body.PC &&
+    !req.body["Playstation 4"] &&
+    !req.body["Xbox One"] &&
+    !req.body["Nintendo Switch"]
+  ) {
+    await User_console.create({ userId: user.id, consoleId: 1 });
+    await User_console.create({ userId: user.id, consoleId: 2 });
+    await User_console.create({ userId: user.id, consoleId: 3 });
+    await User_console.create({ userId: user.id, consoleId: 4 });
   }
 };
 /*************************** ROUTES ***************************/

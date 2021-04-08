@@ -73,7 +73,8 @@ input[type="checkbox"] {
   justify-content: center;
 }
 .alert.alert-danger {
+  color: white;
   background-color: red;
   opacity: 0.9;
-  width: 300px;
+  width: 450px;
 }
