@@ -7,7 +7,8 @@ header {
   box-sizing: border-box;
   position: sticky;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: black;
+  opacity: 0.4;
 }
 
 .navbar a {
