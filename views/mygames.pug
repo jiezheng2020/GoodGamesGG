@@ -11,7 +11,10 @@ block content
                 li(class='main__sidebar-library--played') Played
                 li(class='main__sidebar-library--playing') Currently Playing
                 li(class='main__sidebar-library--not-played') Want to Play
-                    
+                each library in libraries 
+                    div(class="main__sidebar")
+                        //- li(class='main__sidebar-library--user-library') #{library.name}
+                        a(class="main__sidebar-library-link" href=`/mygames/libraries/${library.id}`) #{library.name}
             include includes/default-sidebar.pug
         div(class='main__games')
             ul(class='main__games-list')
