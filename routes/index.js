@@ -1,7 +1,13 @@
 /*************************** REQUIRES ***************************/
 const express = require("express");
 const { csrfProtection, asyncHandler } = require("../utils");
-const { User, Game, Console, User_console } = require("../db/models");
+const {
+  User,
+  Game,
+  Console,
+  User_console,
+  Game_console,
+} = require("../db/models");
 const { validationResult } = require("express-validator");
 const { check } = require("express-validator");
 const bcrypt = require("bcrypt");
@@ -101,12 +107,24 @@ router.get(
   "/authorized",
   asyncHandler(async (req, res) => {
     if (req.session.user) {
-      const games = await Game.findAll();
-      res.render("authorized", {
-        title: "Home Page",
-        games,
-        user: req.session.user,
+      const userId = req.session.user.id;
+      const userPreference = await User_console.findOne({
+        where: userId,
       });
+
+      const userConsole = userPreference.consoleId;
+
+      const games = await Game.findAll({
+        include: [{ model: Console, as: "game_consoles" }],
+        limit: 1,
+      });
+      res.json(games[0].game_consoles[0].Game_console);
+
+      // res.render("authorized", {
+      //   title: "Home Page",
+      //   games,
+      //   user: req.session.user,
+      // });
     } else {
       res.redirect("/");
     }
@@ -173,7 +191,6 @@ router.get(
   "/login",
   loginReq,
   asyncHandler(async (req, res) => {
-    console.log(req.session);
     res.render("login", { title: "Log in" });
   })
 );
@@ -197,7 +214,7 @@ router.post(
       };
       res.redirect("/authorized");
     } else if (!isPassword) errors.push("Password is incorrect");
-    res.render("login", { errors, title: "Log In" });
+    res.render("login", { errors });
   })
 );
 
