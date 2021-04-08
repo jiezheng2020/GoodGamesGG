@@ -1,9 +1,9 @@
 body {
-  background-image: url("../images/19187755.jpg");
+  background-image: url("../images/background.jpg");
   background-size: cover;
 }
 .main__container {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Roboto", sans-serif;
   color: rgb(0, 0, 0);
 }
 form {
@@ -12,10 +12,19 @@ form {
   justify-content: center;
   flex-direction: column;
 }
+h1 {
+  margin-top: 35px;
+  font-size: 40px;
+}
+
+h4 {
+  margin: 0;
+  font-size: 18px;
+}
 
 .sub__container {
   margin: auto;
-  margin-top: 50px;
+  margin-top: 70px;
   width: 600px;
   background-color: rgb(255, 255, 255);
 }
@@ -30,6 +39,10 @@ form {
 }
 
 .form__labels {
+  margin-top: 5px;
+  margin-bottom: 2px;
+  font-size: 18px;
+  font-weight: bold;
   text-align: left;
 }
 
@@ -37,6 +50,8 @@ input[type="text"],
 input[type="email"],
 input[type="password"] {
   text-align: left;
+  color: #333;
+  font-size: 15px;
   width: 100%;
 }
 
@@ -55,10 +70,11 @@ input[type="checkbox"] {
 .signup {
   font-size: 18px;
   font-weight: bold;
-  background-color: rgb(10, 119, 13);
+  border-radius: 10px;
+  background-color: rgb(8, 102, 11);
   color: white;
-  padding: 5px 10px;
-  margin: 30px 0;
+  padding: 10px 50px;
+  margin: 40px 0;
   cursor: pointer;
   opacity: 0.8;
   transition: opacity 0.5s;
@@ -74,7 +90,7 @@ input[type="checkbox"] {
 }
 .alert.alert-danger {
   color: white;
+  font-weight: bold;
   background-color: red;
-  opacity: 0.9;
-  width: 450px;
+  width: 500px;
 }

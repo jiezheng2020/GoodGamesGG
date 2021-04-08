@@ -3,6 +3,8 @@ include includes/utils.pug
 
 append head
     link(rel='stylesheet' href='./stylesheets/signup.css')
+    link(rel="preconnect" href="https://fonts.gstatic.com")
+    link(href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet")
 
 block content
     div(class="main__container")
@@ -31,6 +33,7 @@ block content
                             label Password
                         input(type="password", placeholder="password", name="password", value=user.password, required)
                 div(class="preferences__container")
+                    h4 Please choose a preferred console type
                     each console in consoles
                         input(type="checkbox", name=console.name, unchecked)
                         label(for=console.name) #{console.name}
