@@ -50,6 +50,13 @@ body {
   justify-content: flex-end;
 }
 
+
+
+#demoUser:hover
+{
+  cursor: pointer;
+}
+
 .imagecontainer {
   height: 180px;
   width: 150px;

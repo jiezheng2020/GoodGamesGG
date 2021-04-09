@@ -7,7 +7,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
 
 
-    const data = await fetch('https://api.rawg.io/api/games?dates=2019-01-01,2019-12-31&ordering=-added?key=26ac0f3d2391457087937165a3fbeceb');
+    const data = await fetch('https://api.rawg.io/api/games?key=26ac0f3d2391457087937165a3fbeceb&page_size=50');
     const { results } = await data.json()
 
 
@@ -42,7 +42,7 @@ module.exports = {
       return {
         title: game.name,
         publisher: 'Sony Interactive Entertainment',
-        developer: 'bleh',
+        developer: 'Sony',
         releaseDate: game.released,
         description: game.name,
         overallRating: game.rating,
