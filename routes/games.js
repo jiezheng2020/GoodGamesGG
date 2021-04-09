@@ -122,20 +122,25 @@ router.post('/api', asyncHandler(async (req, res) => {
 router.get('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
 
     const gameId = req.params.id
-    // const {id:userId} = req.session.user;
-    const userId=6;
-    let libararyId = 3;
 
     let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings"}]})
 
     if(game) {
 
         const { user_ratings:users } = game
+        let libraries=null;
+        let userId=Infinity;
 
-        let {Libraries:libraries} = await User.findByPk(userId,{include:[{model:Library}]})
+        if(req.session.user){
+            const {id} = req.session.user;
+            userId=id
+            let {Libraries} = await User.findByPk(userId,{include:[{model:Library}]})
+            libraries = Libraries
+        }
 
         // Array of month's for date conversion
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 
         // Makes rating array to populate
         const releaseDate = `${months[game.releaseDate.getMonth()]} ${game.releaseDate.getDate()}, ${game.releaseDate.getFullYear()}`
