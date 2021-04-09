@@ -1,7 +1,8 @@
 extends layout.pug
-
+include includes/utils.pug
 append head
     link(rel='stylesheet' type="text/css" href='/stylesheets/allgames.css')
+    script(type="application/javascript" src='/js/allgamesScript.js')
 
 block content
     div(class='main')
