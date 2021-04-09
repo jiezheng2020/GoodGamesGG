@@ -12,6 +12,7 @@ const { validationResult } = require("express-validator");
 const { check } = require("express-validator");
 const bcrypt = require("bcrypt");
 const { rawListeners } = require("../app");
+const { Op } = require('sequelize')
 
 /*************************** ROUTER SETUP ***************************/
 const router = express.Router();
@@ -98,7 +99,10 @@ router.get(
   loginReq,
   asyncHandler(async (req, res) => {
     const games = await Game.findAll({
-      limit: 12,
+      where: {
+        overallRating: { [Op.gt]: 4.2 }
+      },
+      limit: 12
     });
     res.render("unauthorized", { req, title: "GoodGames", games });
   })

@@ -4,13 +4,17 @@ include includes/utils.pug
 append head
     link(rel='stylesheet', href='./stylesheets/home-page.css')
 block content
-    div.background
+    div
         h1.welcome Welcome to Good Games
-        main
+        h3.gamesofthemonth GoodGames Games Of The Month:
+        div.background
             div#top10
                 each game in games
                     div.imagecontainer
                         div.images
                             a(href=`/games/${game.id}`)
                                 +createImg(game, 'img')
-                                a(href=`/games/${game.id}`)=game.title
+                            div.image_writing
+                                span.rating #{game.overallRating} / 5 ★
+                                br
+                                a(href=`/games/${game.id}` class='title')=game.title

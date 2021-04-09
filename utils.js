@@ -1,6 +1,7 @@
 /*************************** REQUIRES ***************************/
 const csrf = require("csurf");
 
+
 /*************************** MIDDLEWARE ***************************/
 const csrfProtection = csrf({ cookie: true });
 
