@@ -1,6 +1,8 @@
 /********* Imports *********/
 @import "./imports/game-container.css";
 @import "./imports/split-page.css";
+@import "./imports/star-rating.css";
+@import "./imports/add-star-rating\(hover\).css";
 
 /********* Main Section *********/
 
@@ -33,4 +35,40 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
     padding: 10px;
+}
+
+.main__games-pages{
+    justify-content: center;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    height: 45px;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.main__games-page{
+    margin: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 35px;
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.main__games-page--current{
+    transform: scale(1.2);
+    transition-duration: .2s;
+    background-color: #DFDFE5;
+}
+
+
+.main__games-page:hover{
+    cursor:pointer;
+    transform: scale(1.2);
+    transition-duration: .2s;
 }
