@@ -1,5 +1,6 @@
 if req
-		if req.session.user
+	if req.session.user
+		div.navheader
 			nav#authorizedUser
 				div.navbar
 					div.logo
@@ -12,7 +13,8 @@ if req
 						span.signup_link
 							form(action="/logout", method="post")
 								input(class='logout' value='LogOut' type="submit")
-		else
+	else
+		div.navheader
 			nav#unauthorizedUser
 				div.navbar
 					div.logo

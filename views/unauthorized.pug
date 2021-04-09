@@ -1,5 +1,8 @@
-extends layout
+extends layout.pug
 include includes/utils.pug
+
+append head
+    link(rel='stylesheet', href='./stylesheets/home-page.css')
 block content
     div.background
         h1.welcome Welcome to Good Games

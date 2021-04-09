@@ -1,16 +1,16 @@
-.home
-{
+body {
+  min-height: 100vh;
+}
+.home {
   background-color: rgba(0, 0, 0, 0.5);
-  margin: -15px -5px;
+  margin: 0px;
 }
 
-.splashpage
-{
-  background-size:cover;
-  background-image: url('../images/action2.png');
+.splashpage {
+  background-size: cover;
+  background-image: url("../images/action2.png");
 }
-.welcome
-{
+.welcome {
   color: red;
   font-family: fantasy;
   text-align: center;
@@ -20,9 +20,7 @@
   text-transform: uppercase;
 }
 
-
-#top10
-{
+#top10 {
   display: grid;
   grid-template-columns: repeat(4, 2fr);
   grid-template-rows: repeat(3, 2fr);
@@ -31,28 +29,23 @@
   justify-items: center;
 }
 
-
 /* .gamesofthemonth
 {
   font-size: 1.2em;
 } */
 
-
-.images
-{
+.images {
   object-fit: cover;
 }
 
-.imagecontainer
-{
+.imagecontainer {
   height: 220px;
   width: 220px;
   border: red 3px solid;
   z-index: 3;
 }
 
-.img
-{
+.img {
   height: 200px;
   width: 220px;
   image-rendering: optimizeQuality;
