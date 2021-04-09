@@ -1,20 +1,9 @@
-<<<<<<< HEAD
-.darkness {
-=======
 .home {
->>>>>>> main
   background-image: url("../images/background.jpg");
   background-size: cover;
   margin: 0px;
 }
 
-<<<<<<< HEAD
-.home {
-  background: none;
-}
-
-=======
->>>>>>> main
 .main__container {
   font-family: "Roboto", sans-serif;
   color: rgb(0, 0, 0);

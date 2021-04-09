@@ -1,20 +1,9 @@
-<<<<<<< HEAD
-.darkness {
-  background-image: url("../images/background.jpg");
-  background-size: cover;
-}
-
-.home {
-  background: none;
-}
-=======
 .home {
   background-image: url("../images/background.jpg");
   background-size: cover;
   margin: 0px;
 }
 
->>>>>>> main
 body {
   background-image: url("../images/background.jpg");
   background-size: cover;

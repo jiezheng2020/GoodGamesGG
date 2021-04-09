@@ -4,20 +4,6 @@ body {
 }
 .home {
   background-color: rgba(0, 0, 0, 0.5);
-<<<<<<< HEAD
-  margin: -15px -5px;
-}
-
-.splashpage
-{
-  background-size:cover;
-  background-image: url('../images/action2.png');
-}
-.welcome
-{
-  color: red;
-  font-family: fantasy;
-=======
   margin: 0px;
 }
 
@@ -29,25 +15,18 @@ body {
   color: goldenrod;
   text-shadow: rgb(107, 81, 15) 3px 3px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
->>>>>>> main
   text-align: center;
   justify-content: center;
   font-size: 3em;
   text-transform: uppercase;
 }
 
-<<<<<<< HEAD
-
-#top10
-{
-=======
 .background{
   display: flex;
   justify-content: center;
 }
 
 #top10 {
->>>>>>> main
   display: grid;
   grid-template-columns: repeat(4, 200px);
   grid-template-rows: repeat(3, 200px);
@@ -55,18 +34,7 @@ body {
   justify-items: center;
 }
 
-<<<<<<< HEAD
-
-/* .gamesofthemonth
-{
-  font-size: 1.2em;
-} */
-
-
-.images
-=======
 .gamesofthemonth
->>>>>>> main
 {
   font-size: 1.2em;
   color: whitesmoke;
