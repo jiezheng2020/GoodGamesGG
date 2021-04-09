@@ -7,4 +7,5 @@ block content
             h1.tch Looks like you're lost friend
             br
             p=message
-            a(href='/') Return Home
+            form(action="/logout", method="post")
+                input(class='logout' value='Return Home' type="submit")
