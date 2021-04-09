@@ -14,7 +14,7 @@ function hideAddCreateEdit(rating, username){
         <div>
             <div class="main__ratings-stars">
                 <div class="main__ratings-stars-empty"></div>
-                <div class="main__ratings-stars-full" style="width:${((rating.overall/5).toFixed(1))*100}%"></div>
+                <div class="main__ratings-stars-full" style="width:${((rating.overall/5).toFixed(2))*100}%"></div>
             </div>
         </div>
         <div class="main__game-ratings-review">${rating.body}</div>`
@@ -38,7 +38,7 @@ function loadStarRating(numberOfStars){
 
 function updateOverallRating(overallRating){
     const starRating = document.querySelector('.main__ratings-stars-full')
-    starRating.style = `width:${((overallRating/5).toFixed(1))*100}%`
+    starRating.style = `width:${((overallRating/5).toFixed(2))*100}%`
 }
 
 const stars = document.querySelector('.main__game-ratings-add-stars')

@@ -1,5 +1,31 @@
-const fetch = require('node-fetch')
+const fetch = require("node-fetch");
+const express = require("express");
+const { sequelize, Game, Console } = require("./db/models");
+const faker = require("faker");
+// const Op = Sequelize.Op;
 
+const GetGames = async () => {
+  const gameconsoles = [];
+  const consoles = await Console.findAll();
+  console.log(consoles);
+  // const games = await Game.findAll();
+  // console.log(games);
+  // const consoles = await Console.findAll();
+  // for (let i = 0; i < games.length; i++) {
+  //   const gameId = games[i].id;
+  //   let randConsole = Math.floor(Math.random() * 5);
+  //   if (randConsole === 0) randConsole++;
+
+  //   let newGame = {
+  //     gameId: gameId,
+  //     consoleId: randConsole,
+  //     createdAt: new Date(),
+  //     updatedAt: new Date(),
+  //   };
+  //   gameconsoles.push(newGame);
+  // }
+  await sequelize.close();
+};
 
 
 const getGames = async () => {
@@ -11,3 +37,4 @@ const getGames = async () => {
   //
 }
 getGames()
+

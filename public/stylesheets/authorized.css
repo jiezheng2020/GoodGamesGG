@@ -22,6 +22,10 @@ body {
   margin-bottom: 50px;
 }
 
+.recommendations-block {
+  display: flex;
+  justify-content: center;
+}
 .recommendations {
   display: flex;
   flex-direction: row;
