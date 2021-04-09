@@ -1,0 +1,45 @@
+.footer
+{
+  height: auto;
+  width: auto;
+  box-sizing: border-box;
+  position: sticky;
+  bottom: 0;
+  background-color: tomato;
+  z-index: 100;
+  scroll-snap-align:initial;
+}
+
+
+
+.contributions
+{
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 10px;
+}
+
+
+.group2 > li
+{
+  text-decoration: none;
+  display: inline;
+  padding: 0 4px;
+}
+
+.group2
+{
+  order: 2;
+}
+
+.group2 a
+{
+  text-decoration: none;
+  color: dimgray;
+}
+
+
+.group2 a:hover
+{
+  font-weight: bold;
+}

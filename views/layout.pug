@@ -10,7 +10,9 @@ html(lang="en" class="splashpage")
 			link(rel="manifest", href="../site.webmanifest")
 			link(rel='stylesheet', href='../stylesheets/imports/navbar.css')
 			link(rel='stylesheet', href='../stylesheets/home-page.css')
+			link(rel='stylesheet', href='../stylesheets/footer.css')
 			title #{title}
 	body(class= 'home')
 		include includes/navbar.pug
 		block content
+		include footer.pug
