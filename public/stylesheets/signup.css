@@ -1,41 +1,37 @@
-.home {
+body {
   background-image: url("../images/background.jpg");
   background-size: cover;
   margin: 0px;
 }
 
-body {
-  background-image: url("../images/background.jpg");
-  background-size: cover;
-}
-.main__container {
+.main__signup-container {
   font-family: "Roboto", sans-serif;
   color: rgb(0, 0, 0);
 }
-form {
+.form__signup {
   display: flex;
   text-align: center;
   justify-content: center;
   flex-direction: column;
 }
-h1 {
+h1.head__signup {
   margin-top: 35px;
   font-size: 40px;
 }
 
-h4 {
+h4.head__console-type {
   margin: 0;
   font-size: 18px;
 }
 
-.sub__container {
+.sub__signup-container {
   margin: auto;
   margin-top: 100px;
   width: 600px;
   background-color: white;
 }
 
-.form__container {
+.form__signup-container {
   font-size: 15px;
   padding: 25px;
   display: flex;
@@ -44,7 +40,7 @@ h4 {
   flex-direction: column;
 }
 
-.form__labels {
+.form__signup-labels {
   margin-top: 5px;
   margin-bottom: 2px;
   font-size: 18px;
@@ -73,7 +69,7 @@ input[type="checkbox"] {
   margin-left: 10px;
 }
 
-.signup {
+.signup-btn {
   font-size: 18px;
   font-weight: bold;
   border-radius: 10px;
@@ -85,11 +81,11 @@ input[type="checkbox"] {
   opacity: 0.8;
   transition: opacity 0.5s;
 }
-.signup:hover {
+.signup-btn:hover {
   opacity: 1;
 }
 
-.errors {
+.signup-errors {
   display: flex;
   justify-content: center;
 }
