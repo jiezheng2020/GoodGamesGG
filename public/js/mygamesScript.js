@@ -57,7 +57,7 @@
 
 // Populate The Games
 function populateGames(games, limit, pageNum) {
-    let gamesUl = games.slice(limit * (pageNum - 1), limit * pageNum).map((game) => {
+    let gamesUl = games.map((game) => {
         const imageHref = (game.imageHref) ? game.imageHref : '/images/not-found.png';
         return `<div class="main__games-info">
                     <a href="/games/${game.id}">
@@ -131,31 +131,43 @@ let currGameList;
 
 /***************************** DOMCONTENTLOADED  *****************************/
 window.addEventListener('DOMContentLoaded', async (event) => {
+    const userlibraryLinks = [...document.getElementsByClassName('main__sidebar-user-library-link')]
+    // Array.toArry(libraryLinks)
+    userlibraryLinks.forEach((link) => {
+        link.addEventListener('click', async (e) => {
+            e.preventDefault()
 
-
-    let res = await fetch(`http://localhost:8080/mygames/api`, {
-        method: 'POST',
-        body: JSON.stringify({ filter: 'all', orderType: 'overallRating' }),
-        headers: {
-            "Content-Type": "application/json",
-        }
+            let route = link.getAttribute('href')
+            let res = await fetch(`${route}`)
+            let { games } = await res.json()
+            populateGames(games)
+            
+        })
     })
 
-    let { games } = await res.json()
-    currGameList = games;
+    // let res = await fetch(`http://localhost:8080/mygames/api`, {
+    //     method: 'POST',
+    //     body: JSON.stringify({ filter: 'all', orderType: 'overallRating' }),
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     }
+    // })
 
-    /***************************** Sidebar Orders  *****************************/
-    const sidebarOrder = document.querySelector('.main__sidebar-order')
+    // let { games } = await res.json()
+    // currGameList = games;
 
-    sidebarOrder.addEventListener('click', (event) => {
-        const sortedGameList = mergeSort(currGameList, event.target.id)
-        const currPage = document.querySelector('.main__games-page--current')
+    // /***************************** Sidebar Orders  *****************************/
+    // const sidebarOrder = document.querySelector('.main__sidebar-order')
 
-        const pageNum = parseInt(currPage.id.slice(-1));
+    // sidebarOrder.addEventListener('click', (event) => {
+    //     const sortedGameList = mergeSort(currGameList, event.target.id)
+    //     const currPage = document.querySelector('.main__games-page--current')
 
-        populateGames(sortedGameList, limit, pageNum)
-        currGameList = sortedGameList;
-    })
+    //     const pageNum = parseInt(currPage.id.slice(-1));
+
+    //     populateGames(sortedGameList, limit, pageNum)
+    //     currGameList = sortedGameList;
+    // })
 
     /***************************** Sidebar Filters  *****************************/
     const sidebarFilter = document.querySelector('.main__sidebar-filter')
@@ -189,22 +201,22 @@ window.addEventListener('DOMContentLoaded', async (event) => {
     })
 
 
-    // /***************************** Page Selector  *****************************/
-    // const pageNums = document.querySelector('.main__games-pages')
+    /***************************** Page Selector  *****************************/
+    const pageNums = document.querySelector('.main__games-pages')
 
-    // pageNums.addEventListener('click', async (event) => {
-    //     const currPage = document.querySelector('.main__games-page--current')
-    //     const pageNum = (event.target.id.match(/\d+/)) ? parseInt(event.target.id.slice(-1)) : null;
+    pageNums.addEventListener('click', async (event) => {
+        const currPage = document.querySelector('.main__games-page--current')
+        const pageNum = (event.target.id.match(/\d+/)) ? parseInt(event.target.id.slice(-1)) : null;
 
-    //     if (!pageNum || currPage.id === event.target.id) { return }
+        if (!pageNum || currPage.id === event.target.id) { return }
 
-    //     populateGames(currGameList, limit, pageNum)
+        populateGames(currGameList, limit, pageNum)
 
-    //     currPage.classList.remove('main__games-page--current')
+        currPage.classList.remove('main__games-page--current')
 
-    //     event.target.classList.add('main__games-page--current')
+        event.target.classList.add('main__games-page--current')
 
-    // })
+    })
 
 
 })
