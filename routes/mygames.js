@@ -55,9 +55,10 @@ router.get('/',
           userId: userId
         }
       })
+      const consoles = await db.Console.findAll()
 
       // res.json({games})
-      res.render('mygames', { title: "My Games", games, libraries})
+      res.render('mygames', { title: "My Games", games, libraries, consoles})
     // }
 }));
 // ======================================================================
@@ -89,44 +90,24 @@ router.get('/',
 
 router.get('/:played(\\d)',
   asyncHandler(async (req, res, next) => {
-    // const userId = parseInt(req.params.userId, 10);
-    // const user = await db.User.findByPk(userId);
-    // if (!user) {
-    //   next(userNotFound(userId))
-    // } else {
+ 
     const userId = 6
     const playedStatus = parseInt(req.params.played, 10)
-    const games = await db.My_game.findAll({where: {played: playedStatus}})
-    const finalList = games.map((game) => game.gameId)
-    const user = await db.User.findByPk(userId,
-      {
-        include: [{ model: db.Game, as: "user_mygames"}],
-      })
-
-    const finalGames = await db.Game.findAll({
-      where: {
-        id: finalList,
-        include: user
-      }
+    const user = await db.User.findByPk(userId, {
+      include: [{ model: db.Game, as: "user_mygames" }]
     })
-    // finalList.forEach(async (gameId) => {
-    //     let game = await db.Game.findByPk(gameId)
-    //     // console.log(game.id)
-    //     await response.push(game)
-    // })
-    // console.log(finalGames)
-      // console.log(user)
-    // const { user_mygames: games } = user;
+
+    const games = user.user_mygames.filter((game) => game.My_game.played === playedStatus)
+  
     const libraries = await db.Library.findAll({
       where: {
         userId: userId
       }
     })
-    console.log(libraries)
-    const filteredGames = {games: finalGames}
-    res.json(finalGames)
-    // res.render('mygames', { title: "My Games", filteredGames, libraries})
-    // }
+
+    const consoles = await db.Console.findAll()
+    // res.json(games)
+    res.render('mygames', { title: "My Games", games, libraries, consoles})
   }));
 
 
@@ -175,6 +156,7 @@ router.get('/libraries/:libraryId(\\d+)',
         userId: userId
       }
     })
+    const consoles = await db.Console.findAll()
     // console.log(libraries)
       if(!library) {
         next(libraryNotFound(libreryId))
@@ -182,7 +164,7 @@ router.get('/libraries/:libraryId(\\d+)',
         const { library_games: games } = library;
         // console.log(games)
         // res.json({library})
-        res.render('mygames', {title: 'My Games', games, libraries})
+        res.render('mygames', {title: 'My Games', games, libraries, consoles})
 
     }
 }))
@@ -351,6 +333,45 @@ router.put('/libraries/:libraryId(\\d+)/edit',
     }
 
   }));
+
+router.post('/api', asyncHandler(async (req, res) => {
+  const { filter, orderType, pageNum } = req.body
+
+  if (filter.match(/^\d/g)) {
+    const min = parseInt(filter)
+    const games = await Game.findAll({
+      where: {
+        overallRating: {
+          [Op.gte]: min
+        }
+      },
+      order: [[orderType, 'DESC']]
+    })
+    res.json({ games })
+
+  } else if (filter === 'all') {
+    const games = await Game.findAll({
+      order: [[orderType, 'DESC']]
+    });
+    res.json({ games })
+
+  } else {
+    const consoleType = filter
+    const games = await Game.findAll({
+      include: {
+        model: Console,
+        as: 'game_consoles',
+        where: {
+          name: consoleType
+        }
+      },
+      order: [[orderType, 'DESC']]
+    })
+    res.json({ games })
+
+  }
+})
+);
 
 
 /*************************** EXPORTS ***************************/
