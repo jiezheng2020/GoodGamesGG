@@ -119,30 +119,20 @@ router.post('/api', asyncHandler(async (req, res) => {
 
 
 // Single Game Page Route
-router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
+router.get('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
 
     const gameId = req.params.id
-    const {id:userId} = req.session.user;
+    // const {id:userId} = req.session.user;
+    const userId=6;
+    let libararyId = 3;
 
-    let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings"},{ model:Library, as: "library_games"}]})
+    let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings"}]})
 
     if(game) {
-        let libraries;
 
         const { user_ratings:users } = game
 
-        const { library_games:libraryUsers} = game
-
-        if(libraryUsers.length!==0){
-            let libraryUser=libraryUsers.filter((user)=>{
-                return user.id=userId
-            })[0]
-            libraries = libraryUser.Library
-        } else {
-            libraries = null
-        }
-
-        console.log(game.title, game.overallRating)
+        let {Libraries:libraries} = await User.findByPk(userId,{include:[{model:Library}]})
 
         // Array of month's for date conversion
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -151,7 +141,7 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
         const releaseDate = `${months[game.releaseDate.getMonth()]} ${game.releaseDate.getDate()}, ${game.releaseDate.getFullYear()}`
 
         // Renders game page with specific game info
-        res.render('game', {title:game.title, game, releaseDate, users, userId, req, csrfToken:req.csrfToken()});
+        res.render('game', {title:game.title, game, releaseDate, users, userId, libraries, req});
     } else {
         // Throws error if tweet not found
         next(gameNotFoundError(gameId));
@@ -160,12 +150,17 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
 
 
 // API Get Route For A User's Game Rating
-router.get('/:id(\\d+)/api', csrfProtection, asyncHandler(async(req,res,next)=>{
+router.get('/:id(\\d+)/api', asyncHandler(async(req,res,next)=>{
 
     const gameId = req.params.id
-    const {id:userId} = req.session.user;
+    let userId=null;
+    if(req.session.user){
+        const {id} = req.session.user;
+        userId=id
+    }
 
     const rating = await Rating.findOne({where:{gameId, userId}})
+
 
     if(rating){
         const user = await User.findByPk(userId)
@@ -173,7 +168,7 @@ router.get('/:id(\\d+)/api', csrfProtection, asyncHandler(async(req,res,next)=>{
         const {overall, body} = rating
         res.json({rating, username})
     } else {
-        res.status(400).send({message:'Rating not found'})
+        res.status(400).send({message: 'Rating Does Not Exist'})
     }
 
 }))
@@ -212,8 +207,6 @@ router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
 
         const game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings", }]})
         const { user_ratings:users } = game
-
-        console.log(users)
 
         let [user] = users.filter((user)=>{
             return user.id===userId

@@ -1,6 +1,5 @@
 /***************************** FUNCTIONS *****************************/
 
-
 // Populate The Games
 function populateGames(games, limit, pageNum){
     let gamesUl = games.slice(limit*(pageNum-1),limit*pageNum).map((game)=>{
@@ -79,7 +78,7 @@ let currGameList;
 window.addEventListener('DOMContentLoaded', async(event)=>{
 
 
-    let res = await fetch(`http://localhost:8080/games/api`,{
+    let res = await fetch(`/games/api`,{
         method: 'POST',
         body: JSON.stringify({filter:'all', orderType: 'overallRating'}),
         headers: {
@@ -107,7 +106,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
     const sidebarFilter = document.querySelector('.main__sidebar-filter')
     sidebarFilter.addEventListener('click', async(event)=>{
         if(event.target.className.match(/main__sidebar-filter-(all|rating|console)$/)){
-            let res = await fetch(`http://localhost:8080/games/api`,{
+            let res = await fetch(`/games/api`,{
                 method: 'POST',
                 body: JSON.stringify({filter:event.target.id, orderType: 'overallRating'}),
                 headers: {

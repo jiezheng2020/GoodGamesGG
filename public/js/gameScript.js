@@ -18,7 +18,7 @@ function hideAddCreateEdit(rating, username){
             </div>
         </div>
         <div class="main__game-ratings-review">${rating.body}</div>`
-}
+}6
 
 function loadStarRating(numberOfStars){
     const stars = document.querySelector('.main__game-ratings-add-stars')
@@ -47,24 +47,20 @@ const stars = document.querySelector('.main__game-ratings-add-stars')
 /***************************** DOMCONTENTLOADED  *****************************/
 window.addEventListener('DOMContentLoaded', async(event)=>{
 
+    // Check to see if user is logged in
+    let reqExists = document.querySelector('.main__game-ratings-add')
+    if(!reqExists){return}
 
     /***************************** Loads User's Ratings and Played Status if Exists  *****************************/
     const gameId = parseInt(window.location.href.match(/(\d+)$/g)[0])
 
-    let res = await fetch(`http://localhost:8080/games/${gameId}/api`);
+    let res = await fetch(`/games/${gameId}/api`);
     let {rating, username} = await res.json()
     if(res.ok){
         hideAddCreateEdit(rating, username)
         document.querySelector('.main__game-ratings-add-review').innerHTML = rating.body
         loadStarRating(rating.overall)
     }
-
-
-    // let res = await fetch(`http://localhost:8080/mygames/${gameId}/api`);
-    // let {rating, username} = await res.json()
-    // if(res.ok){
-    //     hideAddCreateEdit(rating, username)
-    // }
 
     /***************************** Select Rating Functionality *****************************/
     const stars = document.querySelector('.main__game-ratings-add-stars')
@@ -88,7 +84,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
         const body = document.querySelector('.main__game-ratings-add-review').value
 
         try {
-            const res = await fetch(`http://localhost:8080/games/${gameId}`,{
+            const res = await fetch(`/games/${gameId}`,{
                 method: submitButton.name,
                 body: JSON.stringify({overall, body}),
                 headers: {
@@ -144,7 +140,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
     const deleteButton = document.querySelector('.main__game-ratings-delete-button')
     deleteButton.addEventListener('click', async (event)=>{
         try {
-            const res = await fetch(`http://localhost:8080/games/${gameId}`,{
+            const res = await fetch(`/games/${gameId}`,{
                 method: 'DELETE'
             })
 
@@ -183,6 +179,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
 
     /***************************** Edit Played Status *****************************/
     const playedStatus = document.querySelector('.main__sidebar-status')
+
     playedStatus.addEventListener('change', async(event)=>{
         const pStats= {
             'Played': 2,
@@ -193,7 +190,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
 
         if (played){
             try {
-                let res = await fetch(`http://localhost:8080/mygames/${gameId}/add`,{
+                let res = await fetch(`/mygames/${gameId}/add`,{
                     method: 'POST',
                     body: JSON.stringify({played}),
                     headers: {
@@ -204,7 +201,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
                 const {exists} = await res.json()
 
                 if (exists){
-                    res = await fetch(`http://localhost:8080/mygames/${gameId}/played`,{
+                    res = await fetch(`/mygames/${gameId}/played`,{
                         method: 'PUT',
                         body: JSON.stringify({played}),
                         headers: {
@@ -225,7 +222,34 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
             }
 
         } else {
-            // const libraries = event.target.value
+            if(event.target.value==='-- Played Status --'){return}
+            const allOptions = document.querySelectorAll('.main__sidebar-status-option')
+            let id;
+            allOptions.forEach((option)=>{
+                if(option.value===event.target.value){
+                    id=option.id
+                }
+            })
+            try {
+                let res = await fetch(`/libraries/${id}/${id}/add`,{
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+
+                const {exists} = await res.json()
+
+                if(exists){
+                    return
+                }
+            } catch(err){
+                console.log(err)
+            }
+
+
+
+
         }
 
 
