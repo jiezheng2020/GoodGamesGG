@@ -13,7 +13,6 @@ const myGamesRouter = require("./routes/mygames");
 const indexRouter = require("./routes/index");
 // const bodyParser = require('body-parser');
 
-
 /*************************** APP SETUP ***************************/
 const app = express();
 
@@ -45,6 +44,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/games", gamesRouter);
 app.use("/mygames", myGamesRouter);
+
 
 // ERRORS
 
@@ -89,6 +89,7 @@ app.use((err, req, res, next) => {
     stack: isProduction ? null : err.stack,
   });
 });
+
 
 /*************************** EXPORTS ***************************/
 module.exports = app;

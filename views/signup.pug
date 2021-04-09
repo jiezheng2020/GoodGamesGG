@@ -7,37 +7,37 @@ append head
     link(href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet")
 
 block content
-    div(class="main__container")
-        form(action="/signup", method="post")
-            div(class="sub__container")
-                h1 Sign Up
-                div(class="form__container")
+    div(class="main__signup-container")
+        form(class="form__signup",action="/signup", method="post")
+            div(class="sub__signup-container")
+                h1.head__signup Sign Up
+                div(class="form__signup-container")
                     div
-                        div(class='form__labels')
+                        div(class='form__signup-labels')
                             label First Name
                         input(type="text", placeholder="John", name="firstName", value=user.firstName, required)
                     div
-                        div(class='form__labels')
+                        div(class='form__signup-labels')
                             label Last Name
                         input(type="text", placeholder="Wick", name="lastName", value=user.lastName, required)
                     div
-                        div(class='form__labels')
+                        div(class='form__signup-labels')
                             label Username
                         input(type="text", placeholder="username", name="userName", value=user.userName, required)
                     div
-                        div(class='form__labels')
+                        div(class='form__signup-labels')
                             label Email
                         input(type="email", placeholder="example@mail.com", name="email", value=user.email, required)
                     div
-                        div(class='form__labels')
+                        div(class='form__signup-labels')
                             label Password
                         input(type="password", placeholder="password", name="password", value=user.password, required)
                 div(class="preferences__container")
-                    h4 Please choose a preferred console type
+                    h4.head__console-type Please choose a preferred console type
                     each console in consoles
                         input(type="checkbox", name=console.name, unchecked)
                         label(for=console.name) #{console.name}
                 div(class="buttons_container")
-                button(type="submit" class='signup') Sign Up
-            div(class="errors")
+                button(type="submit" class='signup-btn') Sign Up
+            div(class="signup-errors")
                 +validationErrorSummary(errors)
