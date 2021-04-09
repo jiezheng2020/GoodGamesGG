@@ -1,0 +1,157 @@
+body {
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+.home {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.splashpage {
+  background: url("../images/10sDgAY-black-gradient-wallpaper.jpg");
+  background-size: cover;
+  opacity: 0.95;
+  /* background-color: rgb(7, 0, 37); */
+}
+.main {
+  height: 100vh;
+}
+.hero {
+  height: 400px;
+  background: url("../images/authorized-background.jpg");
+  background-size: cover;
+  margin-bottom: 50px;
+}
+
+.recommendations {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 50px 200px;
+  width: 1500px;
+  height: 500px;
+  background-color: blue;
+}
+
+.welcome {
+  font-family: "Oswald", sans-serif;
+  display: flex;
+  justify-content: center;
+  margin-top: -120px;
+  font-size: 70px;
+  color: rgb(255, 255, 255);
+}
+
+.textbox {
+  width: 700px;
+  height: 500px;
+  display: grid;
+  grid-template-rows: auto;
+  background-color: rgb(36, 36, 36);
+  opacity: 0.95;
+}
+
+.text {
+  justify-self: center;
+  font-family: "Oswald", sans-serif;
+  font-size: 25px;
+  color: rgb(255, 255, 255);
+  height: 15px;
+}
+
+.borders {
+  border: solid black;
+  border-width: thin;
+  display: grid;
+}
+
+.gamestext {
+  font-family: "Oswald", sans-serif;
+  font-size: 18px;
+  display: flex;
+  color: white;
+  margin-left: 15px;
+  justify-self: center;
+  align-self: center;
+  width: 100%;
+}
+
+img {
+  width: 800px;
+  height: 500px;
+  object-fit: cover;
+}
+.display {
+  height: 500px;
+  width: 800px;
+  display: flex;
+  background-color: green;
+}
+
+.fadein img {
+  position: absolute;
+  margin: 0;
+  animation-name: fade;
+  animation-iteration-count: infinite;
+  animation-duration: 18s;
+}
+
+@-webkit-keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 1;
+  }
+  53% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 1;
+  }
+  53% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+#f1 {
+  animation-delay: -16s;
+}
+#f2 {
+  animation-delay: -14s;
+}
+#f3 {
+  animation-delay: -12s;
+}
+#f4 {
+  animation-delay: -10s;
+}
+#f5 {
+  animation-delay: -8s;
+}
+#f6 {
+  animation-delay: -6s;
+}
+#f7 {
+  animation-delay: -4s;
+}
+#f8 {
+  animation-delay: -2s;
+}

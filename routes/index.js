@@ -117,6 +117,7 @@ router.get(
 
       const gameConsoles = await Game_console.findAll({
         where: { consoleId: userConsole },
+        limit: 8,
       });
 
       const gamesId = gameConsoles.map((game) => game.gameId);
