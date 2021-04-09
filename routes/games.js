@@ -1,6 +1,7 @@
 /*************************** REQUIRES ***************************/
 const express = require("express");
 const { check, validationResult } = require("express-validator");
+const { Op } = require("sequelize");
 
 const { Game, Console, Rating, User, Library } = require("../db/models")
 /*************************** ROUTER SETUP ***************************/
@@ -54,17 +55,29 @@ router.get('/', asyncHandler(async (req, res) => {
 
 router.get('/api/:filter', asyncHandler(async (req, res) => {
     const filterType = req.params.filter
+    console.log(filterType)
 
-    if(filterType.match(/Above/g)){
-        console.log('Above')
+    if(filterType.match(/\d/g)){
+        const min=parseInt(filterType)
+        const games = await Game.findAll({
+            where:{
+                overallRating: {
+                    [Op.gte]:min
+                }
+            },
+            limit:24
+        })
+        res.json({games})
     } else {
-        console.log('Console')
+        const consoleType=filterType
+        const games = await Game.findAll({
+            include:{
+                model:Console,
+            },
+            limit:24
+        })
+        res.json({success:'success'})
     }
-    // Finds all games from the database
-    const games = await Game.findAll();
-
-    // Renders games page with list of all games from A-Z
-    res.render("allgames", { title: "All Games", games });
 })
 );
 
