@@ -2,7 +2,7 @@
   font-family: "Oswald", sans-serif;
   font-size: 20px;
   height: 50px;
-  width: 100vw;
+  width: 100%;
   position: sticky;
   top: 0px;
   background: linear-gradient(rgb(0, 0, 0), rgb(66, 66, 66));
