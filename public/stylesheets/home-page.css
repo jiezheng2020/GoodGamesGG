@@ -93,3 +93,8 @@ body {
 .image_writing > a:hover{
   font-weight: bold;
 }
+
+
+.demoForm{
+  display: none;
+}
