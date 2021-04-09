@@ -1,8 +1,9 @@
 /*************************** REQUIRES ***************************/
 const express = require("express");
 const { check, validationResult } = require("express-validator");
+const { Op } = require("sequelize");
 
-const { Game, Rating, User } = require("../db/models")
+const { Game, Console, Rating, User, Library } = require("../db/models")
 /*************************** ROUTER SETUP ***************************/
 const router = express.Router();
 
@@ -46,9 +47,37 @@ const validateRating = [
 router.get('/', asyncHandler(async (req, res) => {
     // Finds all games from the database
     const games = await Game.findAll();
+    const consoles = await Console.findAll()
 
     // Renders games page with list of all games from A-Z
-    res.render("allgames", { title: "All Games", games });
+    res.render("allgames", { title: "All Games", games, consoles });
+}));
+
+router.get('/api/:filter', asyncHandler(async (req, res) => {
+    const filterType = req.params.filter
+    console.log(filterType)
+
+    if(filterType.match(/\d/g)){
+        const min=parseInt(filterType)
+        const games = await Game.findAll({
+            where:{
+                overallRating: {
+                    [Op.gte]:min
+                }
+            },
+            limit:24
+        })
+        res.json({games})
+    } else {
+        const consoleType=filterType
+        const games = await Game.findAll({
+            include:{
+                model:Console,
+            },
+            limit:24
+        })
+        res.json({success:'success'})
+    }
 })
 );
 
@@ -77,15 +106,28 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
     const gameId = req.params.id
     const userId = 1;
 
-    let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings", }]})
+    let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings"},{ model:Library, as: "library_games"}]})
 
     if(game) {
-        // Makes rating array to populate
+        let libraries;
+
         const { user_ratings:users } = game
+
+        const { library_games:libraryUsers} = game
+
+        if(libraryUsers.length!==0){
+            let libraryUser=libraryUsers.filter((user)=>{
+                return user.id=userId
+            })[0]
+            libraries = libraryUser.Library
+        } else {
+            libraries = null
+        }
+        // Makes rating array to populate
         const releaseDate = `${months[game.releaseDate.getMonth()]} ${game.releaseDate.getDate()}, ${game.releaseDate.getFullYear()}`
-        // res.json(game)
+
         // Renders game page with specific game info6
-        res.render('game', {title:game.title, game, releaseDate, users, userId, csrfToken:req.csrfToken()});
+        res.render('game', {title:game.title, game, releaseDate, users, userId, req, csrfToken:req.csrfToken()});
     } else {
         // Throws error if tweet not found
         next(gameNotFoundError(gameId));
@@ -119,7 +161,7 @@ router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
 
     if(!validationErrors.isEmpty()){
         const errors = validationErrors.array().map((error)=>error.msg)
-        res.status(500).send(new Error('Error!'))
+        res.status(500).send({errors})
         return
     }
 
@@ -154,7 +196,7 @@ router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
         await game.save();
 
         // Sends response with review, and reviews
-        res.json({rating, username:user.userName});
+        res.json({rating, username:user.userName, overallRating:game.overallRating});
     }
 
 }))
@@ -184,10 +226,9 @@ router.put('/:id(\\d+)', asyncHandler(async (req, res, next) => {
         })
 
         game.overallRating = ((game.overallRating*(users.length-1)+overall)/users.length).toFixed(1)
-
         await game.save();
 
-        res.json({ rating, username:user.userName })
+        res.json({rating, username:user.userName, overallRating:game.overallRating});
 
     } else {
         next(gameNotFoundError(gameId))
@@ -206,8 +247,15 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     let rating = await Rating.findOne({ where: { gameId, userId } })
 
     if (rating) {
+
+        const game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings", }]})
+        const { user_ratings:users } = game
+
+        game.overallRating = ((game.overallRating*users.length-rating.overall)/(users.length-1)).toFixed(1)
+        await game.save();
+
         await rating.destroy()
-        res.status(204).end()
+        res.json({overallRating:game.overallRating})
 
     } else {
         next(gameNotFoundError(gameId))

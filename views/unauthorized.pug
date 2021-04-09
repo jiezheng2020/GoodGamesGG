@@ -1,5 +1,5 @@
 extends layout
-
+include includes/utils.pug
 block content
     div.background
         h1.welcome Welcome to Good Games
@@ -9,5 +9,5 @@ block content
                     div.imagecontainer
                         div.images
                             a(href=`/games/${game.id}`)
-                                img(src=game.imageHref class='img')
+                                +createImg(game, 'img')
                                 a(href=`/games/${game.id}`)=game.title
