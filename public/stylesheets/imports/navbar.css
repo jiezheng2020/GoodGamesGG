@@ -59,15 +59,6 @@
 }
 
 .logout {
-  background: none;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 17.6px;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-}
-
-.logout {
   font-family: "Oswald", sans-serif;
   background: none;
   font-size: 21px;
