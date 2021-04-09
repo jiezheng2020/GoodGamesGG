@@ -42,42 +42,58 @@ const validateRating = [
 
 // comment
 /*************************** ROUTES ***************************/
+const limit=24;
 
 // All Games Page
 router.get('/', asyncHandler(async (req, res) => {
     // Finds all games from the database
-    const games = await Game.findAll();
+    const games = await Game.findAll({
+        order:[['overallRating','DESC']],
+        limit,
+    });
     const consoles = await Console.findAll()
 
     // Renders games page with list of all games from A-Z
     res.render("allgames", { title: "All Games", games, consoles });
 }));
 
-router.get('/api/:filter', asyncHandler(async (req, res) => {
-    const filterType = req.params.filter
-    console.log(filterType)
+router.post('/api', asyncHandler(async (req, res) => {
+    const {filter, orderType}=req.body
+    let games;
 
-    if(filterType.match(/\d/g)){
-        const min=parseInt(filterType)
-        const games = await Game.findAll({
+    if(filter.match(/\d/g)){
+        const min=parseInt(filter)
+        games = await Game.findAll({
             where:{
                 overallRating: {
                     [Op.gte]:min
                 }
             },
-            limit:24
+            order:[[orderType,'DESC']],
+            limit
         })
+
         res.json({games})
+    } else if(filter==='rating'){
+        games = await Game.findAll({
+            order:[[orderType,'DESC']],
+            limit,
+        });
     } else {
-        const consoleType=filterType
-        const games = await Game.findAll({
+        const consoleType=filter
+        games = await Game.findAll({
             include:{
                 model:Console,
+                where: {
+                    name:consoleType
+                }
             },
-            limit:24
+            order:[[orderType,'DESC']],
+            limit,
         })
-        res.json({success:'success'})
     }
+
+    res.json({games})
 })
 );
 

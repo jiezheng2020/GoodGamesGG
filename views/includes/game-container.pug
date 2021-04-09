@@ -1,6 +1,7 @@
 each game in games
     div(class='main__games-info')
-        +createImg(game, 'main__games-img')
+        a(href=`/games/${game.id}`)
+            +createImg(game, 'main__games-img')
         a(class='main__games-name' href=`/games/${game.id}`)=game.title
         select(class='main__sidebar-status')
                 option(class='main__sidebar-status-option') -- Played Status --

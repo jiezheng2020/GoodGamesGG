@@ -155,6 +155,9 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
             const editRatingDiv = document.querySelector('.main__game-ratings-edit')
             editRatingDiv.classList.add('main__game--hidden')
 
+            const submitButton = document.querySelector('.main__game-ratings-add-button')
+            submitButton.name = 'POST'
+
             const existingRating = document.querySelector('.main__game-ratings-existing')
             existingRating.innerHTML =''
 
