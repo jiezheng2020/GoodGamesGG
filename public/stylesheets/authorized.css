@@ -5,6 +5,7 @@ body {
 }
 
 .splashpage {
+  display: grid;
   background: url("../images/10sDgAY-black-gradient-wallpaper.jpg");
   background-size: cover;
   opacity: 0.95;
@@ -18,21 +19,6 @@ body {
   background-size: cover;
   margin-bottom: 50px;
 }
-
-.recommendations__authorized-block {
-  display: flex;
-  justify-content: center;
-}
-.recommendations__authorized {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin: 50px 200px;
-  width: 1500px;
-  height: 500px;
-  background-color: blue;
-}
-
 .welcome__authorized {
   font-family: "Oswald", sans-serif;
   display: flex;
@@ -40,6 +26,17 @@ body {
   margin-top: -120px;
   font-size: 70px;
   color: rgb(255, 255, 255);
+}
+
+.recommendations__authorized-block {
+  display: grid;
+  justify-content: center;
+  margin-top: 2%;
+}
+
+.recommendations__authorized {
+  display: grid;
+  grid-template-columns: 0.46fr 0.54fr;
 }
 
 .textbox__authorized {
