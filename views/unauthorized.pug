@@ -10,16 +10,16 @@ block content
             input(name='userName' type='hidden' value='DemoUser' class='demoForm')
             input(name='password' type='hidden' value='demoTime' class='demoForm')
             button(id='demoUser' type='submit') Demo
-        h1.welcome Welcome to Good Games
-        h3.gamesofthemonth GoodGames Games Of The Month:
-        div.background
+        h1.home__welcome Welcome to Good Games
+        h3.gamesofthemonth Games of the month:
+        div.home__background
             div#top10
                 each game in games
-                    div.imagecontainer
-                        div.images
+                    div.home__imagecontainer
+                        div.home__images
                             a(href=`/games/${game.id}`)
-                                +createImg(game, 'img')
+                                +createImg(game, 'home__img')
                             div.image_writing
-                                span.rating #{game.overallRating} / 5 ★
+                                span.home__rating #{game.overallRating} / 5 ★
                                 br
-                                a(href=`/games/${game.id}` class='title')=game.title
+                                a(href=`/games/${game.id}` class='home__title')=game.title
