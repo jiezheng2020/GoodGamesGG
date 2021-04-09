@@ -199,6 +199,7 @@ router.post(
 
       req.session.user = {
         id: user.id,
+        userName: user.userName,
         firstName: user.firstName,
         lastName: user.lastName,
       };
@@ -230,6 +231,7 @@ router.post(
     if (isPassword) {
       req.session.user = {
         id: user.id,
+        userName: user.userName,
         firstName: user.firstName,
         lastName: user.lastName,
       };
@@ -246,8 +248,6 @@ router.post(
     res.redirect("/");
   })
 );
-
-
 
 /*************************** EXPORTS ***************************/
 module.exports = router;

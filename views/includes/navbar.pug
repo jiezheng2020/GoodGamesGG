@@ -3,25 +3,25 @@ if req
 		div.navheader
 			nav#authorizedUser
 				div.navbar
-					div.logo
+					div.nav__logo
 						a(href='/') GoodGames
-					div.games
+					div.nav__games
 						a(href='/games') Games
-					div.mygames
+					div.nav__mygames
 						a(href='/mygames') My Games
-					div.links
+					div.nav__links
 						span.signup_link
 							form(action="/logout", method="post")
-								input(class='logout' value='LogOut' type="submit")
+								input(class='nav__logout' value='LogOut' type="submit")
 	else
 		div.navheader
 			nav#unauthorizedUser
 				div.navbar
-					div.logo
+					div.nav__logo
 						a(href='/') GoodGames
-					div.games
+					div.nav__games
 						a(href='/games') Games
-					div.links
+					div.nav__links
 						span.signup_link
 							a(href='/login') Login
 						span /
