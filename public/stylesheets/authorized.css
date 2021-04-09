@@ -1,6 +1,5 @@
 body {
-  min-height: 100vh;
-  padding-bottom: 50px;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
