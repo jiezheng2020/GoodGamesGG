@@ -399,7 +399,7 @@ module.exports = {
       return {
         title: game.name,
         publisher: "Sony Interactive Entertainment",
-        developer: "Song",
+        developer: "Sony",
         releaseDate: game.released,
         description: game.name,
         overallRating: game.rating,
