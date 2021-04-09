@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .navheader
 {
   border:rgb(10, 8, 8) 1px solid;
@@ -10,6 +11,17 @@
   top: 0;
   background-color: black;
   opacity: 0.4;
+=======
+.navheader {
+  font-family: "Oswald", sans-serif;
+  font-size: 20px;
+  height: 50px;
+  width: 100%;
+  position: sticky;
+  top: 0px;
+  background: linear-gradient(rgb(0, 0, 0), rgb(66, 66, 66));
+  opacity: 0.9;
+>>>>>>> main
   z-index: 100;
 }
 
@@ -21,31 +33,28 @@
   display: grid;
   color: white;
   grid-template-columns: repeat(12, 1fr);
+  padding: 0 8px;
 }
 
 .games {
   text-align: center;
   font-size: 1.1em;
-  padding-top: 5px;
   grid-column: 2/3;
 }
 
 .mygames {
   text-align: center;
   font-size: 1.1em;
-  padding-top: 5px;
   grid-column: 3/4;
 }
 
 .mygames:hover,
 .games:hover {
   font-weight: bold;
-  /* background-color: thistle; */
 }
 
 .links {
   font-size: 1.1em;
-  padding-top: 5px;
   grid-column-start: end;
 }
 
@@ -54,11 +63,14 @@
   justify-self: flex-start;
   font-style: italic;
   font-size: 1.3em;
+<<<<<<< HEAD
   padding-right: 3px;
 }
 
 .signup_link {
   margin-right: 3px;
+=======
+>>>>>>> main
 }
 
 .signup_link:hover,
@@ -66,8 +78,18 @@
   font-weight: bold;
 }
 
+<<<<<<< HEAD
 .login_link {
   margin-left: 3px;
+=======
+.logout {
+  background: none;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 17.6px;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+>>>>>>> main
 }
 
 .logout {

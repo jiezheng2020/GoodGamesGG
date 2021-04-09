@@ -1,6 +1,10 @@
-.home
-{
+body {
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+.home {
   background-color: rgba(0, 0, 0, 0.5);
+<<<<<<< HEAD
   margin: -15px -5px;
 }
 
@@ -13,24 +17,45 @@
 {
   color: red;
   font-family: fantasy;
+=======
+  margin: 0px;
+}
+
+.splashpage {
+  background-size: cover;
+  background-image: url("../images/action2.png");
+}
+.welcome {
+  color: goldenrod;
+  text-shadow: rgb(107, 81, 15) 3px 3px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+>>>>>>> main
   text-align: center;
-  display: flex;
   justify-content: center;
   font-size: 3em;
   text-transform: uppercase;
 }
 
+<<<<<<< HEAD
 
 #top10
 {
+=======
+.background{
+  display: flex;
+  justify-content: center;
+}
+
+#top10 {
+>>>>>>> main
   display: grid;
-  grid-template-columns: repeat(4, 2fr);
-  grid-template-rows: repeat(3, 2fr);
+  grid-template-columns: repeat(4, 200px);
+  grid-template-rows: repeat(3, 200px);
   row-gap: 10px;
-  margin-top: 100px;
   justify-items: center;
 }
 
+<<<<<<< HEAD
 
 /* .gamesofthemonth
 {
@@ -39,21 +64,56 @@
 
 
 .images
+=======
+.gamesofthemonth
+>>>>>>> main
 {
+  font-size: 1.2em;
+  color: whitesmoke;
+  text-align: center;
+}
+
+.images {
+  object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.imagecontainer {
+  height: 180px;
+  width: 150px;
+  border: black 2px solid;
+  border-radius: 20px;
+  box-sizing:border-box;
+  background-color:rgba(100, 100, 100, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img {
+  height: 100px;
+  width: 100px;
+  image-rendering: optimizeQuality;
   object-fit: cover;
 }
 
-.imagecontainer
-{
-  height: 220px;
-  width: 220px;
-  border: red 3px solid;
-  z-index: 3;
+.rating{
+  color: gold;
 }
 
-.img
-{
-  height: 200px;
-  width: 220px;
-  image-rendering: optimizeQuality;
+.title{
+  text-decoration: none;
+  color: black;
+}
+
+.image_writing{
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.image_writing > a:hover{
+  font-weight: bold;
 }
