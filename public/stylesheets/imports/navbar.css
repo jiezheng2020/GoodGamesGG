@@ -18,6 +18,7 @@
   display: grid;
   color: white;
   grid-template-columns: repeat(12, 1fr);
+  padding: 0 8px;
 }
 
 .games {
