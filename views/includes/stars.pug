@@ -2,7 +2,7 @@ mixin loadStars(numberOfStars, string)
   div=string
     div(class=`main__ratings-stars`)
       div(class=`main__ratings-stars-empty`)
-      div(class=`main__ratings-stars-full` style=`width:${((numberOfStars/5).toFixed(1))*100}%`)
+      div(class=`main__ratings-stars-full` style=`width:${((numberOfStars/5).toFixed(2))*100}%`)
 
 mixin createStars()
   div(class='main__game-ratings-add-stars')
