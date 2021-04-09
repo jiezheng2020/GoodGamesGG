@@ -30,9 +30,9 @@ h4 {
 
 .sub__container {
   margin: auto;
-  margin-top: 70px;
+  margin-top: 100px;
   width: 600px;
-  background-color: rgb(255, 255, 255);
+  background-color: white;
 }
 
 .form__container {
@@ -77,7 +77,7 @@ input[type="checkbox"] {
   font-size: 18px;
   font-weight: bold;
   border-radius: 10px;
-  background-color: rgb(8, 102, 11);
+  background-color: rgb(0, 3, 177);
   color: white;
   padding: 10px 50px;
   margin: 40px 0;
@@ -90,11 +90,12 @@ input[type="checkbox"] {
 }
 
 .errors {
-  margin-top: 20px;
   display: flex;
   justify-content: center;
 }
 .alert.alert-danger {
+  margin: 20px 0;
+  padding: 0px 25px 20px 25px;
   color: white;
   font-weight: bold;
   background-color: red;

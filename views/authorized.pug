@@ -1,11 +1,25 @@
-extends layout
+extends layout.pug
+include includes/utils.pug
 
+append head
+    link(rel='stylesheet', href='./stylesheets/authorized.css')
 block content
-    h1 This is Authorized
-    div
-        each game in games
-            div
-                div
-                    img(src=game.imageHref)
-                div
-                    label #{game.title}
+    div.main
+        div.hero
+        div.welcome GoodGamesGG
+        div.recommendations
+            div.textbox
+                div.text These are the top games from your preferences!
+                each game in games
+                    div.borders
+                        div.gamestext #{game.title}, by #{game.publisher} currently has a rating of #{game.overallRating}
+            div.display
+                div.fadein
+                    img(id='f1' src=games[0].imageHref)
+                    img(id='f2' src=games[1].imageHref)
+                    img(id='f3' src=games[2].imageHref)
+                    img(id='f4' src=games[3].imageHref)
+                    img(id='f5' src=games[4].imageHref)
+                    img(id='f6' src=games[5].imageHref)
+                    img(id='f7' src=games[6].imageHref)
+                    img(id='f8' src=games[7].imageHref)
