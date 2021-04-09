@@ -1,4 +1,4 @@
-header
+.navheader
 {
   border:rgb(10, 8, 8) 1px solid;
   margin-bottom: 5px;
@@ -8,32 +8,29 @@ header
   box-sizing: border-box;
   position: sticky;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: black;
+  opacity: 0.4;
+  z-index: 100;
 }
 
-.navbar  a
-{
-
+.navbar a {
   text-decoration: none;
   color: white;
 }
-.navbar
-{
+.navbar {
   display: grid;
   color: white;
   grid-template-columns: repeat(12, 1fr);
 }
 
-.games
-{
+.games {
   text-align: center;
   font-size: 1.1em;
   padding-top: 5px;
   grid-column: 2/3;
 }
 
-.mygames
-{
+.mygames {
   text-align: center;
   font-size: 1.1em;
   padding-top: 5px;
@@ -41,42 +38,43 @@ header
 }
 
 .mygames:hover,
-.games:hover
-{
+.games:hover {
   font-weight: bold;
   /* background-color: thistle; */
 }
 
-.links
-{
+.links {
   font-size: 1.1em;
   padding-top: 5px;
   grid-column-start: end;
 }
 
-
-.logo
-{
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+.logo {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   justify-self: flex-start;
   font-style: italic;
   font-size: 1.3em;
   padding-right: 3px;
 }
 
-.signup_link
-{
+.signup_link {
   margin-right: 3px;
 }
 
 .signup_link:hover,
-.login_link:hover
-{
+.login_link:hover {
   font-weight: bold;
 }
 
-
-.login_link
-{
+.login_link {
   margin-left: 3px;
+}
+
+.logout {
+  background: none;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 17.6px;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
 }
