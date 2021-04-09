@@ -4,23 +4,23 @@ include includes/utils.pug
 append head
     link(rel='stylesheet', href='./stylesheets/authorized.css')
 block content
-    div.main
-        div.hero
-        div.welcome GoodGamesGG
-        div.recommendations-block
-            div.recommendations
-                div.textbox
-                    div.text Here are some games from your preferences!
+    div.main__authorized
+        div.hero__authorized
+        div.welcome__authorized GoodGamesGG
+        div.recommendations__authorized-block
+            div.recommendations__authorized
+                div.textbox__authorized
+                    div.text__authorized Here are some games from your preferences!
                     each game in games
-                        div.borders
-                            div.gamestext #{game.title}, by #{game.publisher} currently has a rating of #{game.overallRating}
-                div.display
+                        div.borders__authorized
+                            div.gamestext__authorized #{game.title}, by #{game.publisher} currently has a rating of #{game.overallRating}
+                div.display__authorized
                     div.fadein
-                        img(id='f1' src=games[0].imageHref)
-                        img(id='f2' src=games[1].imageHref)
-                        img(id='f3' src=games[2].imageHref)
-                        img(id='f4' src=games[3].imageHref)
-                        img(id='f5' src=games[4].imageHref)
-                        img(id='f6' src=games[5].imageHref)
-                        img(id='f7' src=games[6].imageHref)
-                        img(id='f8' src=games[7].imageHref)
+                        img(class="auth_img" id='f1' src=games[0].imageHref)
+                        img(class="auth_img" id='f2' src=games[1].imageHref)
+                        img(class="auth_img" id='f3' src=games[2].imageHref)
+                        img(class="auth_img" id='f4' src=games[3].imageHref)
+                        img(class="auth_img" id='f5' src=games[4].imageHref)
+                        img(class="auth_img" id='f6' src=games[5].imageHref)
+                        img(class="auth_img" id='f7' src=games[6].imageHref)
+                        img(class="auth_img" id='f8' src=games[7].imageHref)

@@ -1,8 +1,6 @@
 body {
   min-height: 100vh;
   padding-bottom: 50px;
-}
-.home {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -10,23 +8,22 @@ body {
   background: url("../images/10sDgAY-black-gradient-wallpaper.jpg");
   background-size: cover;
   opacity: 0.95;
-  /* background-color: rgb(7, 0, 37); */
 }
-.main {
+.main__authorized {
   height: 100vh;
 }
-.hero {
+.hero__authorized {
   height: 400px;
   background: url("../images/authorized-background.jpg");
   background-size: cover;
   margin-bottom: 50px;
 }
 
-.recommendations-block {
+.recommendations__authorized-block {
   display: flex;
   justify-content: center;
 }
-.recommendations {
+.recommendations__authorized {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -36,7 +33,7 @@ body {
   background-color: blue;
 }
 
-.welcome {
+.welcome__authorized {
   font-family: "Oswald", sans-serif;
   display: flex;
   justify-content: center;
@@ -45,7 +42,7 @@ body {
   color: rgb(255, 255, 255);
 }
 
-.textbox {
+.textbox__authorized {
   width: 700px;
   height: 500px;
   display: grid;
@@ -54,7 +51,7 @@ body {
   opacity: 0.95;
 }
 
-.text {
+.text__authorized {
   justify-self: center;
   font-family: "Oswald", sans-serif;
   font-size: 25px;
@@ -62,13 +59,13 @@ body {
   height: 15px;
 }
 
-.borders {
+.borders__authorized {
   border: solid black;
   border-width: thin;
   display: grid;
 }
 
-.gamestext {
+.gamestext__authorized {
   font-family: "Oswald", sans-serif;
   font-size: 18px;
   display: flex;
@@ -79,19 +76,19 @@ body {
   width: 100%;
 }
 
-img {
+img.auth_img {
   width: 800px;
   height: 500px;
   object-fit: cover;
 }
-.display {
+.display__authorized {
   height: 500px;
   width: 800px;
   display: flex;
   background-color: green;
 }
 
-.fadein img {
+.fadein img.auth_img {
   position: absolute;
   margin: 0;
   animation-name: fade;
