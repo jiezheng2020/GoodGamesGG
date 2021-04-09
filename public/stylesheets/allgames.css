@@ -5,6 +5,11 @@
 @import "./imports/add-star-rating\(hover\).css";
 
 /********* Main Section *********/
+body {
+    background-image: url("../images/background.jpg");
+    background-size: cover;
+    margin: 0px;
+}
 
 .main__sidebar ul{
     padding: 0px 3px;
@@ -16,15 +21,23 @@
     padding: 5px 10px;
     font-size: 18px;
     list-style: none;
-    color: blue;
+    color: white;
     /* border: .5px solid grey; */
+}
+
+.main__sidebar-order,
+.main__sidebar-filter-alls,
+.main__sidebar-filter-ratings,
+.main__sidebar-filter--consoles {
+    color:cyan
 }
 
 .main__sidebar li:hover{
     text-decoration: underline;
     cursor: pointer;
-    color: white;
-    background: grey;
+    color:darkcyan;
+    /* background: grey; */
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 
@@ -35,6 +48,7 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
     padding: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .main__games-pages{
@@ -63,7 +77,8 @@
 .main__games-page--current{
     transform: scale(1.2);
     transition-duration: .2s;
-    background-color: #DFDFE5;
+    /* background-color: #DFDFE5; */
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 

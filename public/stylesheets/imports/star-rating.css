@@ -2,7 +2,7 @@
     position: relative;
     vertical-align: middle;
     display: inline-block;
-    color: grey;
+    color:rgba(1, 129, 129, 0.842);
     overflow: hidden;
 }
 
@@ -12,7 +12,7 @@
     top: 0;
     white-space: nowrap;
     overflow: hidden;
-    color: black;
+    color:cyan;
 }
 
 .main__ratings-stars-empty:before,

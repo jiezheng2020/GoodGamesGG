@@ -4,8 +4,10 @@
     margin: 10px;
     width: 200px;
     height: 300px;
-    border: 2px solid rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    border-radius: 6px;
     overflow: hidden;
+    background-color: black;
     /* transition: .05s; */
 }
 
@@ -16,10 +18,11 @@
 
 .main__games-img{
     width: 200px;
-    height: 200px;
+    height: 116px;
     object-fit: cover;
 }
 
 .main__games-body{
-    margin: 0px
+    margin: 0px;
+    color: white
 }
