@@ -1,15 +1,12 @@
-.navheader
-{
-  border:rgb(10, 8, 8) 1px solid;
-  margin-bottom: 5px;
-  padding: 10px;
-  height: auto;
-  width: auto;
-  box-sizing: border-box;
+.navheader {
+  font-family: "Oswald", sans-serif;
+  font-size: 20px;
+  height: 50px;
+  width: 100vw;
   position: sticky;
-  top: 0;
-  background-color: black;
-  opacity: 0.4;
+  top: 0px;
+  background: linear-gradient(rgb(0, 0, 0), rgb(66, 66, 66));
+  opacity: 0.9;
   z-index: 100;
 }
 
@@ -21,31 +18,28 @@
   display: grid;
   color: white;
   grid-template-columns: repeat(12, 1fr);
+  padding: 0 8px;
 }
 
 .games {
   text-align: center;
   font-size: 1.1em;
-  padding-top: 5px;
   grid-column: 2/3;
 }
 
 .mygames {
   text-align: center;
   font-size: 1.1em;
-  padding-top: 5px;
   grid-column: 3/4;
 }
 
 .mygames:hover,
 .games:hover {
   font-weight: bold;
-  /* background-color: thistle; */
 }
 
 .links {
   font-size: 1.1em;
-  padding-top: 5px;
   grid-column-start: end;
 }
 
@@ -54,20 +48,11 @@
   justify-self: flex-start;
   font-style: italic;
   font-size: 1.3em;
-  padding-right: 3px;
-}
-
-.signup_link {
-  margin-right: 3px;
 }
 
 .signup_link:hover,
 .login_link:hover {
   font-weight: bold;
-}
-
-.login_link {
-  margin-left: 3px;
 }
 
 .logout {

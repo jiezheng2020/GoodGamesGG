@@ -1,14 +1,16 @@
-extends layout
+extends layout.pug
+include includes/utils.pug
 
+append head
+    link(rel='stylesheet', href='./stylesheets/home-page.css')
 block content
     div.background
         h1.welcome Welcome to Good Games
         main
-            h3.monthly GoodGames games of the month:
-                div#top10
-                    each game in games
-                        div.imagecontainer
-                            div.images
-                                a(href=`/games/${game.id}`)
-                                    img(src=game.imageHref class='img')
-                                    a(href=`/games/${game.id}`)=game.title
+            div#top10
+                each game in games
+                    div.imagecontainer
+                        div.images
+                            a(href=`/games/${game.id}`)
+                                +createImg(game, 'img')
+                                a(href=`/games/${game.id}`)=game.title

@@ -37,6 +37,7 @@ const libraryNotFound = (libraryId) => {
 
 router.get('/',
   asyncHandler(async (req, res, next) => {
+    console.log("test")
     // const userId = parseInt(req.params.userId, 10);
     // const user = await db.User.findByPk(userId);
     // if (!user) {
@@ -49,15 +50,87 @@ router.get('/',
       })
 
       const { user_mygames: games } = user;
+    const libraries = await db.Library.findAll({
+      where: {
+        userId: userId
+      }
+    })
+      // res.json({games})
+      res.render('mygames', { title: "My Games", games, libraries} )
+    // }
+}));
+
+router.get('/api',
+  asyncHandler(async (req, res, next) => {
+    console.log("test")
+    // const userId = parseInt(req.params.userId, 10);
+    // const user = await db.User.findByPk(userId);
+    // if (!user) {
+    //   next(userNotFound(userId))
+    // } else {
+    const userId = 1
+    const user = await db.User.findByPk(userId,
+      {
+        include: [{ model: db.Game, as: "user_mygames" }]
+      })
+
+    const { user_mygames: games } = user;
+    const libraries = await db.Library.findAll({
+      where: {
+        userId: userId
+      }
+    })
+    res.json({games})
+    // res.render('mygames', { title: "My Games", games, libraries })
+    // }
+  }));
+
+
+router.get('/:played(\\d)',
+  asyncHandler(async (req, res, next) => {
+    // const userId = parseInt(req.params.userId, 10);
+    // const user = await db.User.findByPk(userId);
+    // if (!user) {
+    //   next(userNotFound(userId))
+    // } else {
+    const userId = 1
+    const playedStatus = parseInt(req.params.played, 10)
+    const games = await db.My_game.findAll({where: {played: playedStatus}})
+    const finalList = games.map((game) => game.gameId)
+    const response = []
+
+    const finalGames = await db.Game.findAll({where: {id: finalList}})
+    // finalList.forEach(async (gameId) => {
+    //     let game = await db.Game.findByPk(gameId)
+    //     // console.log(game.id)
+    //     await response.push(game)
+    // })
+    // console.log(finalGames)
+    // const user = await db.User.findByPk(userId,
+      // {
+      //   include: [{ model: db.Game, as: "user_mygames", where: My_game.played === playedStatus}],
+      // })
+
+    // const { user_mygames: games } = user;
     // const libraries = await db.Library.findAll({
     //   where: {
     //     userId: userId
     //   }
     // })
-      res.json({games})
-      // res.render('mygames', { title: "My Games", games, libraries} )
+    res.json(finalGames)
+    // res.render('mygames', { title: "My Games", games, libraries })
     // }
-}));
+  }));
+
+
+
+
+
+
+
+
+
+
 
 // /mygames/ fetch for shelves
 // router.get('/libraries',
@@ -110,6 +183,7 @@ router.get('/libraries/:libraryId(\\d+)',
 // add to overall mygames list
 router.post('/:gameId(\\d+)/add',
   asyncHandler(async (req, res) => {
+    console.log('test')
     const gameId = parseInt(req.params.gameId, 10);
     const userId = 1
     const exists = await db.My_game.findOne({
@@ -130,7 +204,7 @@ router.post('/:gameId(\\d+)/add',
     if (!played) {
         played = 0;
     }
-    
+
     const mygame = await db.My_game.create({played, userId, gameId});
     res.json({ mygame });
     // res.redirect('/:userId(\\d+)');
@@ -139,7 +213,7 @@ router.post('/:gameId(\\d+)/add',
 // add a library
 router.post('/libraries/add',
   asyncHandler(async (req, res) => {
-    console.log("===============================================")
+    console.log("test")
       const userId = 1
       const { name } = req.body
       console.log(name)
@@ -166,7 +240,7 @@ router.post('/libraries/:libraryId(\\d+)/:gameId(\\d+)/add',
         res.json({exists})
         return
     }
-    
+
     const libraryGame = await db.Library_game.create({libraryId, gameId});
       res.json({ libraryGame });
     // res.redirect('/:userId(\\d+)/libraries/:libraryId(\\+)');
@@ -182,7 +256,7 @@ router.put('/:gameId(\\d+)/played',
                   gameId: gameId
                 }
             })
-      
+
       if (!mygame) {
         next(gameNotFound(mygame))
       } else {
@@ -215,7 +289,7 @@ router.delete('/:userId(\\d+)/:gameId(\\d+)/delete',
 }))
 
 // remove game from library
-router.delete('/libraries/:libraryId(\\d+)/:gameId(\\d+)/delete', 
+router.delete('/libraries/:libraryId(\\d+)/:gameId(\\d+)/delete',
   asyncHandler(async (req, res, next) => {
     const libraryId = parseInt(req.params.libraryId, 10);
     const gameId = parseInt(req.params.gameId, 10)
@@ -268,10 +342,9 @@ router.put('/libraries/:libraryId(\\d+)/edit',
       res.json({ newLibrary })
       //   res.redirect('/:userId(\\d+)/libraries');
     }
-  
+
   }));
 
 
 /*************************** EXPORTS ***************************/
 module.exports = router;
-

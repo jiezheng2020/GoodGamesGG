@@ -1,6 +1,7 @@
 extends layout.pug
 
 include includes/stars.pug
+include includes/utils.pug
 
 append head
     link(rel='stylesheet' type="text/css" href='/stylesheets/game.css')
@@ -9,15 +10,16 @@ append head
 block content
     div(class='main')
         div(class='main__sidebar')
-            img(class='main__sidebar-img' src=`${game.imageHref}`)
+            +createImg(game, 'main__sidebar-img')
             +loadStars(game.overallRating, 'Overall Rating: ')
             select(class='main__sidebar-status')
                 option(class='main__sidebar-status-option') -- Played Status --
                 option(class='main__sidebar-status-option') Played
                 option(class='main__sidebar-status-option') Currently Playing
                 option(class='main__sidebar-status-option') Want to Play
-                each library in libraries
-                    option(class='main__sidebar-status-option') #{library.name}
+                if libraries
+                    each library in libraries
+                        option(class='main__sidebar-status-option') #{library.name}
         div(class='main__games')
             div(class='main__game-info')
                 h3(class='main__game-info-title')=game.title

@@ -1,10 +1,7 @@
-.darkness {
+.home {
   background-image: url("../images/background.jpg");
   background-size: cover;
-}
-
-.home {
-  background: none;
+  margin: 0px;
 }
 
 .main__container {
