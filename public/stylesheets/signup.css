@@ -1,3 +1,11 @@
+.darkness {
+  background-image: url("../images/background.jpg");
+  background-size: cover;
+}
+
+.home {
+  background: none;
+}
 body {
   background-image: url("../images/background.jpg");
   background-size: cover;

@@ -20,7 +20,7 @@ const validateRating = [
 ]
 
 
-/*************************** LOADUP FUNCTION ***************************/
+/*************************** FUNCTIONS ***************************/
 // const updateOverallRatings = async()=>{
 //     const games = await Game.findAll({include:[{model:User, as:'user_ratings'}]});
 //     games.forEach(async(game)=>{
@@ -77,7 +77,7 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
     const gameId = req.params.id
     const userId = 1;
 
-    let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings" }]})
+    let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings", }]})
 
     if(game) {
         // Makes rating array to populate
@@ -85,7 +85,7 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
         const releaseDate = `${months[game.releaseDate.getMonth()]} ${game.releaseDate.getDate()}, ${game.releaseDate.getFullYear()}`
         // res.json(game)
         // Renders game page with specific game info6
-        res.render('game', {title:game.title, game, releaseDate, users, csrfToken:req.csrfToken()});
+        res.render('game', {title:game.title, game, releaseDate, users, userId, csrfToken:req.csrfToken()});
     } else {
         // Throws error if tweet not found
         next(gameNotFoundError(gameId));
@@ -97,11 +97,13 @@ router.get('/:id(\\d+)/api', csrfProtection, asyncHandler(async(req,res,next)=>{
     const gameId = req.params.id
     const userId = 1;
 
-    let rating = await Rating.findOne({where:{gameId, userId}})
+    const rating = await Rating.findOne({where:{gameId, userId}})
 
     if(rating){
+        const user = await User.findByPk(userId)
+        const {userName:username}=user
         const {overall, body} = rating
-        res.json({overall, body})
+        res.json({rating, username})
     } else {
         res.status(400).send({message:'Rating not found'})
     }
@@ -138,8 +140,18 @@ router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
             gameId
         });
 
-        let user = await User.findByPk(userId)
-        console.log(user.userName)
+        // let user = await User.findByPk(userId)
+
+        const game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings", }]})
+        const { user_ratings:users } = game
+
+        let [user] = users.filter((user)=>{
+            return user.id=userId
+        })
+
+        game.overallRating = ((game.overallRating*(users.length-1)+overall)/users.length).toFixed(1)
+
+        await game.save();
 
         // Sends response with review, and reviews
         res.json({rating, username:user.userName});
@@ -164,7 +176,18 @@ router.put('/:id(\\d+)', asyncHandler(async (req, res, next) => {
 
         await rating.save()
 
-        res.json({ overall, body })
+        const game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings", }]})
+        const { user_ratings:users } = game
+
+        let [user] = users.filter((user)=>{
+            return user.id=userId
+        })
+
+        game.overallRating = ((game.overallRating*(users.length-1)+overall)/users.length).toFixed(1)
+
+        await game.save();
+
+        res.json({ rating, username:user.userName })
 
     } else {
         next(gameNotFoundError(gameId))

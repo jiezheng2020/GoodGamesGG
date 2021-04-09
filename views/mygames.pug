@@ -15,6 +15,12 @@ block content
                     div(class="main__sidebar")
                         //- li(class='main__sidebar-library--user-library') #{library.name}
                         a(class="main__sidebar-library-link" href=`/mygames/libraries/${library.id}`) #{library.name}
+            div(class='main__sidebar')
+                form(action="/mygames/libraries/add", method="post")
+                    h3 Add new library:
+                    div(class="form__container")
+                        input(type="text", name="name", placeholder="Library name", required)
+                        button(type="submit") Add
             include includes/default-sidebar.pug
         div(class='main__games')
             ul(class='main__games-list')

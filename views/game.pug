@@ -16,6 +16,8 @@ block content
                 option(class='main__sidebar-status-option') Played
                 option(class='main__sidebar-status-option') Currently Playing
                 option(class='main__sidebar-status-option') Want to Play
+                each library in libraries
+                    option(class='main__sidebar-status-option') #{library.name}
         div(class='main__games')
             div(class='main__game-info')
                 h3(class='main__game-info-title')=game.title
@@ -29,18 +31,23 @@ block content
                 li(class='main__game-info-description' name='description')=game.description
             div(class='main__game-ratings')
                 div(class='main__game-ratings-add')
-                    h3 Add Rating/Review
+                    h3(class='main__game-ratings-add-h3') Add Rating/Review
                     +createStars()
                     textarea(class='main__game-ratings-add-review' placeholder='Please enter your review here')
-                    button(class='main__game-ratings-add-button') Submit
+                    button(class='main__game-ratings-add-button' name='POST') Submit
                 div(class='main__game-ratings-edit main__game--hidden')
                     h3 Your Rating/Review
+                    button(class='main__game-ratings-edit-button') Edit
+                    button(class='main__game-ratings-delete-button') Delete
+                    div(class='main__game-ratings-existing')
+
                 div(class='main__game-ratings-all')
                     h3 Rating/Reviews
                     each user in users
-                        div(class='main__game-ratings-single')
-                            p=user.userName
-                            +loadStars(user.Rating.overall)
-                            div(class='main__game-ratings-review') #{user.Rating.body}
+                        if user.id !== userId
+                            div(class='main__game-ratings-single')
+                                p=user.userName
+                                +loadStars(user.Rating.overall)
+                                div(class='main__game-ratings-review') #{user.Rating.body}
 
                     //- each rating in ratings
