@@ -22,7 +22,7 @@ function hideAddCreateEdit(rating, username){
 
 function loadStarRating(numberOfStars){
     const stars = document.querySelector('.main__game-ratings-add-stars')
-    let string = '<span id="main__game-ratings-error"></span>';
+    let string=''
 
     for(let i=5;i>0;i--){
         if(i<=numberOfStars){
@@ -32,6 +32,8 @@ function loadStarRating(numberOfStars){
         }
     }
     stars.innerHTML = string
+    document.querySelector('.main__game-ratings-error').innerHTML=''
+
 }
 
 function updateOverallRating(overallRating){
@@ -46,16 +48,25 @@ const stars = document.querySelector('.main__game-ratings-add-stars')
 window.addEventListener('DOMContentLoaded', async(event)=>{
 
 
-    /***************************** Loads User's Ratings if Exists  *****************************/
+    /***************************** Loads User's Ratings and Played Status if Exists  *****************************/
     const gameId = parseInt(window.location.href.match(/(\d+)$/g)[0])
 
     let res = await fetch(`http://localhost:8080/games/${gameId}/api`);
     let {rating, username} = await res.json()
     if(res.ok){
         hideAddCreateEdit(rating, username)
+        document.querySelector('.main__game-ratings-add-review').innerHTML = rating.body
+        loadStarRating(rating.overall)
     }
 
-    /***************************** Select Rating Functionaliy *****************************/
+
+    // let res = await fetch(`http://localhost:8080/mygames/${gameId}/api`);
+    // let {rating, username} = await res.json()
+    // if(res.ok){
+    //     hideAddCreateEdit(rating, username)
+    // }
+
+    /***************************** Select Rating Functionality *****************************/
     const stars = document.querySelector('.main__game-ratings-add-stars')
     stars.addEventListener('click', (event)=>{
         let num = event.target.className.slice(-1)
@@ -66,12 +77,14 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
         }
     })
 
-    /***************************** Submit a Rating *****************************/
+    /***************************** Submit A Rating *****************************/
     const submitButton = document.querySelector('.main__game-ratings-add-button')
     submitButton.addEventListener('click', async (event)=>{
         let overall = stars.innerHTML.match(/style/g)
+
         if(overall){overall=overall.length}
         else {overall=null}
+
         const body = document.querySelector('.main__game-ratings-add-review').value
 
         try {
@@ -88,9 +101,10 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
             }
 
 
-            const {rating,username, overallRating}= await res.json()
+            const {rating, username, overallRating}= await res.json()
 
-            // console.log(rating, username)
+            document.querySelector('.main__game-ratings-add-review').innerHTML = rating.body
+            loadStarRating(rating.overall)
 
             hideAddCreateEdit(rating, username)
 
@@ -99,7 +113,6 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
 
         } catch(err){
             const { errors } = await err.json()
-            console.log(errors)
             const errorSpan = document.querySelector('.main__game-ratings-error')
             const errorMessage = errors.map((error,i)=>{
                 return `${i+1}.${error}`
@@ -113,7 +126,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
     })
 
 
-    /***************************** Edit a Rating *****************************/
+    /***************************** Edit A Rating *****************************/
     const editButton = document.querySelector('.main__game-ratings-edit-button')
     editButton.addEventListener('click', async (event)=>{
         const submitHeader = document.querySelector('.main__game-ratings-add-h3')
@@ -125,12 +138,9 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
         const submitButton = document.querySelector('.main__game-ratings-add-button')
         submitButton.name = 'PUT'
 
-        const submitReview = document.querySelector('.main__game-ratings-add-review')
-        submitReview.value=rating.body
-
     })
 
-    /***************************** Delete a Rating *****************************/
+    /***************************** Delete A Rating *****************************/
     const deleteButton = document.querySelector('.main__game-ratings-delete-button')
     deleteButton.addEventListener('click', async (event)=>{
         try {
@@ -164,7 +174,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
             updateOverallRating(overallRating)
 
         } catch(err){
-            console.log(err)
+            // const { errors } = await err.json()
         }
     })
 
@@ -175,14 +185,13 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
     const playedStatus = document.querySelector('.main__sidebar-status')
     playedStatus.addEventListener('change', async(event)=>{
         const pStats= {
-            '-- Played Status --': 3,
             'Played': 2,
             'Currently Playing': 1,
             'Want to Play': 0,
         }
         const played = pStats[event.target.value]
 
-        if (played<3 && played>=0){
+        if (played){
             try {
                 let res = await fetch(`http://localhost:8080/mygames/${gameId}/add`,{
                     method: 'POST',
@@ -194,7 +203,6 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
 
                 const {exists} = await res.json()
 
-                console.log(exists)
                 if (exists){
                     res = await fetch(`http://localhost:8080/mygames/${gameId}/played`,{
                         method: 'PUT',
@@ -205,59 +213,19 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
                     })
 
                     const newStatus = await res.json()
-                    console.log(newStatus)
 
 
                 } else {
                     const newStatus = await res.json()
-                    console.log(newStatus)
                 }
 
 
             } catch(err){
                 const { errors } = await err.json()
-                console.log(errors)
-            }
-
-        } else if(played===3){
-            try {
-                let res = await fetch(`http://localhost:8080/mygames/libraries/:libraryId(\\d+)/:gameId(\\d+)/delete`,{
-                    method: 'DELETE',
-                    body: JSON.stringify({played}),
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
-                })
-
-                const {exists} = await res.json()
-
-                console.log(exists)
-                if (exists){
-                    res = await fetch(`http://localhost:8080/mygames/${gameId}/played`,{
-                        method: 'PUT',
-                        body: JSON.stringify({played}),
-                        headers: {
-                            "Content-Type": "application/json",
-                        }
-                    })
-
-                    const newStatus = await res.json()
-                    console.log(newStatus)
-
-
-                } else {
-                    const newStatus = await res.json()
-                    console.log(newStatus)
-                }
-
-
-            } catch(err){
-                const { errors } = await err.json()
-                console.log(errors)
             }
 
         } else {
-            const libraries = event.target.value
+            // const libraries = event.target.value
         }
 
 

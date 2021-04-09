@@ -40,63 +40,7 @@ const validateRating = [
 
 // updateOverallRatings()
 
-// comment
-/*************************** ROUTES ***************************/
-const limit=24;
-
-// All Games Page
-router.get('/', asyncHandler(async (req, res) => {
-    // Finds all games from the database
-    const games = await Game.findAll({
-        order:[['overallRating','DESC']],
-        limit,
-    });
-    const consoles = await Console.findAll()
-
-    // Renders games page with list of all games from A-Z
-    res.render("allgames", { title: "All Games", games, consoles });
-}));
-
-router.post('/api', asyncHandler(async (req, res) => {
-    const {filter, orderType}=req.body
-    let games;
-
-    if(filter.match(/\d/g)){
-        const min=parseInt(filter)
-        games = await Game.findAll({
-            where:{
-                overallRating: {
-                    [Op.gte]:min
-                }
-            },
-            order:[[orderType,'DESC']],
-            limit
-        })
-
-        res.json({games})
-    } else if(filter==='rating'){
-        games = await Game.findAll({
-            order:[[orderType,'DESC']],
-            limit,
-        });
-    } else {
-        const consoleType=filter
-        games = await Game.findAll({
-            include:{
-                model:Console,
-                where: {
-                    name:consoleType
-                }
-            },
-            order:[[orderType,'DESC']],
-            limit,
-        })
-    }
-
-    res.json({games})
-})
-);
-
+/*************************** NOT FOUND FUNCTIONS ***************************/
 // Game Not Found FUNCTION
 const gameNotFoundError = (id) => {
     const error = new Error(`Game with ${id} could not be found`);
@@ -105,6 +49,7 @@ const gameNotFoundError = (id) => {
     return error;
 };
 
+// Rating Exists FUNCTION
 const ratingExists = (id) =>{
     const error = new Error(`Rating for game with ${id} already exists`);
     error.title = "Ratings already exists";
@@ -113,14 +58,71 @@ const ratingExists = (id) =>{
 }
 
 
-// Variable for Date Change
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+/*************************** ROUTES ***************************/
+const limit=12;
 
-// Specific Games Page
+// All Games Page Route
+router.get('/', asyncHandler(async (req, res) => {
+    // Finds all games from the database
+    const games = await Game.findAll({
+        order:[['overallRating','DESC']],
+    });
+    const pageNum = Math.ceil(games.length/limit);
+    const consoles = await Console.findAll()
+
+
+    // Renders games page with list of all games from A-Z
+    res.render("allgames", { title: "All Games", games:games.slice(0,limit), consoles, pageNum});
+}));
+
+
+
+// Api GET Route For Games List
+router.post('/api', asyncHandler(async (req, res) => {
+    const {filter, orderType, pageNum}=req.body
+
+    if(filter.match(/^\d/g)){
+        const min=parseInt(filter)
+        const games = await Game.findAll({
+            where:{
+                overallRating: {
+                    [Op.gte]:min
+                }
+            },
+            order:[[orderType,'DESC']]
+        })
+        res.json({games})
+
+    } else if(filter==='all'){
+        const games = await Game.findAll({
+            order:[[orderType,'DESC']]
+        });
+        res.json({games})
+
+    } else {
+        const consoleType=filter
+        const games = await Game.findAll({
+            include:{
+                model:Console,
+                as: 'game_consoles',
+                where: {
+                    name:consoleType
+                }
+            },
+            order:[[orderType,'DESC']]
+        })
+        res.json({games})
+
+    }
+})
+);
+
+
+// Single Game Page Route
 router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
 
     const gameId = req.params.id
-    const userId = 1;
+    const {id:userId} = req.session.user;
 
     let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings"},{ model:Library, as: "library_games"}]})
 
@@ -139,10 +141,14 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
         } else {
             libraries = null
         }
+
+        // Array of month's for date conversion
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
         // Makes rating array to populate
         const releaseDate = `${months[game.releaseDate.getMonth()]} ${game.releaseDate.getDate()}, ${game.releaseDate.getFullYear()}`
 
-        // Renders game page with specific game info6
+        // Renders game page with specific game info
         res.render('game', {title:game.title, game, releaseDate, users, userId, req, csrfToken:req.csrfToken()});
     } else {
         // Throws error if tweet not found
@@ -150,10 +156,12 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
     }
 }))
 
+
+// API Get Route For A User's Game Rating
 router.get('/:id(\\d+)/api', csrfProtection, asyncHandler(async(req,res,next)=>{
 
     const gameId = req.params.id
-    const userId = 1;
+    const {id:userId} = req.session.user;
 
     const rating = await Rating.findOne({where:{gameId, userId}})
 
@@ -169,7 +177,9 @@ router.get('/:id(\\d+)/api', csrfProtection, asyncHandler(async(req,res,next)=>{
 }))
 
 
-// Create review or rating on game
+
+
+// API Post Route To CREATE A Rating/Review
 router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
     // Defines variables
 
@@ -182,7 +192,7 @@ router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
     }
 
     const gameId = req.params.id
-    const userId = 1;
+    const {id:userId} = req.session.user;
 
     let rating = await Rating.findOne({ where: { gameId, userId } })
 
@@ -198,17 +208,16 @@ router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
             gameId
         });
 
-        // let user = await User.findByPk(userId)
-
         const game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings", }]})
         const { user_ratings:users } = game
 
+        console.log(users)
+
         let [user] = users.filter((user)=>{
-            return user.id=userId
+            return user.id===userId
         })
 
         game.overallRating = ((game.overallRating*(users.length-1)+overall)/users.length).toFixed(1)
-
         await game.save();
 
         // Sends response with review, and reviews
@@ -218,11 +227,11 @@ router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
 }))
 
 
-// Edit review or rating on game
+// API Post Route To EDIT A Rating/Review
 router.put('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     // Defines variables
     const gameId = req.params.id
-    const userId = 1;
+    const {id:userId} = req.session.user;
     const { overall, body } = req.body
 
     // Creates rating instance with above variables
@@ -238,7 +247,7 @@ router.put('/:id(\\d+)', asyncHandler(async (req, res, next) => {
         const { user_ratings:users } = game
 
         let [user] = users.filter((user)=>{
-            return user.id=userId
+            return user.id===userId
         })
 
         game.overallRating = ((game.overallRating*(users.length-1)+overall)/users.length).toFixed(1)
@@ -253,11 +262,12 @@ router.put('/:id(\\d+)', asyncHandler(async (req, res, next) => {
 }))
 
 
-// Delete review or rating on game
+
+// API Post Route To DELETE A Rating/Review
 router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     // Defines variables
     const gameId = req.params.id
-    const userId = 1;
+    const {id:userId} = req.session.user;
 
     // Creates rating instance with above variables
     let rating = await Rating.findOne({ where: { gameId, userId } })
