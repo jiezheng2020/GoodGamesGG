@@ -92,7 +92,7 @@ img {
   margin: 0;
   animation-name: fade;
   animation-iteration-count: infinite;
-  animation-duration: 18s;
+  animation-duration: 24s;
 }
 
 @-webkit-keyframes fade {
@@ -132,26 +132,26 @@ img {
 }
 
 #f1 {
-  animation-delay: -16s;
+  animation-delay: -24s;
 }
 #f2 {
-  animation-delay: -14s;
+  animation-delay: -21s;
 }
 #f3 {
-  animation-delay: -12s;
+  animation-delay: -18s;
 }
 #f4 {
-  animation-delay: -10s;
+  animation-delay: -15s;
 }
 #f5 {
-  animation-delay: -8s;
+  animation-delay: -12s;
 }
 #f6 {
-  animation-delay: -6s;
+  animation-delay: -9s;
 }
 #f7 {
-  animation-delay: -4s;
+  animation-delay: -6s;
 }
 #f8 {
-  animation-delay: -2s;
+  animation-delay: -3s;
 }
