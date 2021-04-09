@@ -90,7 +90,7 @@ router.get('/',
 
 router.get('/:played(\\d)',
   asyncHandler(async (req, res, next) => {
- 
+
     const userId = 6
     const playedStatus = parseInt(req.params.played, 10)
     const user = await db.User.findByPk(userId, {
@@ -98,7 +98,7 @@ router.get('/:played(\\d)',
     })
 
     const games = user.user_mygames.filter((game) => game.My_game.played === playedStatus)
-  
+
     const libraries = await db.Library.findAll({
       where: {
         userId: userId
@@ -218,7 +218,7 @@ router.post('/libraries/:libraryId(\\d+)/:gameId(\\d+)/add',
 
 
     const libraryId = parseInt(req.params.libraryId, 10);
-    const userId = parseInt(req.params.userId, 10);
+    const {id:userId} = req.session.user
     const gameId = parseInt(req.params.gameId, 10);
     const exists = await db.Library_game.findOne({
         where: {
@@ -236,14 +236,16 @@ router.post('/libraries/:libraryId(\\d+)/:gameId(\\d+)/add',
 
     const inMyGame = await db.My_game.findOne({
       where: {
-          gameId: gameId,
-          libraryId: libraryId
+          gameId,
+          userId,
       }
     })
 
+    if(!inMyGame){
+      await db.My_game.create({gameId, userId})
+    }
 
-
-      res.json({ libraryGame });
+    res.json({ libraryGame });
     // res.redirect('/libraries/:libraryId(\\+)');
 }));
 

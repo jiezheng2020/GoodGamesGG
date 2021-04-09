@@ -231,7 +231,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
                 }
             })
             try {
-                let res = await fetch(`/libraries/${id}/${id}/add`,{
+                let res = await fetch(`/libraries/${id}/${gameId}/add`,{
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json",
