@@ -32,6 +32,7 @@ body {
   grid-template-rows: repeat(3, 200px);
   row-gap: 10px;
   justify-items: center;
+
 }
 
 .gamesofthemonth
@@ -47,6 +48,13 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+}
+
+
+
+#demoUser:hover
+{
+  cursor: pointer;
 }
 
 .imagecontainer {
@@ -84,4 +92,9 @@ body {
 
 .image_writing > a:hover{
   font-weight: bold;
+}
+
+
+.demoForm{
+  display: none;
 }

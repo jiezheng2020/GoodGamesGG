@@ -3,8 +3,13 @@ include includes/utils.pug
 
 append head
     link(rel='stylesheet', href='./stylesheets/home-page.css')
+    script(type="application/javascript" src='/js/demo.js')
 block content
     div
+        form(action="/login" method='post')
+            input(name='userName' type='hidden' value='DemoUser' class='demoForm')
+            input(name='password' type='hidden' value='demoTime' class='demoForm')
+            button(id='demoUser' type='submit') Demo
         h1.welcome Welcome to Good Games
         h3.gamesofthemonth GoodGames Games Of The Month:
         div.background

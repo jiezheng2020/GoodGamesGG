@@ -7,13 +7,14 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
 
     const password = bcrypt.hashSync('goodGames2!', 10);
+    const demoTime = bcrypt.hashSync('demoTime', 10);
     let users = [
       { firstName: 'John', lastName: 'Doe', userName: 'johnTheDoeMan', email: 'JohnnyDoe@john.com', hashedPassword: password, createdAt: new Date(), updatedAt: new Date() },
       { firstName: 'Kyle', lastName: 'Powers', userName: 'kpThaSavage', email: 'Kyle@Powers.com', hashedPassword: password, createdAt: new Date(), updatedAt: new Date() },
       { firstName: 'Brent', lastName: 'Arimoto', userName: 'arimotoChanUwu', email: 'Brent@Arimoto.com', hashedPassword: password, createdAt: new Date(), updatedAt: new Date() },
       { firstName: 'Kevin', lastName: 'Zheng', userName: 'scrumMaster', email: 'Kevin@Zheng.com', hashedPassword: password, createdAt: new Date(), updatedAt: new Date() },
       { firstName: 'James', lastName: 'Lentzsch', userName: 'FlyGuy69', email: 'James@castingcouch.ent', hashedPassword: password, createdAt: new Date(), updatedAt: new Date() },
-      { firstName: 'Demo', lastName: 'User', userName: 'DemoUser', email: 'Demo@User.net', hashedPassword: password, createdAt: new Date(), updatedAt: new Date() },
+      { firstName: 'Demo', lastName: 'User', userName: 'DemoUser', email: 'Demo@User.net', hashedPassword: demoTime, createdAt: new Date(), updatedAt: new Date() },
     ];
 
     const randoms = 28;
