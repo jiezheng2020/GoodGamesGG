@@ -11,3 +11,9 @@ block content
         div(class='main__games')
             ul(class='main__games-list')
                 include includes/game-container.pug
+            div(class='main__games-pages')
+                each _,i in Array(pageNum)
+                    if i===0
+                        div(class='main__games-page main__games-page--current' id=`page${i+1}`) #{i+1}
+                    else
+                        div(class='main__games-page' id=`page${i+1}`) #{i+1}

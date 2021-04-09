@@ -1,76 +1,40 @@
-<<<<<<< HEAD
-.footer
-{
-  height: auto;
-  width: auto;
-  box-sizing: border-box;
-  position: sticky;
-  bottom: 0;
-  background-color: tomato;
-  z-index: 100;
-  scroll-snap-align:initial;
-}
-
-
-
-.contributions
-{
-=======
 .footer {
-  height: auto;
+  color: rgb(255, 255, 255);
+  font-family: "Oswald", sans-serif;
+  opacity: 0.8;
+  height: 45px;
   width: 100vw;
   box-sizing: border-box;
   position: fixed;
   bottom: 0;
-  background-color: tomato;
+  background: linear-gradient(rgb(12, 12, 12), black);
   z-index: 100;
   scroll-snap-align: initial;
 }
 
 .contributions {
->>>>>>> main
   display: flex;
   justify-content: space-between;
   padding: 0px 10px;
 }
 
-<<<<<<< HEAD
-
-.group2 > li
-{
-=======
 .group2 > li {
->>>>>>> main
   text-decoration: none;
   display: inline;
   padding: 0 4px;
 }
 
-<<<<<<< HEAD
-.group2
-{
-  order: 2;
-}
-
-.group2 a
-{
-=======
 .group2 {
+  margin-top: 15px;
   order: 2;
 }
 
 .group2 a {
->>>>>>> main
+  padding-right: 12px;
+  color: rgb(255, 255, 255);
   text-decoration: none;
-  color: dimgray;
 }
 
-<<<<<<< HEAD
-
-.group2 a:hover
-{
-=======
 .group2 a:hover {
->>>>>>> main
   font-weight: bold;
 }
