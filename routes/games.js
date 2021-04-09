@@ -22,23 +22,23 @@ const validateRating = [
 
 
 /*************************** FUNCTIONS ***************************/
-// const updateOverallRatings = async()=>{
-//     const games = await Game.findAll({include:[{model:User, as:'user_ratings'}]});
-//     games.forEach(async(game)=>{
-//         let total = 0;
+const updateOverallRatings = async()=>{
+    const games = await Game.findAll({include:[{model:User, as:'user_ratings'}]});
+    games.forEach(async(game)=>{
+        let total = 0;
 
-//         game.user_ratings.forEach((user)=>{
-//           total+=parseInt(user.Rating.overall)
-//         })
+        game.user_ratings.forEach((user)=>{
+          total+=parseInt(user.Rating.overall)
+        })
 
-//         if(total){game.overallRating=(total/game.user_ratings.length).toFixed(1);}
-//         else {game.overallRating=0;};
+        if(total){game.overallRating=(total/game.user_ratings.length).toFixed(1);}
+        else {game.overallRating=0;};
 
-//         await game.save()
-//     })
-// }
+        await game.save()
+    })
+}
 
-// updateOverallRatings()
+updateOverallRatings()
 
 /*************************** NOT FOUND FUNCTIONS ***************************/
 // Game Not Found FUNCTION
@@ -141,6 +141,8 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async(req,res,next)=>{
         } else {
             libraries = null
         }
+
+        console.log(game.title, game.overallRating)
 
         // Array of month's for date conversion
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

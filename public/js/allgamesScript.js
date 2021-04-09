@@ -13,7 +13,7 @@ function populateGames(games, limit, pageNum){
                     <div>
                         <div class="main__ratings-stars">
                             <div class="main__ratings-stars-empty"></div>
-                            <div class="main__ratings-stars-full" style="width:${((game.overallRating/5).toFixed(1))*100}%"></div>
+                            <div class="main__ratings-stars-full" style="width:${((game.overallRating/5).toFixed(2))*100}%"></div>
                         </div>
                     </div>
                     <p class="main__games-body">${game.description}</p>

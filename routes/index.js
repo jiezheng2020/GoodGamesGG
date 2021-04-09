@@ -12,7 +12,8 @@ const { validationResult } = require("express-validator");
 const { check } = require("express-validator");
 const bcrypt = require("bcrypt");
 const { rawListeners } = require("../app");
-const { Op } = require('sequelize')
+const { Op } = require("sequelize");
+const Sequelize = require("sequelize");
 
 /*************************** ROUTER SETUP ***************************/
 const router = express.Router();
@@ -100,9 +101,9 @@ router.get(
   asyncHandler(async (req, res) => {
     const games = await Game.findAll({
       where: {
-        overallRating: { [Op.gt]: 4.2 }
+        overallRating: { [Op.gt]: 4.2 },
       },
-      limit: 12
+      limit: 12,
     });
     res.render("unauthorized", { req, title: "GoodGames", games });
   })
@@ -113,20 +114,30 @@ router.get(
   asyncHandler(async (req, res) => {
     if (req.session.user) {
       const userId = req.session.user.id;
-      const userPreference = await User_console.findOne({
+      const userPreference = await User_console.findAll({
         where: userId,
       });
 
-      const userConsole = userPreference.consoleId;
+      const userConsole = userPreference.map((game) => game.consoleId);
 
       const gameConsoles = await Game_console.findAll({
         where: { consoleId: userConsole },
-        limit: 8,
+        attributes: ["gameId"],
+        limit: 36,
       });
+      const gamesId = [];
 
-      const gamesId = gameConsoles.map((game) => game.gameId);
+      for (let i = 0; i < gameConsoles.length; i++) {
+        if (!gamesId.includes(gameConsoles[i].gameId)) {
+          gamesId.push(gameConsoles[i].gameId);
+        }
+        if (gamesId.length === 8) break;
+      }
 
-      const games = await Game.findAll({ where: { id: gamesId } });
+      const games = await Game.findAll({
+        where: { id: gamesId },
+        order: [["overallRating", "DESC"]],
+      });
 
       res.render("authorized", {
         req,
@@ -188,6 +199,7 @@ router.post(
 
       req.session.user = {
         id: user.id,
+        userName: user.userName,
         firstName: user.firstName,
         lastName: user.lastName,
       };
@@ -219,6 +231,7 @@ router.post(
     if (isPassword) {
       req.session.user = {
         id: user.id,
+        userName: user.userName,
         firstName: user.firstName,
         lastName: user.lastName,
       };

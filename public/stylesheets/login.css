@@ -1,35 +1,35 @@
-.home {
+body {
   background-image: url("../images/background.jpg");
   background-size: cover;
   margin: 0px;
 }
 
-.main__container {
+.main__login-container {
   font-family: "Roboto", sans-serif;
   color: rgb(0, 0, 0);
 }
 
-form {
+.form__login {
   display: flex;
   text-align: center;
   justify-content: center;
   flex-direction: column;
 }
 
-h1 {
+h1.head__login {
   margin-top: 35px;
   margin-bottom: 0;
   font-size: 40px;
 }
 
-.sub__container {
+.sub__login-container {
   margin: auto;
   margin-top: 200px;
   width: 550px;
   background-color: rgb(255, 255, 255);
 }
 
-.form__container {
+.form__login-container {
   font-size: 15px;
   padding: 25px;
   display: flex;
@@ -38,7 +38,7 @@ h1 {
   flex-direction: column;
 }
 
-.form__labels {
+.form__login-labels {
   margin-top: 5px;
   margin-bottom: 2px;
   font-size: 18px;
@@ -60,7 +60,7 @@ input[type="password"]:focus {
   outline: none;
 }
 
-.login {
+.login-btn {
   font-size: 18px;
   font-weight: bold;
   border-radius: 10px;
@@ -73,11 +73,11 @@ input[type="password"]:focus {
   transition: opacity 0.5s;
 }
 
-.login:hover {
+.login-btn:hover {
   opacity: 1;
 }
 
-.errors {
+.login-errors {
   display: flex;
   justify-content: center;
 }

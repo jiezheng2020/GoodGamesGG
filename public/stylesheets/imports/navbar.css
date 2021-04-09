@@ -22,29 +22,29 @@
   padding-right: 20px;
 }
 
-.games {
+.nav__games {
   text-align: center;
   font-size: 1.1em;
   grid-column: 2/3;
 }
 
-.mygames {
+.nev__mygames {
   text-align: center;
   font-size: 1.1em;
   grid-column: 3/4;
 }
 
-.mygames:hover,
-.games:hover {
+.nav__mygames:hover,
+.nav__games:hover {
   font-weight: bold;
 }
 
-.links {
+.nav__links {
   font-size: 1.1em;
   grid-column-start: end;
 }
 
-.logo {
+.nav__logo {
   padding-top: 3px;
   padding-left: 10px;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
@@ -58,16 +58,7 @@
   font-weight: bold;
 }
 
-.logout {
-  background: none;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 17.6px;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-}
-
-.logout {
+.nav__logout {
   font-family: "Oswald", sans-serif;
   background: none;
   font-size: 21px;
