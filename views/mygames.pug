@@ -12,8 +12,10 @@ block content
                     a(class="main__sidebar-user-library-link", href="/mygames") All
                 li(class='main__sidebar-library' name='played')
                     a(class="main__sidebar-user-library-link"  href="/mygames/2") Played
-                li(class='main__sidebar-library' name='playing') Currently Playing
-                li(class='main__sidebar-library' name='not-played') Want to Play
+                li(class='main__sidebar-library' name='playing') 
+                    a(class="main__sidebar-user-library-link"  href="/mygames/1") Currently Playing
+                li(class='main__sidebar-library' name='not-played')
+                    a(class="main__sidebar-user-library-link"  href="/mygames/0") Want to Play
                 //- div(class="main__sidebar")
                 each library in libraries
                     li(class='main__sidebar-user-library' name=`${library.name}`)
