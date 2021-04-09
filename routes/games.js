@@ -72,7 +72,7 @@ router.get('/', asyncHandler(async (req, res) => {
 
 
     // Renders games page with list of all games from A-Z
-    res.render("allgames", { title: "All Games", games:games.slice(0,limit), consoles, pageNum});
+    res.render("allgames", { title: "All Games", games:games.slice(0,limit), consoles, pageNum, req});
 }));
 
 
