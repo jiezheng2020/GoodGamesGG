@@ -1,4 +1,10 @@
 extends layout.pug
+append head
+    link(rel="stylesheet", href="./stylesheets/errors.css")
 block content
-    p=message
-    p=stack
+    div.errors
+        div.errorHolder
+            h1.tch Looks like you're lost friend
+            br
+            p=message
+            a(href='/') Return Home
