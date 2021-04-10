@@ -3,6 +3,7 @@ extends layout.pug
 include includes/stars.pug
 include includes/utils.pug
 
+
 append head
     link(rel='stylesheet' type="text/css" href='/stylesheets/game.css')
     script(type="application/javascript" src='/js/gameScript.js')
@@ -12,25 +13,30 @@ block content
         div(class='main__sidebar')
             +createImg(game, 'main__sidebar-img')
             +loadStars(game.overallRating, 'Overall Rating: ')
-            select(class='main__sidebar-status')
-                option(class='main__sidebar-status-option') -- Played Status --
-                option(class='main__sidebar-status-option') Played
-                option(class='main__sidebar-status-option') Currently Playing
-                option(class='main__sidebar-status-option') Want to Play
-                if libraries
-                    each library,i in libraries
-                        option(class='main__sidebar-status-option' id=`${library.id}`) #{library.name}
+            if req.session.user
+                div(class='main__sidebar-status')
+                    select(class='main__sidebar-status-select')
+                        option(class='main__sidebar-status-option') -- Played Status --
+                        option(class='main__sidebar-status-option') Played
+                        option(class='main__sidebar-status-option') Currently Playing
+                        option(class='main__sidebar-status-option') Want to Play
+                        if libraries
+                            each library in libraries
+                                option(class='main__sidebar-status-option' id=`${library.id}`) #{library.name}
+                span(class='main__sidebar-status-arrow')
         div(class='main__games')
             div(class='main__game-info')
                 h3(class='main__game-info-title')=game.title
-                label(for="publisher") Publisher(s):
-                li(class='main__game-info-publisher' name='publisher')=game.publisher
-                label(for="developer") Developer(s):
-                li(class='main__game-info-developer' name='developer')=game.developer
-                label(for="releaseDate") Release Date:
-                li(class='main__game-info-releaseDate' name='releaseDate')=releaseDate
-                label(for="description") Description:
-                li(class='main__game-info-description' name='description')=game.description
+                div(class='main__game-info-left')
+                    label(for="publisher") Publisher(s):
+                    li(class='main__game-info-publisher' name='publisher')=game.publisher
+                    label(for="developer") Developer(s):
+                    li(class='main__game-info-developer' name='developer')=game.developer
+                    label(for="releaseDate") Release Date:
+                    li(class='main__game-info-releaseDate' name='releaseDate')=releaseDate
+                div(class='main__game-info-right')
+                    label(for="description") Description:
+                    li(class='main__game-info-description' name='description')=game.description
             div(class='main__game-ratings')
                 if req.session.user
                     div(class='main__game-ratings-add')
@@ -45,10 +51,19 @@ block content
                         button(class='main__game-ratings-delete-button') Delete
                         div(class='main__game-ratings-existing')
                 div(class='main__game-ratings-all')
-                    h3 Rating/Reviews
-                    each user in users
-                        if user.id !== userId
+                    h3 Ratings/Reviews
+                    if req.session.user
+                        each userReview in userReviews
+                            if userReview.id !== user.id
+                                div(class='main__game-ratings-single')
+                                    div(class='main__game-ratings-name-rating')
+                                        h4=userReview.userName
+                                        +loadStars(userReview.Rating.overall)
+                                    div(class='main__game-ratings-review') #{userReview.Rating.body}
+                    else
+                        each userReview in userReviews
                             div(class='main__game-ratings-single')
-                                p=user.userName
-                                +loadStars(user.Rating.overall)
-                                div(class='main__game-ratings-review') #{user.Rating.body}
+                                div(class='main__game-ratings-name-rating')
+                                    h4=userReview.userName
+                                    +loadStars(userReview.Rating.overall)
+                                div(class='main__game-ratings-review') #{userReview.Rating.body}

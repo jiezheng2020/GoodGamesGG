@@ -25,14 +25,19 @@ const validateRating = [
 const updateOverallRatings = async()=>{
     const games = await Game.findAll({include:[{model:User, as:'user_ratings'}]});
     games.forEach(async(game)=>{
+        console.log(typeof game.overallRating)
         let total = 0;
 
         game.user_ratings.forEach((user)=>{
           total+=parseInt(user.Rating.overall)
         })
 
-        if(total){game.overallRating=(total/game.user_ratings.length).toFixed(1);}
-        else {game.overallRating=0;};
+        if(total){
+            game.overallRating=(total/game.user_ratings.length).toFixed(1);
+            if(game.overallRating>5){game.overallRating=5}
+        }else {
+            game.overallRating=0;
+        };
 
         await game.save()
     })
@@ -127,14 +132,14 @@ router.get('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
 
     if(game) {
 
-        const { user_ratings:users } = game
+        const { user_ratings:userReviews } = game
+
         let libraries=null;
-        let userId=Infinity;
+        let user=null
 
         if(req.session.user){
-            const {id} = req.session.user;
-            userId=id
-            let {Libraries} = await User.findByPk(userId,{include:[{model:Library}]})
+            user = req.session.user;
+            let {Libraries} = await User.findByPk(user.id,{include:[{model:Library}]})
             libraries = Libraries
         }
 
@@ -146,7 +151,7 @@ router.get('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
         const releaseDate = `${months[game.releaseDate.getMonth()]} ${game.releaseDate.getDate()}, ${game.releaseDate.getFullYear()}`
 
         // Renders game page with specific game info
-        res.render('game', {title:game.title, game, releaseDate, users, userId, libraries, req});
+        res.render('game', {title:game.title, game, releaseDate, userReviews, user, libraries, req});
     } else {
         // Throws error if tweet not found
         next(gameNotFoundError(gameId));
@@ -218,6 +223,7 @@ router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
         })
 
         game.overallRating = ((game.overallRating*(users.length-1)+overall)/users.length).toFixed(1)
+        if(game.overallRating>5){game.overallRating=5}
         await game.save();
 
         // Sends response with review, and reviews
@@ -251,6 +257,10 @@ router.put('/:id(\\d+)', asyncHandler(async (req, res, next) => {
         })
 
         game.overallRating = ((game.overallRating*(users.length-1)+overall)/users.length).toFixed(1)
+
+        if(game.overallRating>5){game.overallRating=5}
+
+
         await game.save();
 
         res.json({rating, username:user.userName, overallRating:game.overallRating});
@@ -277,7 +287,18 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
         const game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings", }]})
         const { user_ratings:users } = game
 
-        game.overallRating = ((game.overallRating*users.length-rating.overall)/(users.length-1)).toFixed(1)
+        if(users.length!==1){
+            console.log(typeof game.overallRating)
+            game.overallRating = ((((game.overallRating)*users.length)-rating.overall)/(users.length-1)).toFixed(1)
+
+            if(game.overallRating>5){game.overallRating=5}
+
+        } else {
+            game.overallRating = 0;
+        }
+
+        console.log(typeof game.overallRating)
+
         await game.save();
 
         await rating.destroy()

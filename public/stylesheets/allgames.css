@@ -6,9 +6,15 @@
 
 /********* Main Section *********/
 body {
-    background-image: url("../images/background.jpg");
+    background-image: url("../images/10sDgAY-black-gradient-wallpaper.jpg");
+    /* background-color: rgba(32, 32, 32); */
     background-size: cover;
     margin: 0px;
+}
+
+.main__sidebar{
+    position: fixed;
+    width: 225px;
 }
 
 .main__sidebar ul{
@@ -17,7 +23,11 @@ body {
 
 }
 
-.main__sidebar li{
+.main__sidebar-order-alpha,
+.main__sidebar-order-rating,
+.main__sidebar-filter-all,
+.main__sidebar-filter-rating,
+.main__sidebar-filter-console{
     padding: 5px 10px;
     font-size: 18px;
     list-style: none;
@@ -37,7 +47,14 @@ body {
     cursor: pointer;
     color:darkcyan;
     /* background: grey; */
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.main__sidebar-order--current,
+.main__sidebar-filter--current{
+    font-size: 19px;
+    color:darkcyan;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 
@@ -65,24 +82,27 @@ body {
 }
 
 .main__games-page{
+    color: teal;
+    border: 1px solid grey;
     margin: 10px;
     width: 40px;
     height: 40px;
     font-size: 35px;
-    border: 1px solid black;
     text-align: center;
     border-radius: 5px;
 }
 
 .main__games-page--current{
+    color: cyan;
     transform: scale(1.2);
     transition-duration: .2s;
     /* background-color: #DFDFE5; */
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 
 .main__games-page:hover{
+    color: cyan;
     cursor:pointer;
     transform: scale(1.2);
     transition-duration: .2s;

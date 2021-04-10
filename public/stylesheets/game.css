@@ -2,6 +2,24 @@
 @import "./imports/split-page.css";
 @import "./imports/star-rating.css";
 @import "./imports/add-star-rating\(hover\).css";
+@import "./imports/reset.css";
+
+.splashpage {
+    display: grid;
+    background: url("../images/10sDgAY-black-gradient-wallpaper.jpg");
+    background-size: cover;
+}
+
+.main__sidebar,
+.main__games{
+    color: white;
+}
+
+.main__sidebar{
+    position: fixed;
+    width: 225px;
+}
+
 
 /********* Sidebar *********/
 
@@ -17,6 +35,7 @@
     width: 100%;
     height: 200px;
     object-fit: cover;
+    border-radius: 10px;
 }
 
 
@@ -25,23 +44,141 @@
     padding: 10px;
 }
 
+.main__game-info{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-template-rows: 50px 200px;
+    grid-template-areas:
+        'title title'
+        'leftInfo rightInfo';
+    margin-bottom: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.main__game-info-title{
+    grid-area: title;
+    font-size: 30px;
+}
+
+.main__game-info-left{
+    grid-area: leftInfo;
+    padding-right: 20px;
+}
+
+.main__game-info-right{
+    grid-area: rightInfo;
+}
+
+
+.main__game-info label{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: rgba(150, 150, 150, 0.5);
+}
+
+.main__game-info li{
+    margin: 5px 0px;
+    list-style: none;
+    /* background-color: rgba(64, 64, 64, 0.5); */
+}
+
 .main__game-ratings-add{
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px;
 }
 
-.main__game-ratings-add-review{
-    height: 75px;
+.main__game-ratings-add-review,
+.main__game-ratings-edit-review{
+    color: whitesmoke;
+    resize: none;
+    min-height: 100px;
+    background-color: rgba(64, 64, 64, 0.5);
+    border: none;
+    border-radius: 5px;
+    margin: 10px 0px;
+}
+.main__game-ratings-existing,
+.main__game-ratings-single{
+    padding: 10px;
+    border: 1px solid rgba(48, 48, 48, 0.9);
+    margin: 15px 0;
+    border-radius: 5px;
+    background-color: rgba(64, 64, 64, 0.5);
 }
 
-.main__game-ratings-add-button{
+h4{
+    margin-right: 10px;
+    color: thistle;
+}
+
+h3{
+    color: lightcyan;
+}
+
+.main__game-ratings-name-rating{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.main__game-ratings-add-button,
+.main__game-ratings-edit-button,
+.main__game-ratings-delete-button{
+    margin: 10px;
+    font-size: 15px;
+    height: 25px;
     width: 100px;
+    border-radius: 5px;
+    outline: none;
+    background-color: rgba(64, 64, 64, 0.5);
+    transition: none;
+    border: none;
+    color: teal
 }
 
-#main__game-ratings-error{
-    color: red;
+button:hover {
+    background-color: rgba(100, 100, 100, 0.5);
+    cursor: pointer;
 }
 
+button:active {
+    background-color: rgba(100, 100, 100, 0.5);
+    box-shadow: 5px #666;
+    transform: scale(.95);
+}
+
+.main__game-ratings-error{
+    color: maroon;
+}
+
+.main__sidebar{
+    background-color: rgba(0, 0, 0, 0.0);
+    border: rgba(0, 0, 0, 0.0);
+    height: auto;
+}
+
+.main__sidebar-status{
+    position: relative;
+}
+
+.main__sidebar-status-select{
+    width: 100%;
+    background-color: rgba(48, 48, 48, 0.9);
+    opacity: .8;
+    color: white;
+    padding: 3px 28px 3px 3px;
+    border: none;
+    font-size: 15px;
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+}
+
+.main__sidebar-status-option {
+    outline: none;
+
+
+}
 
 .main__game--hidden{
     display: none;
