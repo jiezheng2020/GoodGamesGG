@@ -1,10 +1,12 @@
 .main{
-    margin: 0px 100px;
+    margin: 50px auto;
     display: grid;
     grid-template-columns: 250px 1fr;
-    grid-template-rows: auto;
+    grid-template-rows: 100%;
     grid-template-areas:
     "left right";
+    max-width: 1400px;
+
 }
 
 .main__sidebar{
@@ -15,13 +17,18 @@
     margin: 0;
     padding: 5px;
     /* background-color: #f1f1f1; */
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(16,16,16, 0.9);
     overflow: auto;
+    border-radius: 10px;
+    padding: 5px;
 }
+
 
 .main__games{
     grid-area: right;
     border: 2px solid black;
     /* background-color: #f1f1f1; */
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(16,16,16, 0.9);
+    border-radius: 10px;
+    min-width: 550px;
 }

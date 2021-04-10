@@ -26,5 +26,5 @@
 }
 
 .main__ratings-stars-full:before {
-    -webkit-text-stroke: 1px black;
+    -webkit-text-stroke: 1px cyan;
 }

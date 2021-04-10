@@ -4,12 +4,10 @@ const fetch = require("node-fetch");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-
     const data = await fetch(
       "https://api.rawg.io/api/games?dates=2019-01-01,2019-12-31&ordering=-added?key=26ac0f3d2391457087937165a3fbeceb"
     );
     const { results } = await data.json();
-
 
     const games = [
       {
@@ -44,13 +42,13 @@ module.exports = {
         description:
           "A disgraced Samurai from fuedal era Japan must stave off a Mongolian invasion with his trusty sword and the help of a few scoundrels along the way.",
         overallRating: 5.0,
-        imageHref: "/images/220px-Ghost_of_Tsushima.png",
+        imageHref: "/images/Sekiro.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         title: "Grand Theft Auto V",
-        publisher: "Rokcstar Games",
+        publisher: "Rockstar Games",
         developer: "Rockstar North",
         releaseDate: "2013-09-17",
         description:

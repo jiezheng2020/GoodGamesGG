@@ -1,8 +1,9 @@
 include stars.pug
 each game in games
     div(class='main__games-info')
-        a(href=`/games/${game.id}`)
+        a( href=`/games/${game.id}`)
             +createImg(game, 'main__games-img')
+
         div(class='main__games-data')
             a(class='main__games-name' href=`/games/${game.id}`)=game.title
             +loadStars(game.overallRating)
