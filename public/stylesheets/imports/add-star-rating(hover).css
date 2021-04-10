@@ -9,14 +9,14 @@
 }
 
 .main__game-ratings-add-stars span{
-    color: grey;
+    color: rgba(1, 129, 129, 0.842);
     font-size: 22px;
     transition: .3s;
 }
 
 
 .main__game-ratings-add-stars span:hover{
-    color: black;
+    color: cyan;
     transition: .3;
 }
 
@@ -25,5 +25,5 @@
 .main__game-ratings-add-star3:hover ~ span,
 .main__game-ratings-add-star4:hover ~ span,
 .main__game-ratings-add-star5:hover ~ span{
-    color: black;
+    color: cyan;
 }

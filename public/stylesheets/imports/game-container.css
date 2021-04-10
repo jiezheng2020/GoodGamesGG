@@ -1,10 +1,10 @@
 .main__games-info{
     display: grid;
-    grid-template-rows: 200px 1fr 30px 3fr;
+    grid-template-rows: 116px 1fr;
     margin: 10px;
     width: 200px;
     height: 300px;
-    border: 2px solid rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(98, 42, 153, 0.719);
     border-radius: 6px;
     overflow: hidden;
     background-color: black;
@@ -22,7 +22,27 @@
     object-fit: cover;
 }
 
+.main__games-name,
 .main__games-body{
+    padding: 5px;
     margin: 0px;
     color: white
+}
+
+.main__sidebar-status {
+    background-color: darkcyan;
+    color: white;
+    margin-left: 6px;
+    padding-left: 2px;
+    border-radius: 3px;
+    border-color:  rgba(98, 42, 153, 0.719);
+}
+
+.main__sidebar-status:hover {
+    background-color: cyan;
+    color: rgb(119, 40, 197);
+    margin-left: 6px;
+    padding-left: 2px;
+    border-radius: 3px;
+    border-color:  rgba(98, 42, 153, 0.719);
 }

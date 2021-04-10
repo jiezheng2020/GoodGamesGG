@@ -202,21 +202,21 @@ window.addEventListener('DOMContentLoaded', async (event) => {
 
 
     /***************************** Page Selector  *****************************/
-    const pageNums = document.querySelector('.main__games-pages')
+    // const pageNums = document.querySelector('.main__games-pages')
 
-    pageNums.addEventListener('click', async (event) => {
-        const currPage = document.querySelector('.main__games-page--current')
-        const pageNum = (event.target.id.match(/\d+/)) ? parseInt(event.target.id.slice(-1)) : null;
+    // pageNums.addEventListener('click', async (event) => {
+    //     const currPage = document.querySelector('.main__games-page--current')
+    //     const pageNum = (event.target.id.match(/\d+/)) ? parseInt(event.target.id.slice(-1)) : null;
 
-        if (!pageNum || currPage.id === event.target.id) { return }
+    //     if (!pageNum || currPage.id === event.target.id) { return }
 
-        populateGames(currGameList, limit, pageNum)
+    //     populateGames(currGameList, limit, pageNum)
 
-        currPage.classList.remove('main__games-page--current')
+    //     currPage.classList.remove('main__games-page--current')
 
-        event.target.classList.add('main__games-page--current')
+    //     event.target.classList.add('main__games-page--current')
 
-    })
+    // })
 
 
 })

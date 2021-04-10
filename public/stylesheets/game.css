@@ -4,9 +4,18 @@
 @import "./imports/add-star-rating\(hover\).css";
 
 /********* Sidebar *********/
+body {
+    background-image: url("../images/background.jpg");
+    background-size: cover;
+    margin: 0px;
+    color: white;
+    font-family: "Oswald", sans-serif;
+}
 
 .main__sidebar{
     display: grid;
+    margin-top: 50px;
+    margin-bottom: 50px;
     padding: 2px;
     grid-template-rows: 200px 30px 30px 1fr;
     border: 2px solid rgba(0, 0, 0, 0.5);
@@ -15,27 +24,62 @@
 
 .main__sidebar-img{
     width: 100%;
-    height: 200px;
+    height: 116px;
     object-fit: cover;
+}
+
+.main__sidebar-status {
+    background-color: darkcyan;
+    color: white;
+    margin-left: 6px;
+    padding-left: 2px;
+    border-radius: 3px;
+    border-color:  rgba(98, 42, 153, 0.719);
+}
+
+.main__sidebar-status:hover {
+    background-color: cyan;
+    color: rgb(119, 40, 197);
+    margin-left: 6px;
+    padding-left: 2px;
+    border-radius: 3px;
+    border-color:  rgba(98, 42, 153, 0.719);
 }
 
 
 /********* Game Info Section *********/
 .main__games{
     padding: 10px;
+    color: white;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .main__game-ratings-add{
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
 }
 
 .main__game-ratings-add-review{
-    height: 75px;
+    height: 125px;
+    background-color:rgb(240, 239, 239)
 }
 
 .main__game-ratings-add-button{
     width: 100px;
+    background-color: darkcyan;
+    color: white;
+    border-radius: 4px;
+    border-color:  rgba(98, 42, 153, 0.719);
+}
+
+.main__game-ratings-add-button:hover{
+    width: 100px;
+    background-color: cyan;
+    color: rgba(98, 42, 153, 0.719);
+    border-radius: 4px;
+    border-color:  rgba(98, 42, 153, 0.719);
 }
 
 #main__game-ratings-error{

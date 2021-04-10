@@ -3,14 +3,15 @@ each game in games
     div(class='main__games-info')
         a(href=`/games/${game.id}`)
             +createImg(game, 'main__games-img')
-        a(class='main__games-name' href=`/games/${game.id}`)=game.title
-        +loadStars(game.overallRating)
-        if libraries
-            select(class='main__sidebar-status')
-                    option(class='main__sidebar-status-option') -- Played Status --
-                    option(class='main__sidebar-status-option') Played
-                    option(class='main__sidebar-status-option') Currently Playing
-                    option(class='main__sidebar-status-option') Want to Play
-                    each library in libraries
-                        option(class='main__sidebar-status-option') #{library.name}
-        p(class='main__games-body') #{game.description}
+        div(class='main__games-data')
+            a(class='main__games-name' href=`/games/${game.id}`)=game.title
+            +loadStars(game.overallRating)
+            if libraries
+                select(class='main__sidebar-status')
+                        option(class='main__sidebar-status-option') Add to Library
+                        option(class='main__sidebar-status-option') Played
+                        option(class='main__sidebar-status-option') Currently Playing
+                        option(class='main__sidebar-status-option') Want to Play
+                        each library in libraries
+                            option(class='main__sidebar-status-option') #{library.name}
+            p(class='main__games-body') #{game.description}

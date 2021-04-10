@@ -39,7 +39,7 @@ router.get('/',
   asyncHandler(async (req, res, next) => {
     // console.log("test")
 
-      const userId = 6
+      const userId = req.session.user.id
       const user = await db.User.findByPk(userId,
       {
         include: [{model: db.Game, as: "user_mygames"}]
@@ -55,7 +55,7 @@ router.get('/',
       const consoles = await db.Console.findAll()
 
       // res.json({games})
-      res.render('mygames', { title: "My Games", games, libraries, consoles})
+      res.render('mygames', { req, title: "My Games", games, libraries, consoles})
     // }
 }));
 
@@ -85,7 +85,7 @@ router.get('/all',
 router.get('/:played(\\d)',
   asyncHandler(async (req, res, next) => {
  
-    const userId = 6
+    const userId = req.session.user.id
     const playedStatus = parseInt(req.params.played, 10)
     const user = await db.User.findByPk(userId, {
       include: [{ model: db.Game, as: "user_mygames" }]
@@ -160,7 +160,7 @@ router.post('/:gameId(\\d+)/add',
   asyncHandler(async (req, res) => {
     console.log('test')
     const gameId = parseInt(req.params.gameId, 10);
-    const userId = 6
+    const userId = req.session.user.id
     const exists = await db.My_game.findOne({
         where: {
             gameId: gameId,
@@ -189,7 +189,7 @@ router.post('/:gameId(\\d+)/add',
 router.post('/libraries/add',
   asyncHandler(async (req, res) => {
     console.log("test")
-      const userId = 6
+      const userId = req.session.user.id
       const { name } = req.body
       console.log(name)
 
