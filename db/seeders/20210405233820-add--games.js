@@ -4,12 +4,10 @@ const fetch = require("node-fetch");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-
     const data = await fetch(
       "https://api.rawg.io/api/games?dates=2019-01-01,2019-12-31&ordering=-added?key=26ac0f3d2391457087937165a3fbeceb"
     );
     const { results } = await data.json();
-
 
     const games = [
       {
@@ -50,7 +48,7 @@ module.exports = {
       },
       {
         title: "Grand Theft Auto V",
-        publisher: "Rokcstar Games",
+        publisher: "Rockstar Games",
         developer: "Rockstar North",
         releaseDate: "2013-09-17",
         description:
