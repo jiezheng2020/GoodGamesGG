@@ -111,7 +111,9 @@ input[type="checkbox"] {
   margin: 20px 0;
   padding: 0px 25px 20px 25px;
   color: white;
-  font-weight: bold;
+  font-weight: normal;
   background-color: red;
+  opacity: 0.8;
+  border-radius: 20px;
   width: 500px;
 }
