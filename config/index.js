@@ -8,4 +8,5 @@ module.exports = {
     host: process.env.DB_HOST,
   },
   secret: process.env.SECRET,
+  fetch_route: process.env.FETCH_ROUTE
 };

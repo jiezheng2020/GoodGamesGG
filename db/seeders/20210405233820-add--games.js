@@ -115,7 +115,7 @@ module.exports = {
         description:
           "Facing the threat of a zombie apocalypse, one girl must venture out to deliver the cure to the last remaining civilization on Earth.",
         overallRating: 4.9,
-        imageHref: "./images/Video_Game_Cover_-_The_Last_of_Us.png",
+        imageHref: "/images/Video_Game_Cover_-_The_Last_of_Us.png",
         createdAt: new Date(),
         updatedAt: new Date(),
       },

@@ -103,6 +103,7 @@ router.get('/:played(\\d)',
     // console.log(games)
     res.json({games})
     // res.render('mygames', { title: "My Games", games, libraries, consoles})
+
   }));
 
 
@@ -201,8 +202,10 @@ router.post('/libraries/add',
   // add a game to a library
 router.post('/libraries/:libraryId(\\d+)/:gameId(\\d+)/add',
   asyncHandler(async (req, res) => {
-        // const userId = parseInt(req.params.userId, 10);
+
+
     const libraryId = parseInt(req.params.libraryId, 10);
+    const {id:userId} = req.session.user
     const gameId = parseInt(req.params.gameId, 10);
     const exists = await db.Library_game.findOne({
         where: {
@@ -217,7 +220,19 @@ router.post('/libraries/:libraryId(\\d+)/:gameId(\\d+)/add',
     }
 
     const libraryGame = await db.Library_game.create({libraryId, gameId});
-      res.json({ libraryGame });
+
+    const inMyGame = await db.My_game.findOne({
+      where: {
+          gameId,
+          userId,
+      }
+    })
+
+    if(!inMyGame){
+      await db.My_game.create({gameId, userId})
+    }
+
+    res.json({ libraryGame });
     // res.redirect('/libraries/:libraryId(\\+)');
 }));
 

@@ -18,8 +18,8 @@ block content
                 option(class='main__sidebar-status-option') Currently Playing
                 option(class='main__sidebar-status-option') Want to Play
                 if libraries
-                    each library in libraries
-                        option(class='main__sidebar-status-option') #{library.name}
+                    each library,i in libraries
+                        option(class='main__sidebar-status-option' id=`${library.id}`) #{library.name}
         div(class='main__games')
             div(class='main__game-info')
                 h3(class='main__game-info-title')=game.title

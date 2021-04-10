@@ -32,6 +32,8 @@ body {
   display: grid;
   justify-content: center;
   margin-top: 2%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .recommendations__authorized {
@@ -40,7 +42,7 @@ body {
 }
 
 .textbox__authorized {
-  width: 700px;
+  width: 600px;
   height: 500px;
   display: grid;
   grid-template-rows: auto;
@@ -74,15 +76,14 @@ body {
 }
 
 img.auth_img {
-  width: 800px;
+  width: 725px;
   height: 500px;
   object-fit: cover;
 }
 .display__authorized {
   height: 500px;
-  width: 800px;
+  width: 725px;
   display: flex;
-  background-color: green;
 }
 
 .fadein img.auth_img {
