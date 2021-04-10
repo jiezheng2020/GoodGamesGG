@@ -60,7 +60,7 @@ body {
 }
 
 .borders__authorized {
-  border: solid black;
+  border-top: solid black;
   border-width: thin;
   display: grid;
 }
