@@ -1,22 +1,28 @@
 /***************************** FUNCTIONS *****************************/
 
+
 // Populate The Games
 function populateGames(games, limit, pageNum){
     let gamesUl = games.slice(limit*(pageNum-1),limit*pageNum).map((game)=>{
         const imageHref = (game.imageHref) ? game.imageHref : '/images/not-found.png';
-        return `<div class="main__games-info">
-                    <a href="/games/${game.id}">
-                        <img class="main__games-img" src="${imageHref}">
-                    </a>
-                    <a class="main__games-name" href="/games/${game.id}">${game.title}</a>
-                    <div>
-                        <div class="main__ratings-stars">
-                            <div class="main__ratings-stars-empty"></div>
-                            <div class="main__ratings-stars-full" style="width:${((game.overallRating/5).toFixed(2))*100}%"></div>
-                        </div>
+        return `
+        <div class="main__games-info">
+            <a href="/games/${game.id}">
+                <img class="main__games-img" src="${imageHref}">
+            </a>
+            <div class="main__games-text">
+                <a class="main__games-name" href="/games/${game.id}">${game.title}</a>
+                <div>
+                    <div class="main__ratings-stars">
+                        <div class="main__ratings-stars-empty"></div>
+                        <div class="main__ratings-stars-full" style="width:${((game.overallRating/5).toFixed(2))*100}%"></div>
                     </div>
-                    <p class="main__games-body">${game.description}</p>
-                </div>`
+                </div>
+                <p class="main__games-body">${game.description}</p>
+            </div>
+        </div>
+                `
+
     })
 
     document.querySelector('.main__games-list').innerHTML = gamesUl.join('')
@@ -78,7 +84,7 @@ let currGameList;
 window.addEventListener('DOMContentLoaded', async(event)=>{
 
 
-    let res = await fetch(`/games/api`,{
+    let res = await fetch(`http://localhost:8080/games/api`,{
         method: 'POST',
         body: JSON.stringify({filter:'all', orderType: 'overallRating'}),
         headers: {
@@ -98,15 +104,24 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
 
         const pageNum = parseInt(currPage.id.slice(-1));
 
+        const currOrder = document.querySelector('.main__sidebar-order--current')
+
+        if(currOrder !== event.target){
+            currOrder.classList.remove('main__sidebar-order--current')
+            event.target.classList.add('main__sidebar-order--current')
+        }
+
         populateGames(sortedGameList, limit, pageNum)
         currGameList = sortedGameList;
     })
 
     /***************************** Sidebar Filters  *****************************/
+
+    /***************************** Sidebar Filters  *****************************/
     const sidebarFilter = document.querySelector('.main__sidebar-filter')
     sidebarFilter.addEventListener('click', async(event)=>{
         if(event.target.className.match(/main__sidebar-filter-(all|rating|console)$/)){
-            let res = await fetch(`/games/api`,{
+            let res = await fetch(`http://localhost:8080/games/api`,{
                 method: 'POST',
                 body: JSON.stringify({filter:event.target.id, orderType: 'overallRating'}),
                 headers: {
@@ -117,6 +132,20 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
             const {games} = await res.json()
 
             currGameList=games;
+
+            const currFilter = document.querySelector('.main__sidebar-filter--current')
+            const currOrder = document.querySelector('.main__sidebar-order--current')
+            const ratingOrder = document.querySelector('.main__sidebar-order-rating')
+
+            if(currFilter !== event.target){
+                currFilter.classList.remove('main__sidebar-filter--current')
+                event.target.classList.add('main__sidebar-filter--current')
+            }
+
+            if(currOrder!==ratingOrder){
+                currOrder.classList.remove('main__sidebar-order--current')
+                ratingOrder.classList.add('main__sidebar-order--current')
+            }
 
             populateGames(games, limit, 1)
 
@@ -133,7 +162,6 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
         }
     })
 
-
     /***************************** Page Selector  *****************************/
     const pageNums = document.querySelector('.main__games-pages')
 
@@ -141,13 +169,14 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
         const currPage = document.querySelector('.main__games-page--current')
         const pageNum = (event.target.id.match(/\d+/)) ? parseInt(event.target.id.slice(-1)) : null;
 
-        if(!pageNum||currPage.id === event.target.id){return}
+        if(!pageNum||currPage === event.target){return}
+
+        currPage.classList.remove('main__games-page--current')
+        event.target.classList.add('main__games-page--current')
 
         populateGames(currGameList, limit, pageNum)
 
-        currPage.classList.remove('main__games-page--current')
 
-        event.target.classList.add('main__games-page--current')
 
     })
 

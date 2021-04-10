@@ -10,15 +10,18 @@ function hideAddCreateEdit(rating, username){
     const existingRating = document.querySelector('.main__game-ratings-existing')
 
     existingRating.innerHTML =
-        `<p>${username}</p>
-        <div>
-            <div class="main__ratings-stars">
-                <div class="main__ratings-stars-empty"></div>
-                <div class="main__ratings-stars-full" style="width:${((rating.overall/5).toFixed(2))*100}%"></div>
+        `
+        <div class="main__game-ratings-name-rating">
+            <h4>${username}</h4>
+            <div>
+                <div class="main__ratings-stars">
+                    <div class="main__ratings-stars-empty"></div>
+                    <div class="main__ratings-stars-full" style="width:${((rating.overall/5).toFixed(2))*100}%"></div>
+                </div>
             </div>
         </div>
         <div class="main__game-ratings-review">${rating.body}</div>`
-}6
+}
 
 function loadStarRating(numberOfStars){
     const stars = document.querySelector('.main__game-ratings-add-stars')
@@ -26,7 +29,7 @@ function loadStarRating(numberOfStars){
 
     for(let i=5;i>0;i--){
         if(i<=numberOfStars){
-            string+=`<span class='main__game-ratings-add-star${i}' style='color:black'>★</span>`
+            string+=`<span class='main__game-ratings-add-star${i}' style='color:cyan'>★</span>`
         } else {
             string+=`<span class='main__game-ratings-add-star${i}'>★</span>`
         }
@@ -42,7 +45,6 @@ function updateOverallRating(overallRating){
 }
 
 const stars = document.querySelector('.main__game-ratings-add-stars')
-
 
 /***************************** DOMCONTENTLOADED  *****************************/
 window.addEventListener('DOMContentLoaded', async(event)=>{
@@ -170,7 +172,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
             updateOverallRating(overallRating)
 
         } catch(err){
-            // const { errors } = await err.json()
+            windows.location.href = '/error'
         }
     })
 
@@ -179,16 +181,15 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
 
     /***************************** Edit Played Status *****************************/
     const playedStatus = document.querySelector('.main__sidebar-status')
-
     playedStatus.addEventListener('change', async(event)=>{
         const pStats= {
             'Played': 2,
             'Currently Playing': 1,
             'Want to Play': 0,
         }
-        const played = pStats[event.target.value]
 
-        if (played){
+        if (event.target.value in pStats){
+            const played = pStats[event.target.value]
             try {
                 let res = await fetch(`/mygames/${gameId}/add`,{
                     method: 'POST',
@@ -218,7 +219,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
 
 
             } catch(err){
-                const { errors } = await err.json()
+                windows.location.href = '/error'
             }
 
         } else {
@@ -231,7 +232,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
                 }
             })
             try {
-                let res = await fetch(`/libraries/${id}/${gameId}/add`,{
+                let res = await fetch(`/mygames/libraries/${id}/${gameId}/add`,{
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json",
@@ -245,7 +246,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
                 }
 
             } catch(err){
-                console.log(err)
+                windows.location.href = '/error'
             }
 
 
