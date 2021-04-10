@@ -45,7 +45,6 @@
 }
 
 .nav__logo {
-  padding-top: 3px;
   padding-left: 10px;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   justify-self: flex-start;
@@ -61,8 +60,8 @@
 .nav__logout {
   font-family: "Oswald", sans-serif;
   background: none;
-  font-size: 21px;
   border: none;
   color: #ffffff;
   cursor: pointer;
+  font-size: 1.1em;
 }
