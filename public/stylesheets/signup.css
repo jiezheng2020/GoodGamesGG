@@ -1,5 +1,5 @@
 body {
-  background-image: url("../images/background.jpg");
+  background-image: url("../images/996774.jpg");
   background-size: cover;
   margin: 0px;
 }
@@ -15,25 +15,32 @@ body {
   flex-direction: column;
 }
 h1.head__signup {
-  margin-top: 35px;
+  margin-top: 50px;
+  margin-bottom: 0;
+  color: white;
   font-size: 40px;
+  font-weight: normal;
 }
 
 h4.head__console-type {
   margin: 0;
+  color: white;
+  font-weight: normal;
   font-size: 18px;
 }
 
 .sub__signup-container {
   margin: auto;
-  margin-top: 100px;
-  width: 600px;
-  background-color: white;
+  margin-top: 50px;
+  width: 550px;
+  border-radius: 30px;
+  background-color: rgb(43, 43, 43);
+  opacity: 0.95;
 }
 
 .form__signup-container {
   font-size: 15px;
-  padding: 25px;
+  padding: 20px;
   display: flex;
   margin: auto;
   width: 300px;
@@ -42,47 +49,58 @@ h4.head__console-type {
 
 .form__signup-labels {
   margin-top: 5px;
+  color: white;
   margin-bottom: 2px;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: thin;
   text-align: left;
 }
 
+.console-label {
+  color: white;
+}
 input[type="text"],
 input[type="email"],
 input[type="password"] {
   text-align: left;
-  color: #333;
-  font-size: 15px;
-  width: 100%;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus {
-  background-color: #ddd;
+  height: 30px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  display: block;
+  box-shadow: none;
+  font-weight: normal;
+  color: #e9e9e9;
+  background-color: #32353c;
   outline: none;
+  border: 1px solid #26282d;
+  width: 100%;
+  font-size: 20px;
 }
 
 input[type="checkbox"] {
-  margin-top: 25px;
+  color: white;
+  margin-top: 10px;
   margin-left: 10px;
 }
 
 .signup-btn {
   font-size: 18px;
   font-weight: bold;
+  border: none;
   border-radius: 10px;
-  background-color: rgb(0, 3, 177);
+  background: linear-gradient(to right, rgb(74, 147, 255), rgb(9, 97, 211));
   color: white;
   padding: 10px 50px;
-  margin: 40px 0;
+  opacity: 0.9;
+  margin-top: 15px;
+  margin-bottom: 30px;
   cursor: pointer;
-  opacity: 0.8;
   transition: opacity 0.5s;
 }
 .signup-btn:hover {
   opacity: 1;
+  background: linear-gradient(rgb(74, 147, 255), rgb(55, 142, 255));
 }
 
 .signup-errors {
@@ -93,7 +111,9 @@ input[type="checkbox"] {
   margin: 20px 0;
   padding: 0px 25px 20px 25px;
   color: white;
-  font-weight: bold;
+  font-weight: normal;
   background-color: red;
+  opacity: 0.8;
+  border-radius: 20px;
   width: 500px;
 }

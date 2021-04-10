@@ -1,11 +1,14 @@
 body {
-  min-height: 100%;
+  min-height: 100vh;
+  padding-bottom: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .splashpage {
   display: grid;
   background: url("../images/10sDgAY-black-gradient-wallpaper.jpg");
   background-size: cover;
+  opacity: 0.95;
 }
 .main__authorized {
   height: 100vh;
@@ -31,6 +34,7 @@ body {
   margin-top: 2%;
   margin-left: 10%;
   margin-right: 10%;
+  margin-bottom: 5%;
 }
 
 .recommendations__authorized {
@@ -56,7 +60,7 @@ body {
 }
 
 .borders__authorized {
-  border: solid black;
+  border-top: solid black;
   border-width: thin;
   display: grid;
 }
@@ -88,66 +92,48 @@ img.auth_img {
   margin: 0;
   animation-name: fade;
   animation-iteration-count: infinite;
-  animation-duration: 24s;
-}
-
-@-webkit-keyframes fade {
-  0% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  33% {
-    opacity: 1;
-  }
-  53% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-  }
+  animation-duration: 32s;
 }
 
 @keyframes fade {
   0% {
+    opacity: 1;
+  }
+  6% {
+    opacity: 1;
+  }
+  13% {
     opacity: 0;
   }
-  20% {
-    opacity: 1;
-  }
-  33% {
-    opacity: 1;
-  }
-  53% {
+  94% {
     opacity: 0;
   }
   100% {
-    opacity: 0;
+    opacity: 1;
   }
 }
 
 #f1 {
-  animation-delay: -24s;
+  animation-delay: 0s;
 }
 #f2 {
-  animation-delay: -21s;
+  animation-delay: 4s;
 }
 #f3 {
-  animation-delay: -18s;
+  animation-delay: 8s;
 }
 #f4 {
-  animation-delay: -15s;
+  animation-delay: 12s;
 }
 #f5 {
-  animation-delay: -12s;
+  animation-delay: 16s;
 }
 #f6 {
-  animation-delay: -9s;
+  animation-delay: 20s;
 }
 #f7 {
-  animation-delay: -6s;
+  animation-delay: 24s;
 }
 #f8 {
-  animation-delay: -3s;
+  animation-delay: 28s;
 }
