@@ -1,11 +1,14 @@
 body {
-  min-height: 100%;
+  min-height: 100vh;
+  padding-bottom: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .splashpage {
   display: grid;
   background: url("../images/10sDgAY-black-gradient-wallpaper.jpg");
   background-size: cover;
+  opacity: 0.95;
 }
 .main__authorized {
   height: 100vh;
