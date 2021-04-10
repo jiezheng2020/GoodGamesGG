@@ -46,10 +46,11 @@
 
 .nav__logo {
   padding-left: 10px;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-family: "Oswald", sans-serif;
   justify-self: flex-start;
   font-style: italic;
-  font-size: 1.3em;
+  font-size: 1.1em;
+  font-weight: bold;
 }
 
 .signup_link:hover,
