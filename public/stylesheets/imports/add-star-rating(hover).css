@@ -9,7 +9,7 @@
 }
 
 .main__game-ratings-add-stars span{
-    color: grey;
+    color: rgba(1, 129, 129, 0.842);
     font-size: 22px;
     transition: .3s;
 }
