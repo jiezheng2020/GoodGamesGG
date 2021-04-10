@@ -42,7 +42,7 @@ module.exports = {
         description:
           "A disgraced Samurai from fuedal era Japan must stave off a Mongolian invasion with his trusty sword and the help of a few scoundrels along the way.",
         overallRating: 5.0,
-        imageHref: "/images/Sekiro.jpg",
+        imageHref: "/images/tsushima.jpeg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
