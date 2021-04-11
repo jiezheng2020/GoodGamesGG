@@ -94,7 +94,7 @@ body {
 .main__game-info{
     display: grid;
     grid-template-columns: 40% 60%;
-    grid-template-rows: 50px 200px;
+    grid-template-rows: 50px auto;
     grid-template-areas:
         'title title'
         'leftInfo rightInfo';
@@ -103,6 +103,7 @@ body {
 }
 
 .main__game-info-title{
+    font-family: "Oswald", sans-serif;
     grid-area: title;
     font-size: 30px;
 }
@@ -131,7 +132,7 @@ body {
 .main__game-ratings-add-header,
 .main__game-ratings-edit-header,
 .main__game-ratings-all-header{
-    color: lightcyan;
+    color: whitesmoke;
 }
 
 .main__game-ratings-add{
