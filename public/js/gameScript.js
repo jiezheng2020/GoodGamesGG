@@ -267,12 +267,12 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
                 const {exists, libraryGame, mygame} = await res.json()
 
                 if(exists){
-                    libraryStatus.innerHTML = `Game Already Exists In ${libraryGame.name}`
+                    libraryStatus.innerHTML = `Game Already Exists In "${libraryGame.name}"`
                     libraryStatus.style.color = 'cyan'
                     return
                 }
 
-                libraryStatus.innerHTML = `Successfully Added To ${libraryGame.name}`
+                libraryStatus.innerHTML = `Successfully Added To "${libraryGame.name}"`
                 libraryStatus.style.color = 'cyan'
 
                 document.querySelector('.main__sidebar-status-container').classList.remove('main__game--hidden')
