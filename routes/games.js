@@ -156,7 +156,7 @@ router.get('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
 
 
         // Makes rating array to populate
-        const releaseDate = `${months[game.releaseDate.getMonth()]} ${game.releaseDate.getDate()}, ${game.releaseDate.getFullYear()}`
+        const releaseDate = `${months[game.releaseDate.getMonth()]} ${game.releaseDate.getDate()+1}, ${game.releaseDate.getFullYear()}`
 
         // Renders game page with specific game info
         res.render('game', {title:game.title, game, releaseDate, userReviews, playedStatus, user, libraries, req});
@@ -254,10 +254,7 @@ router.put('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     let rating = await Rating.findOne({ where: { gameId, userId } })
 
     if (rating) {
-        rating.overall = overall
-        rating.body = body
 
-        await rating.save()
 
         const game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings"}]})
         const { user_ratings:users } = game
@@ -266,11 +263,14 @@ router.put('/:id(\\d+)', asyncHandler(async (req, res, next) => {
             return user.id===userId
         })
 
-        game.overallRating = ((game.overallRating*(users.length-1)+overall)/users.length).toFixed(1)
+        game.overallRating = ((game.overallRating*(users.length) - rating.overall + overall)/users.length).toFixed(1)
 
         if(game.overallRating>5){game.overallRating=5}
 
+        rating.overall = overall
+        rating.body = body
 
+        await rating.save()
         await game.save();
 
         res.json({rating, username:user.userName, overallRating:game.overallRating});
