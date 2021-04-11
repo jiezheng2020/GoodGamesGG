@@ -30,6 +30,7 @@ GoodGamesGG, a [Goodreads](https://www.goodreads.com/) inspired project, is a so
 
 ## Challenges
  - We initially had alot of issues with unseeding our database, running into foreign key constraints. The issue stemmed from us manipulating our database via dotenv instead of just sequelize locally, and there were certain practices we had to do differently.
+ - We initially had alot of CSS issues, with making sure pages didn't inherit styles that we didn't want it to. We also needed to make our website responsive to different screen sizes to a certain extent.
 
 ## Code Highlights
 
