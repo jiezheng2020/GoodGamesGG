@@ -20,7 +20,7 @@ app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
-app.use(cookieParser());6
+app.use(cookieParser());
 
 app.set("view engine", "pug");
 
