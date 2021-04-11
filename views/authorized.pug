@@ -13,7 +13,7 @@ block content
                     div.text__authorized Here are some games from your preferences!
                     each game in games
                         div.borders__authorized
-                            div.gamestext__authorized #{game.title}, by #{game.publisher} currently has a rating of #{game.overallRating}
+                            a(class="gamestext__authorized" href=`/games/${game.id}`) #{game.title}, by #{game.publisher} currently has a rating of #{game.overallRating}
                 div.display__authorized
                     div.fadein
                         img(class="auth_img" id='f8' src=games[7].imageHref)

@@ -73,7 +73,12 @@ body {
   margin-left: 15px;
   justify-self: center;
   align-self: center;
+  text-decoration: none;
   width: 100%;
+}
+
+.gamestext__authorized:hover {
+  font-weight: bold;
 }
 
 img.auth_img {
