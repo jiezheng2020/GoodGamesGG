@@ -13,10 +13,10 @@ GoodGamesGG, a [Goodreads](https://www.goodreads.com/) inspired project, is a so
 - Heroku Server
 
 #### Back-End
-- PostgreSQL
-- ExpressJs
-- Bcrypt
-- Faker
+- PostgreSQL: Database
+- ExpressJs: Express session
+- Bcrypt: User Authentication
+- Faker: Used to populate data into database
 - Sequelize
 
 ### Wiki Documentation
