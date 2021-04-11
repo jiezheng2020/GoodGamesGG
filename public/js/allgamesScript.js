@@ -22,7 +22,6 @@ function populateGames(games, limit, pageNum){
             </div>
         </div>
                 `
-
     })
 
     document.querySelector('.main__games-list').innerHTML = gamesUl.join('')
