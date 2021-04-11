@@ -4,5 +4,7 @@ GoodGamesGG, a [Goodreads](https://www.goodreads.com/) inspired project, is a so
 
 ### **Live Link: [GoodGamesGG](https://goodgamesgg.herokuapp.com/)**
 
-### Wiki
+## Technologies 
+
+### Wiki Documentation
 Check out our [Wiki](https://github.com/jiezheng2020/GoodGamesGG/wiki) Documentation for more details!
