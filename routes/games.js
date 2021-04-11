@@ -132,7 +132,8 @@ router.get('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
 
     const gameId = req.params.id
 
-    let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings"}]})
+    let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings"},{ model:Console, as: "game_consoles"}]})
+    let consoles = game.game_consoles.map(con=>con.name).join(', ')
 
     if(game) {
 
@@ -159,7 +160,7 @@ router.get('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
         const releaseDate = `${months[game.releaseDate.getMonth()]} ${game.releaseDate.getDate()+1}, ${game.releaseDate.getFullYear()}`
 
         // Renders game page with specific game info
-        res.render('game', {title:game.title, game, releaseDate, userReviews, playedStatus, user, libraries, req});
+        res.render('game', {title:game.title, game, releaseDate, consoles, userReviews, playedStatus, user, libraries, req});
     } else {
         // Throws error if tweet not found
         next(gameNotFoundError(gameId));
