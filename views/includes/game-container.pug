@@ -10,9 +10,9 @@ each game in games
             if libraries
                 select(class='main__sidebar-status')
                         option(class='main__sidebar-status-option') Add to Library
-                        option(class='main__sidebar-status-option') Played
-                        option(class='main__sidebar-status-option') Currently Playing
-                        option(class='main__sidebar-status-option') Want to Play
+                        option(class='main__sidebar-status-option' href=`/${game.id}/2`) Played
+                        option(class='main__sidebar-status-option' href=`/${game.id}/1`) Currently Playing
+                        option(class='main__sidebar-status-option' href=`/${game.id}/0`) Want to Play
                         each library in libraries
-                            option(class='main__sidebar-status-option' href) #{library.name}
+                            option(class='main__sidebar-status-option' href=`/libraries/${library.id}/${game.id}/add`) #{library.name}
             p(class='main__games-body') #{game.description}
