@@ -23,7 +23,16 @@ GoodGamesGG, a [Goodreads](https://www.goodreads.com/) inspired project, is a so
 - Sequelize
 
 ## Features
+ - User session authentication/authorization handled using bcryptjs for hashing and Express session for cookie generation
+ - Authorized users granted access to creating and editting ratings/reviews.
+ - Authorized users are able to create custom libraries and add games to it.
+ - Uses AJAX to filter games in game page asynchronously
 
 ## Challenges
 
 ## Code Highlights
+
+## Future Implementations
+ - Search bar to search across all models
+ - Having genres on each game for more options to user preferences
+ - Displaying an accounts page with user information
