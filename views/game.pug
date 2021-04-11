@@ -40,30 +40,30 @@ block content
             div(class='main__game-ratings')
                 if req.session.user
                     div(class='main__game-ratings-add')
-                        h3(class='main__game-ratings-add-h3') Add Rating/Review
+                        h3(class='main__game-ratings-add-header') Add Rating/Review
                         span(class="main__game-ratings-error")
                         +createStars()
                         textarea(class='main__game-ratings-add-review' placeholder='Please enter your review here')
                         button(class='main__game-ratings-add-button' name='POST') Submit
                     div(class='main__game-ratings-edit main__game--hidden')
-                        h3 Your Rating/Review
+                        h3(class='main__game-ratings-edit-header') Your Rating/Review
                         button(class='main__game-ratings-edit-button') Edit
                         button(class='main__game-ratings-delete-button') Delete
-                        div(class='main__game-ratings-existing')
+                        div(class='main__game-ratings-user')
                 div(class='main__game-ratings-all')
-                    h3 Ratings/Reviews
+                    h3(class='main__game-ratings-all-header') Ratings/Reviews
                     if req.session.user
                         each userReview in userReviews
                             if userReview.id !== user.id
-                                div(class='main__game-ratings-single')
-                                    div(class='main__game-ratings-name-rating')
-                                        h4=userReview.userName
+                                div(class='main__game-ratings-all')
+                                    div(class='main__game-ratings-all-username_and_stars')
+                                        h4(class='main__game-ratings-all-username')=userReview.userName
                                         +loadStars(userReview.Rating.overall)
-                                    div(class='main__game-ratings-review') #{userReview.Rating.body}
+                                    div(class='main__game-ratings-all-review') #{userReview.Rating.body}
                     else
                         each userReview in userReviews
-                            div(class='main__game-ratings-single')
-                                div(class='main__game-ratings-name-rating')
-                                    h4=userReview.userName
+                            div(class='main__game-ratings-all')
+                                div(class='main__game-ratings-all-username_and_stars')
+                                    h4(class='main__game-ratings-all-username')=userReview.userName
                                     +loadStars(userReview.Rating.overall)
-                                div(class='main__game-ratings-review') #{userReview.Rating.body}
+                                div(class='main__game-ratings-all-review') #{userReview.Rating.body}

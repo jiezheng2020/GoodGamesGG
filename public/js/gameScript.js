@@ -11,16 +11,16 @@ function hideAddCreateEdit(rating, username){
 
     existingRating.innerHTML =
         `
-        <div class="main__game-ratings-name-rating">
-            <h4>${username}</h4>
+        <div class="main__game-ratings-user-username_and_stars">
+            <h4 class="main__game-ratings-user-username">${username}</h4>
             <div>
-                <div class="main__ratings-stars">
+                <div class="main__game-ratings-user-stars main__ratings-stars">
                     <div class="main__ratings-stars-empty"></div>
                     <div class="main__ratings-stars-full" style="width:${((rating.overall/5).toFixed(2))*100}%"></div>
                 </div>
             </div>
         </div>
-        <div class="main__game-ratings-review">${rating.body}</div>`
+        <div class="main__game-ratings-user-review">${rating.body}</div>`
 }
 
 function loadStarRating(numberOfStars){
@@ -248,13 +248,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
             } catch(err){
                 windows.location.href = '/error'
             }
-
-
-
-
         }
-
-
     })
 
 })

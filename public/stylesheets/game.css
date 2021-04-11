@@ -4,15 +4,19 @@
 @import "./imports/add-star-rating\(hover\).css";
 @import "./imports/reset.css";
 
-.splashpage {
-    display: grid;
-    background: url("../images/10sDgAY-black-gradient-wallpaper.jpg");
+body {
+    background-image: url("../images/background-4.jpg");
     background-size: cover;
+    margin: 0px;
+    color: white;
+    font-family: "Oswald", sans-serif;
+    opacity: .9;
 }
 
 .main__sidebar,
 .main__games{
     color: white;
+    height: auto;
 }
 
 .main__sidebar{
@@ -20,22 +24,19 @@
     width: 225px;
 }
 
+.main__sidebar-status{
+    position: relative;
+}
+
 
 /********* Sidebar *********/
-body {
-    background-image: url("../images/background.jpg");
-    background-size: cover;
-    margin: 0px;
-    color: white;
-    font-family: "Oswald", sans-serif;
-}
 
 .main__sidebar{
     display: grid;
     margin-top: 50px;
     margin-bottom: 50px;
     padding: 2px;
-    grid-template-rows: 200px 30px 30px 1fr;
+    grid-template-rows: 120px 30px 30px auto;
     border: 2px solid rgba(0, 0, 0, 0.5);
     align-items: center;
 }
@@ -99,7 +100,6 @@ body {
     grid-area: rightInfo;
 }
 
-
 .main__game-info label{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     color: rgba(150, 150, 150, 0.5);
@@ -109,6 +109,13 @@ body {
     margin: 5px 0px;
     list-style: none;
     /* background-color: rgba(64, 64, 64, 0.5); */
+}
+
+/********* Rating Section *********/
+.main__game-ratings-add-header,
+.main__game-ratings-edit-header,
+.main__game-ratings-all-header{
+    color: lightcyan;
 }
 
 .main__game-ratings-add{
@@ -125,31 +132,31 @@ body {
     color: whitesmoke;
     resize: none;
     min-height: 100px;
-    background-color:rgb(240, 239, 239)
-/*     background-color: rgba(64, 64, 64, 0.5); */
+    /* background-color:rgb(240, 239, 239) */
+    background-color: rgba(64, 64, 64, 0.5);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     margin: 10px 0px;
+    outline: ;
 }
-.main__game-ratings-existing,
-.main__game-ratings-single{
+
+.main__game-ratings-user,
+.main__game-ratings-all{
     padding: 10px;
-    border: 1px solid rgba(48, 48, 48, 0.9);
+    border: 1px solid rgba(48, 48, 48, 1);
     margin: 15px 0;
     border-radius: 5px;
-    background-color: rgba(64, 64, 64, 0.5);
+    background-color: rgba(48, 48, 48, 1);
 }
 
-h4{
+.main__game-ratings-user-username,
+.main__game-ratings-all-username{
     margin-right: 10px;
-    color: thistle;
+    color: rgba(172, 59, 200, .8);
 }
 
-h3{
-    color: lightcyan;
-}
 
-.main__game-ratings-name-rating{
+.main__game-ratings-all-username_and_stars{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -165,32 +172,20 @@ h3{
     width: 100px;
     background-color: darkcyan;
     color: white;
-    border-radius: 4px;
-    border-color:  rgba(98, 42, 153, 0.719);
-}
-
-.main__game-ratings-add-button:hover{
-    width: 100px;
-    background-color: cyan;
-    color: rgba(98, 42, 153, 0.719);
-    border-radius: 4px;
-    border-color:  rgba(98, 42, 153, 0.719);
-    border-radius: 5px;
+    border-radius: 3px;
     outline: none;
-    background-color: rgba(64, 64, 64, 0.5);
-    transition: none;
     border: none;
-    color: teal
 }
 
-button:hover {
-    background-color: rgba(100, 100, 100, 0.5);
+.main__game-ratings-add-button:hover,
+.main__game-ratings-edit-button:hover,
+.main__game-ratings-delete-button:hover {
     cursor: pointer;
 }
 
-button:active {
-    background-color: rgba(100, 100, 100, 0.5);
-    box-shadow: 5px #666;
+.main__game-ratings-add-button:active,
+.main__game-ratings-edit-button:active,
+.main__game-ratings-delete-button:active {
     transform: scale(.95);
 }
 
@@ -198,19 +193,10 @@ button:active {
     color: maroon;
 }
 
-.main__sidebar{
-    background-color: rgba(0, 0, 0, 0.0);
-    border: rgba(0, 0, 0, 0.0);
-    height: auto;
-}
-
-.main__sidebar-status{
-    position: relative;
-}
 
 .main__sidebar-status-select{
     width: 100%;
-    background-color: rgba(48, 48, 48, 0.9);
+    background-color: rgba(0, 139, 139, 0.9);
     opacity: .8;
     color: white;
     padding: 3px 28px 3px 3px;
@@ -223,8 +209,6 @@ button:active {
 
 .main__sidebar-status-option {
     outline: none;
-
-
 }
 
 .main__game--hidden{

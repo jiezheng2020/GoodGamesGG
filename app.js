@@ -73,6 +73,8 @@ app.use((err, req, res, next) => {
     res.status(404);
     res.render("page-not-found", {
       title: "Page Not Found",
+      req,
+      err,
     });
   } else {
     next(err);

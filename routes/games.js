@@ -25,7 +25,6 @@ const validateRating = [
 const updateOverallRatings = async()=>{
     const games = await Game.findAll({include:[{model:User, as:'user_ratings'}]});
     games.forEach(async(game)=>{
-        console.log(typeof game.overallRating)
         let total = 0;
 
         game.user_ratings.forEach((user)=>{
@@ -288,7 +287,6 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
         const { user_ratings:users } = game
 
         if(users.length!==1){
-            console.log(typeof game.overallRating)
             game.overallRating = ((((game.overallRating)*users.length)-rating.overall)/(users.length-1)).toFixed(1)
 
             if(game.overallRating>5){game.overallRating=5}
@@ -296,8 +294,6 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
         } else {
             game.overallRating = 0;
         }
-
-        console.log(typeof game.overallRating)
 
         await game.save();
 
