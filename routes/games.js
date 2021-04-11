@@ -135,8 +135,6 @@ router.get('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
     let game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings"},{ model:Console, as: "game_consoles"}]})
     let consoles = game.game_consoles.map(con=>con.name).join(', ')
 
-    console.log(consoles)
-
     if(game) {
 
         const { user_ratings:userReviews } = game
