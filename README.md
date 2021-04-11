@@ -19,5 +19,5 @@ GoodGamesGG, a [Goodreads](https://www.goodreads.com/) inspired project, is a so
 - Faker: Used to populate data into database
 - Sequelize
 
-### Wiki Documentation
+### Starting Development 
 Check out our [Wiki](https://github.com/jiezheng2020/GoodGamesGG/wiki) Documentation for more details!
