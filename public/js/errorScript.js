@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
         document.querySelector(`.errors__message1`).innerHTML+=message1[i]
         await new Promise(resolve => {
             setTimeout(resolve, speed)
-          })
+        })
     }
 
     for (let i=0;i<message2.length;i++){

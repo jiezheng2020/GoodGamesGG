@@ -13,7 +13,7 @@ body {
 }
 
 .splashpage {
-  animation: ;
+  /* animation: ; */
   background-size: cover;
   background-image: url("../images/action2.png");
 }
