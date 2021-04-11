@@ -100,10 +100,8 @@ router.get(
   loginReq,
   asyncHandler(async (req, res) => {
     const games = await Game.findAll({
-      where: {
-        overallRating: { [Op.gt]: 4.2 },
-      },
       limit: 12,
+      order: [["overallRating", "DESC"]],
     });
     res.render("unauthorized", { req, title: "GoodGames", games });
   })

@@ -29,6 +29,8 @@ GoodGamesGG, a [Goodreads](https://www.goodreads.com/) inspired project, is a so
  - Uses AJAX to filter games in game page asynchronously
 
 ## Challenges
+ - We initially had alot of issues with unseeding our database, running into foreign key constraints. The issue stemmed from us manipulating our database via dotenv instead of just sequelize locally, and there were certain practices we had to do differently.
+ - We initially had alot of CSS issues, making sure our pages didn't inherit any styles we didn't want it to. We also needed to make our website responsive to different screen sizes.
 
 ## Code Highlights
 

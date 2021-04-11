@@ -3,13 +3,13 @@ include includes/utils.pug
 
 append head
     link(rel='stylesheet' type="text/css" href='/stylesheets/allgames.css')
-    script(type="application/javascript" src='/js/mygamesScript.js')
+    //- script(type="application/javascript" src='/js/mygamesScript.js')
 block content
     div(class='main')
         div(class='main__sidebar')
             ul(class='main__sidebar-libraries') Libraries:
                 li(class='main__sidebar-library' name="all")
-                    a(class="main__sidebar-user-library-link", href="/mygames/all") All
+                    a(class="main__sidebar-user-library-link", href="/mygames") All
                 li(class='main__sidebar-library' name='played')
                     a(class="main__sidebar-user-library-link"  href="/mygames/2") Played
                 li(class='main__sidebar-library' name='playing') 
