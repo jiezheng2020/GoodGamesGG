@@ -1,29 +1,22 @@
-*{
-  font-family: "Oswald", sans-serif;
-}
-
-
 body {
   min-height: 100vh;
   padding-bottom: 50px;
+  font-family: "Oswald" sans-serif;
 }
 .home {
   background-color: rgba(0, 0, 0, 0.5);
   margin: 0px;
 }
 
+
 .splashpage {
-  /* animation: ; */
   background-size: cover;
   background-image: url("../images/action2.png");
 }
 .home__welcome {
   color: whitesmoke;
-  text-shadow: rgb(107, 81, 15) 3px 3px;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
   font-size: 3em;
-  text-transform: uppercase;
 }
 
 .home__background{
@@ -34,15 +27,16 @@ body {
 
 #top10 {
   display: grid;
-  grid-template-columns: repeat(4, 200px);
-  grid-template-rows: repeat(3, 200px);
-  row-gap: 10px;
+  grid-template-columns: repeat(4, 185px);
+  grid-template-rows: repeat(3, 225px);
   justify-items: center;
+  align-items: center;
   border: transparent 1px solid;
-  background-color:rgba(100, 100, 100, 0.7);
-  border-radius: 20px;
+  background-color:rgba(0, 0, 0, 0.6);
+  border-radius: 6px;
   box-sizing: border-box;
   box-shadow: 0px 20px 15px rgba(0, 0, 0, 0.5);
+  margin-top: 20px;
 }
 
 .gamesofthemonth
@@ -50,6 +44,9 @@ body {
   font-size: 1.2em;
   color: whitesmoke;
   text-align: center;
+  text-transform: uppercase;
+  margin-top: 10px;
+  font-style: oblique;
 }
 
 .home__images {
@@ -60,7 +57,33 @@ body {
   justify-content: flex-end;
 }
 
+.home__banner-container{
+  display:flex;
+  justify-content: center;
+}
 
+
+.home__banner{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-sizing:border-box;
+  border-radius: 8px;
+  width: 740px;
+}
+
+
+.home__demo{
+  display: grid;
+  justify-content: right;
+}
+
+#demoUser{
+  font-size: 1.5em;
+  margin-right: 5px;
+  margin-top: 5px;
+}
 
 #demoUser:hover
 {
@@ -68,16 +91,25 @@ body {
 }
 
 .home__imagecontainer {
-  height: 180px;
+  height: 200px;
   width: 150px;
   border: rgba(0, 0, 0, 0.5) 2px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   box-sizing:border-box;
   background-color:rgba(100, 100, 100, .8);
   display: flex;
   justify-content: center;
   align-items: center;
+  text-overflow: ellipsis;
 }
+
+.home__imagecontainer:hover {
+    transform: scale(1.05,1.05);
+    transition-duration: .5s;
+    border: cyan 0.05px solid;
+}
+
+
 
 .home__img {
   height: 100px;
@@ -87,7 +119,7 @@ body {
 }
 
 .home__rating{
-  color: gold;
+  color: cyan;
 }
 
 .home__title{
@@ -101,7 +133,7 @@ body {
 }
 
 .image_writing > a:hover{
-  font-weight: bold;
+  font-weight: bolder;
 }
 
 

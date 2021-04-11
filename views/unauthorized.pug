@@ -6,12 +6,15 @@ append head
     script(type="application/javascript" src='/js/demo.js')
 block content
     div
-        form(action="/login" method='post')
-            input(name='userName' type='hidden' value='DemoUser' class='demoForm')
-            input(name='password' type='hidden' value='demoTime' class='demoForm')
-            button(id='demoUser' type='submit') Demo
-        h1.home__welcome Welcome to Good Games
-        h3.gamesofthemonth Games of the month:
+        div.home__demo
+            form(action="/login" method='post')
+                input(name='userName' type='hidden' value='DemoUser' class='demoForm')
+                input(name='password' type='hidden' value='demoTime' class='demoForm')
+                button(id='demoUser' type='submit') Demo
+        div.home__banner-container
+            div.home__banner
+                h1.home__welcome Welcome To GoodGames
+                h3.gamesofthemonth Games of the month:
         div.home__background
             div#top10
                 each game in games
