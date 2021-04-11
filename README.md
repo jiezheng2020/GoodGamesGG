@@ -19,8 +19,8 @@ GoodGamesGG, a [Goodreads](https://www.goodreads.com/) inspired project, is a so
 - PostgreSQL: Database
 - ExpressJs: Express session
 - Bcrypt: User Authentication
-- Faker: Used to populate data into database
-- Sequelize
+- Faker: Populate data into database
+- Sequelize: Manage Database
 
 ## Features
  - User session authentication/authorization handled using bcryptjs for hashing and Express session for cookie generation
