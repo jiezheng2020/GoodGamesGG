@@ -73,6 +73,8 @@ app.use((err, req, res, next) => {
     res.status(404);
     res.render("page-not-found", {
       title: "Page Not Found",
+      req,
+      err,
     });
   } else {
     next(err);
@@ -87,6 +89,7 @@ app.use((err, req, res, next) => {
     title: "Server Error",
     message: isProduction ? null : err.message,
     stack: isProduction ? null : err.stack,
+    req
   });
 });
 

@@ -42,7 +42,7 @@ module.exports = {
         description:
           "A disgraced Samurai from fuedal era Japan must stave off a Mongolian invasion with his trusty sword and the help of a few scoundrels along the way.",
         overallRating: 5.0,
-        imageHref: "/images/Sekiro.jpg",
+        imageHref: "/images/tsushima.jpeg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -160,116 +160,6 @@ module.exports = {
           "Battle your way across Hyrule as Link, yet again, to reclaim the kingdom and save the princess.",
         overallRating: 5.0,
         imageHref: "/images/legend_of_zelda.png",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        title: "Fornite",
-        publisher: "Epic Games, Water Bros. Interactive Entertainment",
-        developer: "Epic Games, People Can Fly",
-        releaseDate: new Date(2017, 7, 21),
-        description: "Fornite",
-        overallRating: 4.9,
-        imageHref: "/images/fortnite.jpg",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        title: "League of Legends",
-        publisher: "Riot Games",
-        developer: "Riot Games",
-        releaseDate: new Date(2009, 10, 27),
-        description: "League of Legends",
-        overallRating: 4,
-        imageHref: "/images/leagueoflegends.jpg",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        title: "Rocket League",
-        publisher: "Psyonix",
-        developer: "Psyonix, Panic Button Games",
-        releaseDate: new Date(2015, 7, 7),
-        description: "Rocket League",
-        overallRating: 4,
-        imageHref: "/images/rocketleague.jpg",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        title: "Apex Legends",
-        publisher: "EA Games",
-        developer: "Respawn Entertainment, Panic Button Games",
-        releaseDate: new Date(2019, 2, 4),
-        description: "Apex Legends",
-        overallRating: 3.7,
-        imageHref: "/images/apex.jpg",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        title: "Valorant",
-        publisher: "Riot Games",
-        developer: "Riot Games",
-        releaseDate: new Date(2020, 6, 2),
-        description: "Valorant",
-        overallRating: 4,
-        imageHref: "/images/valorant.png",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        title: "Kingdom Hearts III",
-        publisher: "Square Enix",
-        developer: "Square Enix",
-        releaseDate: new Date(2019, 1, 25),
-        description: "Kingdom Hearts III",
-        overallRating: 4,
-        imageHref: "/images/kh3.png",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        title: "Persona 5",
-        publisher: "Atlus",
-        developer: "Atlus, P Studio",
-        releaseDate: new Date(2016, 9, 15),
-        description: "Persona 5",
-        overallRating: 5,
-        imageHref: "/images/persona5.jpg",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        title: "Final Fantasy VII Remake",
-        publisher: "Square Enix",
-        developer: "Square Enix",
-        releaseDate: new Date(2020, 4, 10),
-        description: "Final Fantasy VII",
-        overallRating: 4,
-        imageHref: "/images/ff7.jpg",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        title: "Pokemon Sword",
-        publisher: "Nintendo, The Pokemon Company",
-        developer: "Game Freak",
-        releaseDate: new Date(2019, 11, 15),
-        description: "Pokemon Sword",
-        overallRating: 4,
-        imageHref: "/images/pokemonsword.jpg",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        title: "Animal Crossing: New Horizons",
-        publisher: "Nintendo",
-        developer: "Nintendo",
-        releaseDate: new Date(2020, 3, 20),
-        description: "Animal Crossing",
-        overallRating: 5,
-        imageHref: "/images/animalcrossing.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -395,7 +285,39 @@ module.exports = {
       },
     ];
 
+    let brentsArray=['fortnite', 'league-of-legends', 'rocket-league', 'valorant', 'kingdom-hearts-iii', 'persona-5', 'final-fantasy-vii-remake', 'pokemon-2019', 'animal-crossing-2019']
+    let brentsHrefs=["/images/fortnite.jpg","/images/leagueoflegends.jpg","/images/rocketleague.jpg","/images/valorant.png","/images/kh3.png","/images/persona5.jpg","/images/ff7.jpg","/images/pokemonsword.jpg","/images/animalcrossing.jpg"]
+
+    const res = brentsArray.map(async(slug)=>{
+      let res = await fetch(`https://api.rawg.io/api/games/${slug}`)
+      return res.json()
+    })
+
+    const brentGames = await Promise.all(res)
+
+    let brentFinalArray = [];
+
+    for(let i=0;i<brentGames.length;i++){
+      let g = {
+        title: brentGames[i].name,
+        publisher: (brentGames[i].publishers.length) ? brentGames[i].publishers.map(el=>el.name).join(', ') : "Epic Games, People Can Fly",
+        developer: brentGames[i].developers.map(el=>el.name).join(', '),
+        releaseDate: brentGames[i].released,
+        description: brentGames[i].description_raw,
+        overallRating: brentGames[i].rating,
+        imageHref: brentsHrefs[i],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+
+      brentFinalArray.push(g)
+    }
+
+    games.push(...brentFinalArray);
+
+
     const newGames = results.map((game) => {
+
       return {
         title: game.name,
         publisher: "Sony Interactive Entertainment",
@@ -408,6 +330,7 @@ module.exports = {
         updatedAt: new Date(),
       };
     });
+
     games.push(...newGames);
     return queryInterface.bulkInsert("Games", games, {});
   },

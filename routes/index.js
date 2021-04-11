@@ -213,7 +213,7 @@ router.get(
   "/login",
   loginReq,
   asyncHandler(async (req, res) => {
-    res.render("login", { req, title: "Log in" });
+    res.render("login", { req, title: "Log in", userName: "" });
   })
 );
 
@@ -237,7 +237,7 @@ router.post(
       };
       res.redirect("/authorized");
     } else if (!isPassword) errors.push("Password is incorrect");
-    res.render("login", { req, errors });
+    res.render("login", { req, errors, userName });
   })
 );
 

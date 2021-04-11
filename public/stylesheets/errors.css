@@ -1,24 +1,24 @@
-.errors
-{
-  display: flex;
-  background-color: navy;
-  height: 100vh;
-  width: 100vw;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+body{
+  background-image: url("/images/background-9.png");
 }
+
+.errors{
+  margin: auto;
+}
+
 .errorHolder{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   color: white;
   text-transform: uppercase;
   font-size: 1.2em;
 }
+
+.errors__message1,
+.errors__message2,
 .tch
 {
-  text-align: center;
+  text-align: left;
   color: white;
+  padding: 20px;
 }
