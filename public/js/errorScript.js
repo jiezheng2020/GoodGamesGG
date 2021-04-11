@@ -1,4 +1,7 @@
 window.addEventListener('DOMContentLoaded', async(event)=>{
+    // const errorDiv = document.querySelector('.errors')
+    // errorDiv.backgroundImage = `url("../../images/background-9.png")`
+
     const message1 = `Welp, I don't know how we got lost. But now we're in space...`
     const message2 = `Please use the navbar above to navigate back to a known page`
     const speed = 25;

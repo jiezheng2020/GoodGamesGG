@@ -23,7 +23,17 @@ block content
                         if libraries
                             each library in libraries
                                 option(class='main__sidebar-status-option' id=`${library.id}`) #{library.name}
-                span(class='main__sidebar-status-arrow')
+                if playedStatus === undefined
+                    div(class='main__sidebar-status-container main__game--hidden')
+                        label(class='main__sidebar-status-label') Play Status:
+                        li(class='main__sidebar-status-played') Loading ⧗
+                else
+                    div(class='main__sidebar-status-container')
+                        label(class='main__sidebar-status-label') Play Status:
+                        li(class='main__sidebar-status-played') #{playedStatus}
+                div(class='main__sidebar-library-container main__game--hidden')
+                    label(class='main__sidebar-library-label') Library Status Update:
+                    li(class='main__sidebar-library-status')
         div(class='main__games')
             div(class='main__game-info')
                 h3(class='main__game-info-title')=game.title
@@ -50,7 +60,7 @@ block content
                         button(class='main__game-ratings-edit-button') Edit
                         button(class='main__game-ratings-delete-button') Delete
                         div(class='main__game-ratings-user')
-                div(class='main__game-ratings-all')
+                div(class='main__game-ratings-all-container')
                     h3(class='main__game-ratings-all-header') Ratings/Reviews
                     if req.session.user
                         each userReview in userReviews
@@ -67,3 +77,5 @@ block content
                                     h4(class='main__game-ratings-all-username')=userReview.userName
                                     +loadStars(userReview.Rating.overall)
                                 div(class='main__game-ratings-all-review') #{userReview.Rating.body}
+    if req.session.user
+        div(class='req__exists')

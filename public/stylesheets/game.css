@@ -36,7 +36,7 @@ body {
     margin-top: 50px;
     margin-bottom: 50px;
     padding: 2px;
-    grid-template-rows: 120px 30px 30px auto;
+    /* grid-template-rows: 120px 30px 30px auto; */
     border: 2px solid rgba(0, 0, 0, 0.5);
     align-items: center;
 }
@@ -64,6 +64,22 @@ body {
     padding-left: 2px;
     border-radius: 3px;
     border-color:  rgba(98, 42, 153, 0.719);
+}
+
+.main__sidebar-status-container{
+    display: flex;
+}
+
+.main__sidebar-status-label,
+.main__sidebar-library-label{
+    color: white
+}
+
+.main__sidebar-status-played,
+.main__sidebar-library-status{
+    list-style: none;
+    padding-left: 10px;
+    color: cyan;
 }
 
 
@@ -137,7 +153,13 @@ body {
     border: none;
     border-radius: 8px;
     margin: 10px 0px;
-    outline: ;
+    padding: 5px;
+}
+
+.main__game-ratings-add-review:focus,
+.main__game-ratings-edit-review:focus {
+    outline: none !important;
+    border: .5px solid cyan;
 }
 
 .main__game-ratings-user,
@@ -155,7 +177,7 @@ body {
     color: rgba(172, 59, 200, .8);
 }
 
-
+.main__game-ratings-user-username_and_stars,
 .main__game-ratings-all-username_and_stars{
     display: flex;
     flex-direction: row;
@@ -196,8 +218,8 @@ body {
 
 .main__sidebar-status-select{
     width: 100%;
-    background-color: rgba(0, 139, 139, 0.9);
-    opacity: .8;
+    background-color: rgb(0, 139, 139);
+    opacity: .9;
     color: white;
     padding: 3px 28px 3px 3px;
     border: none;
@@ -205,6 +227,13 @@ body {
     -webkit-appearance: button;
     appearance: button;
     outline: none;
+    transform: none;
+}
+
+.main__sidebar-status-select:hover,
+.main__sidebar-status-select:active{
+    outline: none !important;
+    border: none !important;
 }
 
 .main__sidebar-status-option {

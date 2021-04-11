@@ -7,10 +7,9 @@
 /********* Main Section *********/
 body {
     background-image: url("../images/background-4.jpg");
-    /* background-color: rgba(32, 32, 32); */
+    background-position: center;
     background-size: cover;
     margin: 0px;
-    /* font-family: "Oswald", sans-serif; */
 }
 
 .main {

@@ -121,6 +121,11 @@ router.post('/api', asyncHandler(async (req, res) => {
 })
 );
 
+const pStats = {
+    2: 'Played',
+    1: 'Currently Playing',
+    0: 'Want to Play'
+}
 
 // Single Game Page Route
 router.get('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
@@ -134,11 +139,15 @@ router.get('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
         const { user_ratings:userReviews } = game
 
         let libraries=null;
-        let user=null
+        let user=null;
+        let playedStatus = null;
 
         if(req.session.user){
+
             user = req.session.user;
             let {Libraries} = await User.findByPk(user.id,{include:[{model:Library}]})
+            let {user_mygames:[userMyGame]} = await Game.findByPk(gameId,{include:[{ model:User, as: "user_mygames"}]})
+            playedStatus = (userMyGame) ? pStats[userMyGame.My_game.played] : undefined;
             libraries = Libraries
         }
 
@@ -150,7 +159,7 @@ router.get('/:id(\\d+)', asyncHandler(async(req,res,next)=>{
         const releaseDate = `${months[game.releaseDate.getMonth()]} ${game.releaseDate.getDate()}, ${game.releaseDate.getFullYear()}`
 
         // Renders game page with specific game info
-        res.render('game', {title:game.title, game, releaseDate, userReviews, user, libraries, req});
+        res.render('game', {title:game.title, game, releaseDate, userReviews, playedStatus, user, libraries, req});
     } else {
         // Throws error if tweet not found
         next(gameNotFoundError(gameId));
@@ -175,9 +184,10 @@ router.get('/:id(\\d+)/api', asyncHandler(async(req,res,next)=>{
         const user = await User.findByPk(userId)
         const {userName:username}=user
         const {overall, body} = rating
-        res.json({rating, username})
+        res.json({exists: true, rating, username})
     } else {
-        res.status(400).send({message: 'Rating Does Not Exist'})
+        res.status(404).send({message: 'Rating does not exist'})
+        // res.json({exists: false, message: 'Rating does not exist'})
     }
 
 }))
@@ -194,6 +204,7 @@ router.post('/:id(\\d+)', validateRating, asyncHandler(async(req,res,next)=>{
     if(!validationErrors.isEmpty()){
         const errors = validationErrors.array().map((error)=>error.msg)
         res.status(500).send({errors})
+        // res.json({validationErrors:errors})
         return
     }
 
@@ -248,7 +259,7 @@ router.put('/:id(\\d+)', asyncHandler(async (req, res, next) => {
 
         await rating.save()
 
-        const game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings", }]})
+        const game = await Game.findByPk(gameId,{include:[{ model:User, as: "user_ratings"}]})
         const { user_ratings:users } = game
 
         let [user] = users.filter((user)=>{
@@ -265,7 +276,7 @@ router.put('/:id(\\d+)', asyncHandler(async (req, res, next) => {
         res.json({rating, username:user.userName, overallRating:game.overallRating});
 
     } else {
-        next(gameNotFoundError(gameId))
+        res.status(404).send({message: 'Rating does not exist'})
     }
 
 }))
@@ -301,7 +312,7 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
         res.json({overallRating:game.overallRating})
 
     } else {
-        next(gameNotFoundError(gameId))
+        res.status(404).send({message:'Rating doest not exist'})
     }
 
 }))
