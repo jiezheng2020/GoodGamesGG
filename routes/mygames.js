@@ -84,7 +84,7 @@ router.get('/all',
 
 router.get('/:played(\\d)',
   asyncHandler(async (req, res, next) => {
- 
+
     const userId = req.session.user.id
     const playedStatus = parseInt(req.params.played, 10)
     const user = await db.User.findByPk(userId, {
@@ -189,14 +189,13 @@ router.post('/:gameId(\\d+)/add',
 // add a library
 router.post('/libraries/add',
   asyncHandler(async (req, res) => {
-    console.log("test")
-      const userId = req.session.user.id
-      const { name } = req.body
-      console.log(name)
+    const userId = req.session.user.id
+    const { name } = req.body
+    console.log(name)
 
-      const library = await db.Library.create({name, userId});
-      // res.json({ library })
-      res.redirect('/mygames');
+    const library = await db.Library.create({name, userId});
+    // res.json({ library })
+    res.redirect('/mygames');
   }));
 
   // add a game to a library
@@ -205,8 +204,8 @@ router.post('/libraries/:libraryId(\\d+)/:gameId(\\d+)/add',
     const libraryId = parseInt(req.params.libraryId, 10);
     const gameId = parseInt(req.params.gameId, 10);
     const {id:userId} = req.session.user
-    6
-    console.log(1)
+
+    const libraryGame = await db.Library.findByPk(libraryId)
     const exists = await db.Library_game.findOne({
         where: {
             gameId: gameId,
@@ -214,30 +213,26 @@ router.post('/libraries/:libraryId(\\d+)/:gameId(\\d+)/add',
         }
     })
 
+
     if (exists) {
-        res.json({exists})
-        return
+      res.json({exists, libraryGame})
+      return
     }
 
-    console.log(2)
+    await db.Library_game.create({libraryId, gameId});
 
-    const libraryGame = await db.Library_game.create({libraryId, gameId});
-
-    const inMyGame = await db.My_game.findOne({
+    let mygame = await db.My_game.findOne({
       where: {
           gameId,
           userId,
       }
     })
 
-    console.log(3)
-    if(!inMyGame){
-      await db.My_game.create({gameId, userId})
+    if(!mygame){
+      mygame = await db.My_game.create({played:2, gameId, userId})
     }
 
-    console.log(4)
-
-    res.json({ libraryGame });
+    res.json({ libraryGame, mygame });
     // res.redirect('/libraries/:libraryId(\\+)');
 }));
 

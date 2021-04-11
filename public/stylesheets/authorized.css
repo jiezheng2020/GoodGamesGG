@@ -6,9 +6,9 @@ body {
 
 .splashpage {
   display: grid;
-  background: url("../images/10sDgAY-black-gradient-wallpaper.jpg");
+  background: url("../images/background-4.jpg");
   background-size: cover;
-  opacity: 0.95;
+  opacity: 0.9;
 }
 .main__authorized {
   height: 100vh;

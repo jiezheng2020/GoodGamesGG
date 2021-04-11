@@ -5,17 +5,18 @@
     margin: 10px;
     width: 200px;
     height: 300px;
-    border: 2px solid rgba(98, 42, 153, 0.719);
+    border: .05px solid rgba(64,64,64, 0.5);
     border-radius: 6px;
     overflow: hidden;
     background-color: rgba(64,64,64, 0.5);
-    transition: .08s;
+    transition: .1s;
 }
 
 .main__games-info:hover{
     transform: scale(1.05,1.05);
     transition-duration: .5s;
     cursor: pointer;
+    border: .05px solid cyan;
 }
 /*
 .main__games-info:active{

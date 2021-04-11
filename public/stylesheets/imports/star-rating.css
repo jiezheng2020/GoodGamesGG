@@ -1,3 +1,6 @@
+.main__ratings-stars-container{
+    color: white;
+}
 .main__ratings-stars{
     position: relative;
     vertical-align: middle;

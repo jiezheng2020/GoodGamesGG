@@ -1,9 +1,9 @@
 extends layout.pug
 append head
-    link(rel="stylesheet", href="./stylesheets/errors.css")
+    link(rel="stylesheet", href="/stylesheets/errors.css")
+    script(type="application/javascript" src='/js/errorScript.js')
 block content
     div.errors
         div.errorHolder
-            h1.tch The page you are looking for could not be found
-            br
-            a(href='/') Return Home
+            h2.errors__message1
+            h2.errors__message2
