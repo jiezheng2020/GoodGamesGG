@@ -183,7 +183,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
     /***************************** Edit Played Status *****************************/
     const playedStatus = document.querySelector('.main__sidebar-status-select')
     playedStatus.addEventListener('change', async(event)=>{
-        console.log('hi')
+        
         const playedNums= {
             'Played': 2,
             'Currently Playing': 1,
@@ -195,7 +195,6 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
             1: 'Currently Playing',
             0: 'Want to Play',
         }
-        console.log("event target value -- ", event.target.value)
 
         if (event.target.value in playedNums){
             const played = playedNums[event.target.value]
