@@ -255,7 +255,7 @@ router.put('/:gameId(\\d+)/played',
         res.json({ newPlayed });
       }
 
-      // res.redirect('/:userId(\\d+)')
+      //res.redirect('/')
 }));
 
 // remove game from mygames

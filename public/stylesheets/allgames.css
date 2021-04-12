@@ -10,6 +10,7 @@ body {
     background-position: center;
     background-size: cover;
     margin: 0px;
+    font-family: "Roboto", sans-serif;
 }
 
 .main {
@@ -25,9 +26,9 @@ body {
 .main__sidebar ul{
     padding: 0px 3px;
     font-size: 20px;
-
 }
 
+.main__sidebar-user-library-link,
 .main__sidebar-order-alpha,
 .main__sidebar-order-rating,
 .main__sidebar-filter-all,
@@ -67,6 +68,9 @@ body {
     background-color: rgba(32, 32, 32, 0.9);
 }
 
+.main__sidebar-libraries li{
+   padding: 5px;
+}
 
 /********* Games Section *********/
 
@@ -120,12 +124,14 @@ body {
 }
 
 .main__sidebar-add-library {
+    padding-top: 20px;
     padding-left: 4px;
     padding-bottom: 20px;
-    color:cyan
+    color: darkcyan
 }
 
 .main__sidebar-add-library-button {
+    margin-left: 5px;
     background-color: darkcyan;
     color: white;
     border-radius: 4px;
@@ -133,6 +139,7 @@ body {
 }
 
 .main__sidebar-add-library-button:hover {
+    margin-left: 5px;
     background-color: cyan;
     color: rgba(98, 42, 153, 0.719);
     border-radius: 4px;

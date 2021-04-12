@@ -183,6 +183,7 @@ window.addEventListener('DOMContentLoaded', async(event)=>{
     /***************************** Edit Played Status *****************************/
     const playedStatus = document.querySelector('.main__sidebar-status-select')
     playedStatus.addEventListener('change', async(event)=>{
+        
         const playedNums= {
             'Played': 2,
             'Currently Playing': 1,
