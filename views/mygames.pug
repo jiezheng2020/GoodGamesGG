@@ -3,7 +3,7 @@ include includes/utils.pug
 
 append head
     link(rel='stylesheet' type="text/css" href='/stylesheets/allgames.css')
-    //- script(type="application/javascript" src='/js/mygamesScript.js')
+    script(type="application/javascript" src='/js/mygamesScript.js')
 block content
     div(class='main')
         div(class='main__sidebar')
@@ -23,10 +23,10 @@ block content
             div(class='main__sidebar-add-library')
                 form(action="/mygames/libraries/add", method="post")
                     h3 Add new library:
-                    div(class="form__container")
+                    div(class="main__sidebar-library-add-form")
                         input(type="text", name="name", placeholder="Library name", required)
                         button(class="main__sidebar-add-library-button" type="submit") Add
-            include includes/default-sidebar.pug
+            //- include includes/default-sidebar.pug
         div(class='main__games')
             ul(class='main__games-list')
                 include includes/game-container.pug

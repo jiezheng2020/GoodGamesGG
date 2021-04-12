@@ -130,7 +130,7 @@
 // let currGameList;
 
 // /***************************** DOMCONTENTLOADED  *****************************/
-// window.addEventListener('DOMContentLoaded', async (event) => {
+window.addEventListener('DOMContentLoaded', async (event) => {
 //     const userlibraryLinks = [...document.getElementsByClassName('main__sidebar-user-library-link')]
 //     // Array.toArry(libraryLinks)
 //     userlibraryLinks.forEach((link) => {
@@ -219,4 +219,20 @@
 //     // })
 
 
-// })
+    // 
+    
+    // const playedStatus = document.querySelector('.main__sidebar-status')
+    // console.log(playedStatus)
+    // playedStatus.addEventListener('change', async (event) => {
+    //     console.log('hi')
+    //     const played = playedNums[event.target.value]
+    //     console.log(played)
+    //     let res = await fetch(`/mygames/${gameId}/played`, {
+    //         method: 'PUT',
+    //         body: JSON.stringify({ played }),
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         }
+    //     })
+    // })
+})
