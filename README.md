@@ -34,7 +34,7 @@
 
 ## Code Highlights
 
-demoGif.gif
+<img src='demoGif.gif'>
 
 ## Future Implementations
  - AJAX implementation for adding to libraries in Mygames page
