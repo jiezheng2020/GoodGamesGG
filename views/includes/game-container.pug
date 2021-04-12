@@ -14,5 +14,5 @@ each game in games
                         option(class='main__sidebar-status-option' href=`/${game.id}/1`) Currently Playing
                         option(class='main__sidebar-status-option' href=`/${game.id}/0`) Want to Play
                         each library in libraries
-                            option(class='main__sidebar-status-option' href=`/libraries/${library.id}/${game.id}/add`) #{library.name}
+                            option(class='main__sidebar-status-option' href=`/libraries/${library.id}/${game.id}/add` id=`${library.id}`) #{library.name}
             p(class='main__games-body') #{game.description}

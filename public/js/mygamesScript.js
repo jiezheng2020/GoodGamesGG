@@ -11,9 +11,9 @@
 //     check the target to decide what to render
 //     iterate through response and render appropriate games
 //     */
-   
-   
-   
+
+
+
 //    const libraries = document.querySelectorAll('.main__sidebar-library')
 //    libraries.forEach((library) => {
 //        library.addEventListener('click', async (event) => {
@@ -38,7 +38,7 @@
 //                 //    each library in libraries
 //                 //    option(class= 'main__sidebar-status-option') #{ library.name }
 //                 //    p(class= 'main__games-body') #{ game.description }"
-//                }) 
+//                })
 //                // return await res.json();
 //             //    return games;
 //             }
@@ -130,7 +130,7 @@
 // let currGameList;
 
 // /***************************** DOMCONTENTLOADED  *****************************/
-// window.addEventListener('DOMContentLoaded', async (event) => {
+window.addEventListener('DOMContentLoaded', async (event) => {
 //     const userlibraryLinks = [...document.getElementsByClassName('main__sidebar-user-library-link')]
 //     // Array.toArry(libraryLinks)
 //     userlibraryLinks.forEach((link) => {
@@ -141,7 +141,7 @@
 //             let res = await fetch(`${route}`)
 //             let { games } = await res.json()
 //             populateGames(games)
-            
+
 //         })
 //     })
 
@@ -201,22 +201,72 @@
 //     })
 
 
-//     /***************************** Page Selector  *****************************/
-//     // const pageNums = document.querySelector('.main__games-pages')
+    /***************************** Page Selector  *****************************/
+    const playedNums= {
+        'Played': 2,
+        'Currently Playing': 1,
+        'Want to Play': 0,
+    }
 
-//     // pageNums.addEventListener('click', async (event) => {
-//     //     const currPage = document.querySelector('.main__games-page--current')
-//     //     const pageNum = (event.target.id.match(/\d+/)) ? parseInt(event.target.id.slice(-1)) : null;
+    const  playedStats={
+        2: 'Played',
+        1: 'Currently Playing',
+        0: 'Want to Play',
+    }
 
-//     //     if (!pageNum || currPage.id === event.target.id) { return }
+    const allSelects = document.querySelectorAll('.main__sidebar-status')
+    allSelects.forEach((select)=>{
+        select.addEventListener('change', async(event)=>{
+            const [gameId] = event.target.previousElementSibling.previousElementSibling.href.match(/\d+$/g)
+            if (event.target.value in playedNums){
+                const played = playedNums[event.target.value]
+                try {
+                    res = await fetch(`/mygames/${gameId}/played`,{
+                        method: 'PUT',
+                        body: JSON.stringify({played}),
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    })
 
-//     //     populateGames(currGameList, limit, pageNum)
+                    const {newPlayed} = await res.json()
 
-//     //     currPage.classList.remove('main__games-page--current')
+                } catch(err){
+                    // window.location.href = '/error'
+                }
 
-//     //     event.target.classList.add('main__games-page--current')
+            } else {
 
-//     // })
+                if(event.target.value==='Add to Library'){return}
+
+                const allOptions = event.target.querySelectorAll('.main__sidebar-status-option')
+                let id;
+                allOptions.forEach((option)=>{
+                    if(option.value===event.target.value){
+                        id=option.id
+                    }
+                })
+
+                try {
+                    let res = await fetch(`/mygames/libraries/${id}/${gameId}/add`,{
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    })
+
+                    const {exists, libraryGame, mygame} = await res.json()
+
+                    if(exists){
+                        return
+                    }
+
+                } catch(err){
+                    // window.location.href = '/error'
+                }
+            }
+        })
+    })
 
 
-// })
+})
