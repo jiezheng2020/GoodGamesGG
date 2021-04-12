@@ -34,6 +34,8 @@
 
 ## Code Highlights
 
+demoGif.gif
+
 ## Future Implementations
  - AJAX implementation for adding to libraries in Mygames page
  - Search bar to search across all models
