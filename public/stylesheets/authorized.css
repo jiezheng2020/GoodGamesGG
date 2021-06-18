@@ -1,18 +1,23 @@
 body {
-  min-height: 100vh;
   padding-bottom: 50px;
   background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .splashpage {
-  display: grid;
   background: url("../images/background-4.jpg");
   background-size: cover;
   opacity: 0.9;
+  height: 100vh;
+  overflow: hidden;
 }
+
 .main__authorized {
   height: 100vh;
 }
+
 .hero__authorized {
   height: 400px;
   background: url("../images/authorized-background.jpg");

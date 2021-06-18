@@ -69,6 +69,12 @@ input[type="password"] {
   font-size: 20px;
 }
 
+.buttons_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .login-btn {
   font-size: 18px;
   font-weight: bold;
@@ -82,6 +88,7 @@ input[type="password"] {
   margin-bottom: 40px;
   cursor: pointer;
   transition: opacity 0.5s;
+  width: 150px;
 }
 
 .login-btn:hover {

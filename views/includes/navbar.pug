@@ -21,6 +21,10 @@ if req
 						a(href='/') GoodGames
 					div.nav__games
 						a(href='/games') Games
+					form(action="/login" method='post' class='nav__demo')
+						input(name='userName' type='hidden' value='DemoUser' class='demoForm')
+						input(name='password' type='hidden' value='demoTime' class='demoForm')
+						button(id='demoUser' type='submit' class='nav__demo-btn') Demo
 					div.nav__links
 						span.signup_link
 							a(href='/login') Login
