@@ -17,7 +17,7 @@
 .navbar {
   display: grid;
   color: white;
-  grid-template-columns: 100px 75px 100px 1fr 100px 100px;
+  grid-template-columns: 120px 75px 100px 1fr 100px 100px;
   grid-template-areas: "logo games mygames . demo auth";
   padding-top: 8px;
   padding-right: 20px;

@@ -1,8 +1,5 @@
-
-
 // /***************************** DOMCONTENTLOADED *****************************/
 // window.addEventListener('DOMContentLoaded', async (event) => {
-
 
 //     /******** SELECTS ALL/PLAYED/NOT PLAYED/WANT TO PLAY LIBRARIES ********/
 //     /*
@@ -11,8 +8,6 @@
 //     check the target to decide what to render
 //     iterate through response and render appropriate games
 //     */
-
-
 
 //    const libraries = document.querySelectorAll('.main__sidebar-library')
 //    libraries.forEach((library) => {
@@ -54,7 +49,6 @@
 
 /***************************** FUNCTIONS *****************************/
 
-
 // Populate The Games
 // function populateGames(games, limit, pageNum) {
 //     let gamesUl = games.map((game) => {
@@ -76,7 +70,6 @@
 
 //     document.querySelector('.main__games-list').innerHTML = gamesUl.join('')
 // }
-
 
 // // Merge Sort Function For Ordering
 // function merge(leftArray, rightArray, type) {
@@ -130,143 +123,159 @@
 // let currGameList;
 
 // /***************************** DOMCONTENTLOADED  *****************************/
-window.addEventListener('DOMContentLoaded', async (event) => {
-//     const userlibraryLinks = [...document.getElementsByClassName('main__sidebar-user-library-link')]
-//     // Array.toArry(libraryLinks)
-//     userlibraryLinks.forEach((link) => {
-//         link.addEventListener('click', async (e) => {
-//             e.preventDefault()
+window.addEventListener("DOMContentLoaded", async (event) => {
+  //     const userlibraryLinks = [...document.getElementsByClassName('main__sidebar-user-library-link')]
+  //     // Array.toArry(libraryLinks)
+  //     userlibraryLinks.forEach((link) => {
+  //         link.addEventListener('click', async (e) => {
+  //             e.preventDefault()
 
-//             let route = link.getAttribute('href')
-//             let res = await fetch(`${route}`)
-//             let { games } = await res.json()
-//             populateGames(games)
+  //             let route = link.getAttribute('href')
+  //             let res = await fetch(`${route}`)
+  //             let { games } = await res.json()
+  //             populateGames(games)
 
-//         })
-//     })
+  //         })
+  //     })
 
-//     // let res = await fetch(`http://localhost:8080/mygames/api`, {
-//     //     method: 'POST',
-//     //     body: JSON.stringify({ filter: 'all', orderType: 'overallRating' }),
-//     //     headers: {
-//     //         "Content-Type": "application/json",
-//     //     }
-//     // })
+  //     // let res = await fetch(`http://localhost:8080/mygames/api`, {
+  //     //     method: 'POST',
+  //     //     body: JSON.stringify({ filter: 'all', orderType: 'overallRating' }),
+  //     //     headers: {
+  //     //         "Content-Type": "application/json",
+  //     //     }
+  //     // })
 
-//     // let { games } = await res.json()
-//     // currGameList = games;
+  //     // let { games } = await res.json()
+  //     // currGameList = games;
 
-//     // /***************************** Sidebar Orders  *****************************/
-//     // const sidebarOrder = document.querySelector('.main__sidebar-order')
+  //     // /***************************** Sidebar Orders  *****************************/
+  //     // const sidebarOrder = document.querySelector('.main__sidebar-order')
 
-//     // sidebarOrder.addEventListener('click', (event) => {
-//     //     const sortedGameList = mergeSort(currGameList, event.target.id)
-//     //     const currPage = document.querySelector('.main__games-page--current')
+  //     // sidebarOrder.addEventListener('click', (event) => {
+  //     //     const sortedGameList = mergeSort(currGameList, event.target.id)
+  //     //     const currPage = document.querySelector('.main__games-page--current')
 
-//     //     const pageNum = parseInt(currPage.id.slice(-1));
+  //     //     const pageNum = parseInt(currPage.id.slice(-1));
 
-//     //     populateGames(sortedGameList, limit, pageNum)
-//     //     currGameList = sortedGameList;
-//     // })
+  //     //     populateGames(sortedGameList, limit, pageNum)
+  //     //     currGameList = sortedGameList;
+  //     // })
 
-//     /***************************** Sidebar Filters  *****************************/
-//     const sidebarFilter = document.querySelector('.main__sidebar-filter')
-//     sidebarFilter.addEventListener('click', async (event) => {
-//         if (event.target.className.match(/main__sidebar-filter-(all|rating|console)$/)) {
-//             let res = await fetch(`http://localhost:8080/mygames/api`, {
-//                 method: 'POST',
-//                 body: JSON.stringify({ filter: event.target.id, orderType: 'overallRating' }),
-//                 headers: {
-//                     "Content-Type": "application/json",
-//                 }
-//             })
+  //     /***************************** Sidebar Filters  *****************************/
+  //     const sidebarFilter = document.querySelector('.main__sidebar-filter')
+  //     sidebarFilter.addEventListener('click', async (event) => {
+  //         if (event.target.className.match(/main__sidebar-filter-(all|rating|console)$/)) {
+  //             let res = await fetch(`http://localhost:8080/mygames/api`, {
+  //                 method: 'POST',
+  //                 body: JSON.stringify({ filter: event.target.id, orderType: 'overallRating' }),
+  //                 headers: {
+  //                     "Content-Type": "application/json",
+  //                 }
+  //             })
 
-//             const { games } = await res.json()
+  //             const { games } = await res.json()
 
-//             currGameList = games;
+  //             currGameList = games;
 
-//             populateGames(games, limit, 1)
+  //             populateGames(games, limit, 1)
 
-//             const pageNums = document.querySelector('.main__games-pages')
-//             pageNums.innerHTML = ''
-//             const pageCount = Math.ceil(currGameList.length / limit);
-//             for (let i = 0; i < pageCount; i++) {
-//                 if (i === 0) {
-//                     pageNums.innerHTML += `<div class="main__games-page main__games-page--current" id="page${i + 1}">${i + 1}</div>`
-//                 } else {
-//                     pageNums.innerHTML += `<div class="main__games-page" id="page${i + 1}">${i + 1}</div>`
-//                 }
-//             }
-//         }
-//     })
+  //             const pageNums = document.querySelector('.main__games-pages')
+  //             pageNums.innerHTML = ''
+  //             const pageCount = Math.ceil(currGameList.length / limit);
+  //             for (let i = 0; i < pageCount; i++) {
+  //                 if (i === 0) {
+  //                     pageNums.innerHTML += `<div class="main__games-page main__games-page--current" id="page${i + 1}">${i + 1}</div>`
+  //                 } else {
+  //                     pageNums.innerHTML += `<div class="main__games-page" id="page${i + 1}">${i + 1}</div>`
+  //                 }
+  //             }
+  //         }
+  //     })
 
+  /***************************** Page Selector  *****************************/
+  const playedNums = {
+    Played: 2,
+    "Currently Playing": 1,
+    "Want to Play": 0,
+  };
 
-    /***************************** Page Selector  *****************************/
-    const playedNums= {
-        'Played': 2,
-        'Currently Playing': 1,
-        'Want to Play': 0,
-    }
+  const playedStats = {
+    2: "Played",
+    1: "Currently Playing",
+    0: "Want to Play",
+  };
 
-    const  playedStats={
-        2: 'Played',
-        1: 'Currently Playing',
-        0: 'Want to Play',
-    }
+  const allSelects = document.querySelectorAll(".main__sidebar-status");
+  allSelects.forEach((select) => {
+    select.addEventListener("change", async (event) => {
+      const [gameId] =
+        event.target.previousElementSibling.previousElementSibling.href.match(
+          /\d+$/g
+        );
+      if (event.target.value in playedNums) {
+        console.log(event.target.value);
+        const played = playedNums[event.target.value];
+        try {
+          const res = await fetch(`/mygames/${gameId}/played`, {
+            method: "PUT",
+            body: JSON.stringify({ played }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
 
-    const allSelects = document.querySelectorAll('.main__sidebar-status')
-    allSelects.forEach((select)=>{
-        select.addEventListener('change', async(event)=>{
-            const [gameId] = event.target.previousElementSibling.previousElementSibling.href.match(/\d+$/g)
-            if (event.target.value in playedNums){
-                const played = playedNums[event.target.value]
-                try {
-                    res = await fetch(`/mygames/${gameId}/played`,{
-                        method: 'PUT',
-                        body: JSON.stringify({played}),
-                        headers: {
-                            "Content-Type": "application/json",
-                        }
-                    })
-
-                    const {newPlayed} = await res.json()
-
-                } catch(err){
-                    // window.location.href = '/error'
-                }
-
-            } else {
-
-                if(event.target.value==='Add to Library'){return}
-
-                const allOptions = event.target.querySelectorAll('.main__sidebar-status-option')
-                let id;
-                allOptions.forEach((option)=>{
-                    if(option.value===event.target.value){
-                        id=option.id
-                    }
-                })
-
-                try {
-                    let res = await fetch(`/mygames/libraries/${id}/${gameId}/add`,{
-                        method: 'POST',
-                        headers: {
-                            "Content-Type": "application/json",
-                        }
-                    })
-
-                    const {exists, libraryGame, mygame} = await res.json()
-
-                    if(exists){
-                        return
-                    }
-
-                } catch(err){
-                    // window.location.href = '/error'
-                }
+          const { newPlayed } = await res.json();
+        } catch (err) {
+          // window.location.href = '/error'
+        }
+      } else if (parseInt(event.target.value) !== NaN) {
+        try {
+          const res = await fetch(
+            `/mygames/libraries/${event.target.value}/${gameId}/delete`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
             }
-        })
-    })
+          );
+          location.reload();
+        } catch (err) {
+          // window.location.href = '/error'
+        }
+      } else {
+        if (event.target.value === "-- Add to Library --") {
+          return;
+        }
 
+        const allOptions = event.target.querySelectorAll(
+          ".main__sidebar-status-option"
+        );
+        let id;
+        allOptions.forEach((option) => {
+          if (option.value === event.target.value) {
+            id = option.id;
+          }
+        });
 
-})
+        try {
+          let res = await fetch(`/mygames/libraries/${id}/${gameId}/add`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const { exists, libraryGame, mygame } = await res.json();
+
+          if (exists) {
+            return;
+          }
+        } catch (err) {
+          // window.location.href = '/error'
+        }
+      }
+    });
+  });
+});

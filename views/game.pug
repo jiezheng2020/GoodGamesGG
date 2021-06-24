@@ -18,9 +18,11 @@ block content
                 div(class='main__sidebar-status')
                     select(class='main__sidebar-status-select')
                         option(class='main__sidebar-status-option') -- Played Status --
+                        option(class='main__sidebar-status-option' disabled) --------------
                         option(class='main__sidebar-status-option') Played
                         option(class='main__sidebar-status-option') Currently Playing
                         option(class='main__sidebar-status-option') Want to Play
+                        option(class='main__sidebar-status-option' disabled) --------------
                         if libraries
                             each library in libraries
                                 option(class='main__sidebar-status-option' id=`${library.id}`) #{library.name}
