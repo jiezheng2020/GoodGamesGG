@@ -99,11 +99,58 @@ router.get(
   "/",
   loginReq,
   asyncHandler(async (req, res) => {
-    const games = await Game.findAll({
-      limit: 12,
+    const ps4Games = await Game.findAll({
+      include: {
+        model: Console,
+        as: "game_consoles",
+        where: {
+          name: "Playstation 4",
+        },
+      },
       order: [["overallRating", "DESC"]],
+      limit: 10,
     });
-    res.render("unauthorized", { req, title: "GoodGames", games });
+    const xboxGames = await Game.findAll({
+      include: {
+        model: Console,
+        as: "game_consoles",
+        where: {
+          name: "Xbox One",
+        },
+      },
+      order: [["overallRating", "DESC"]],
+      limit: 10,
+    });
+    const pcGames = await Game.findAll({
+      include: {
+        model: Console,
+        as: "game_consoles",
+        where: {
+          name: "PC",
+        },
+      },
+      order: [["overallRating", "DESC"]],
+      limit: 10,
+    });
+    const switchGames = await Game.findAll({
+      include: {
+        model: Console,
+        as: "game_consoles",
+        where: {
+          name: "Nintendo Switch",
+        },
+      },
+      order: [["overallRating", "DESC"]],
+      limit: 10,
+    });
+    res.render("unauthorized", {
+      req,
+      title: "GoodGames",
+      ps4Games,
+      xboxGames,
+      pcGames,
+      switchGames,
+    });
   })
 );
 

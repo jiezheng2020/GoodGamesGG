@@ -2,6 +2,7 @@ extends layout.pug
 include includes/utils.pug
 
 append head
+    link(rel='stylesheet' type="text/css" href='/stylesheets/authorized.css')
     link(rel='stylesheet' href='./stylesheets/login.css')
     link(rel="preconnect" href="https://fonts.gstatic.com")
     link(href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet")
@@ -9,8 +10,8 @@ append head
 
 block content
     div(class="main__login-container")
-        form(class="form__login" ,action="/login", method="post")
-            div(class="sub__login-container")
+        div(class="sub__login-container")
+            form(class="form__login" ,action="/login", method="post")
                 h1.head__login Log In
                 div(class="form__login-container")
                     div
@@ -22,6 +23,10 @@ block content
                             label Password
                         input(type="password", placeholder="password", name="password", required)
                 div(class="buttons_container")
-                button(type="submit" class='login-btn') Login
-            div(class="login-errors")
-                +validationErrorSummary(errors)
+                    button(type="submit" class='login-btn') Login
+            form(action="/login" method='post' class="buttons_container")
+                input(name='userName' type='hidden' value='DemoUser' class='demoForm')
+                input(name='password' type='hidden' value='demoTime' class='demoForm')
+                button(id='demoUser' type='submit' class='login-btn') Demo
+        div(class="login-errors")
+            +validationErrorSummary(errors)

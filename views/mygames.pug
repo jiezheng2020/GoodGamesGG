@@ -2,6 +2,7 @@ extends layout.pug
 include includes/utils.pug
 
 append head
+    link(rel='stylesheet' type="text/css" href='/stylesheets/authorized.css')
     link(rel='stylesheet' type="text/css" href='/stylesheets/allgames.css')
     script(type="application/javascript" src='/js/mygamesScript.js')
 block content
@@ -12,7 +13,7 @@ block content
                     a(class="main__sidebar-user-library-link", href="/mygames") All
                 li(class='main__sidebar-library' name='played')
                     a(class="main__sidebar-user-library-link"  href="/mygames/2") Played
-                li(class='main__sidebar-library' name='playing') 
+                li(class='main__sidebar-library' name='playing')
                     a(class="main__sidebar-user-library-link"  href="/mygames/1") Currently Playing
                 li(class='main__sidebar-library' name='not-played')
                     a(class="main__sidebar-user-library-link"  href="/mygames/0") Want to Play

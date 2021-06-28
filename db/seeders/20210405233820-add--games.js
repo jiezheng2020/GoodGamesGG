@@ -5,7 +5,7 @@ const fetch = require("node-fetch");
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const data = await fetch(
-      "https://api.rawg.io/api/games?dates=2019-01-01,2019-12-31&ordering=-added?key=26ac0f3d2391457087937165a3fbeceb"
+      "https://api.rawg.io/api/games?key=b6fa635e114945c992c969cac137f6b4"
     );
     const { results } = await data.json();
 
@@ -285,39 +285,63 @@ module.exports = {
       },
     ];
 
-    let brentsArray=['fortnite', 'league-of-legends', 'rocket-league', 'valorant', 'kingdom-hearts-iii', 'persona-5', 'final-fantasy-vii-remake', 'pokemon-2019', 'animal-crossing-2019']
-    let brentsHrefs=["/images/fortnite.jpg","/images/leagueoflegends.jpg","/images/rocketleague.jpg","/images/valorant.png","/images/kh3.png","/images/persona5.jpg","/images/ff7.jpg","/images/pokemonsword.jpg","/images/animalcrossing.jpg"]
+    let brentsArray = [
+      "fortnite",
+      "league-of-legends",
+      "rocket-league",
+      "valorant",
+      "kingdom-hearts-iii",
+      "persona-5",
+      "final-fantasy-vii-remake",
+      "pokemon-2019",
+      "animal-crossing-2019",
+    ];
 
-    const res = brentsArray.map(async(slug)=>{
-      let res = await fetch(`https://api.rawg.io/api/games/${slug}`)
-      return res.json()
-    })
+    let brentsHrefs = [
+      "/images/fortnite.jpg",
+      "/images/leagueoflegends.jpg",
+      "/images/rocketleague.jpg",
+      "/images/valorant.png",
+      "/images/kh3.png",
+      "/images/persona5.jpg",
+      "/images/ff7.jpg",
+      "/images/pokemonsword.jpg",
+      "/images/animalcrossing.jpg",
+    ];
 
-    const brentGames = await Promise.all(res)
+    const res = brentsArray.map(async (slug) => {
+      let res = await fetch(
+        `https://api.rawg.io/api/games/${slug}?key=b6fa635e114945c992c969cac137f6b4`
+      );
+      return res.json();
+    });
+
+    const brentGames = await Promise.all(res);
+    console.log(brentGames);
 
     let brentFinalArray = [];
 
-    for(let i=0;i<brentGames.length;i++){
+    for (let i = 0; i < brentGames.length; i++) {
       let g = {
         title: brentGames[i].name,
-        publisher: (brentGames[i].publishers.length) ? brentGames[i].publishers.map(el=>el.name).join(', ') : "Epic Games, People Can Fly",
-        developer: brentGames[i].developers.map(el=>el.name).join(', '),
+        publisher: brentGames[i].publishers.length
+          ? brentGames[i].publishers.map((el) => el.name).join(", ")
+          : "Epic Games, People Can Fly",
+        developer: brentGames[i].developers.map((el) => el.name).join(", "),
         releaseDate: brentGames[i].released,
         description: brentGames[i].description_raw,
         overallRating: brentGames[i].rating,
         imageHref: brentsHrefs[i],
         createdAt: new Date(),
         updatedAt: new Date(),
-      }
+      };
 
-      brentFinalArray.push(g)
+      brentFinalArray.push(g);
     }
 
     games.push(...brentFinalArray);
 
-
     const newGames = results.map((game) => {
-
       return {
         title: game.name,
         publisher: "Sony Interactive Entertainment",

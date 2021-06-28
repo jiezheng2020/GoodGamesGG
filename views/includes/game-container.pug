@@ -7,12 +7,18 @@ each game in games
         div(class='main__games-data')
             a(class='main__games-name' href=`/games/${game.id}`)=game.title
             +loadStars(game.overallRating)
-            //- if libraries
-            //-     select(class='main__sidebar-status')
-            //-             option(class='main__sidebar-status-option') Add to Library
-            //-             option(class='main__sidebar-play-status-option' value= 2) Played
-            //-             option(class='main__sidebar-play-status-option' value= 1) Currently Playing
-            //-             option(class='main__sidebar-play-status-option' value= 0) Want to Play
-            //-             each library in libraries
-            //-                 option(class='main__sidebar-library-add-option') #{library.name}
+            if libraries
+                select(class='main__sidebar-status')
+                        option(class='main__sidebar-status-option') -- Add to Library --
+                        if libraryId
+                            option(class='main__sidebar-status-option' disabled) --------------
+                            option(class='main__sidebar-status-option' value=libraryId) -- Remove From Library --
+                        option(class='main__sidebar-status-option' disabled) --------------
+                        option(class='main__sidebar-status-option' href=`/${game.id}/2`) Played
+                        option(class='main__sidebar-status-option' href=`/${game.id}/1`) Currently Playing
+                        option(class='main__sidebar-status-option' href=`/${game.id}/0`) Want to Play
+                        option(class='main__sidebar-status-option' disabled) --------------
+                        each library in libraries
+                            if library.id !== libraryId
+                                option(class='main__sidebar-status-option' href=`/libraries/${library.id}/${game.id}/add` id=`${library.id}`) #{library.name}
             p(class='main__games-body') #{game.description}

@@ -5,242 +5,279 @@
 @import "./imports/reset.css";
 
 body {
-    background-image: url("../images/background-4.jpg");
-    background-size: cover;
-    margin: 0px;
-    color: white;
-    font-family: "Oswald", sans-serif;
-    opacity: .9;
+  background-image: url("../images/background-4.jpg");
+  background-size: cover;
+  margin: 0px;
+  color: white;
+  font-family: "Oswald", sans-serif;
+  opacity: 0.9;
 }
 
 .main__sidebar,
-.main__games{
-    color: white;
-    height: auto;
+.main__games {
+  color: white;
+  height: auto;
 }
 
-.main__sidebar{
-    position: fixed;
-    width: 225px;
-}
-
-.main__sidebar-status{
-    position: relative;
-}
-
-
-/********* Sidebar *********/
-
-.main__sidebar{
-    display: grid;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    padding: 2px;
-    /* grid-template-rows: 120px 30px 30px auto; */
-    border: 2px solid rgba(0, 0, 0, 0.5);
-    align-items: center;
-}
-
-.main__sidebar-img{
-    width: 100%;
-    height: 116px;
-    object-fit: cover;
-    border-radius: 10px;
+.main__sidebar {
+  position: fixed;
+  width: 225px;
 }
 
 .main__sidebar-status {
-    background-color: darkcyan;
-    color: white;
-    margin-left: 6px;
-    padding-left: 2px;
-    border-radius: 3px;
-    border-color:  rgba(98, 42, 153, 0.719);
+  position: relative;
+}
+
+/********* Sidebar *********/
+
+.main__sidebar {
+  display: grid;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 2px;
+  /* grid-template-rows: 120px 30px 30px auto; */
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  align-items: center;
+}
+
+.main__sidebar-img {
+  width: 100%;
+  height: 116px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.main__sidebar-status {
+  background-color: darkcyan;
+  color: white;
+  margin-left: 6px;
+  padding-left: 2px;
+  border-radius: 3px;
+  border-color: rgba(98, 42, 153, 0.719);
 }
 
 .main__sidebar-status:hover {
-    background-color: cyan;
-    color: rgb(119, 40, 197);
-    margin-left: 6px;
-    padding-left: 2px;
-    border-radius: 3px;
-    border-color:  rgba(98, 42, 153, 0.719);
+  background-color: cyan;
+  color: rgb(119, 40, 197);
+  margin-left: 6px;
+  padding-left: 2px;
+  border-radius: 3px;
+  border-color: rgba(98, 42, 153, 0.719);
 }
 
-.main__sidebar-status-container{
-    display: flex;
+.main__sidebar-status-container {
+  display: flex;
 }
 
 .main__sidebar-status-label,
-.main__sidebar-library-label{
-    color: white
+.main__sidebar-library-label {
+  color: white;
 }
 
 .main__sidebar-status-played,
-.main__sidebar-library-status{
-    list-style: none;
-    padding-left: 10px;
-    color: cyan;
+.main__sidebar-library-status {
+  list-style: none;
+  padding-left: 10px;
+  color: cyan;
 }
-
 
 /********* Game Info Section *********/
-.main__games{
-    padding: 10px;
-    color: white;
-    margin-top: 50px;
-    margin-bottom: 50px;
+.main__games {
+  padding: 10px;
+  color: white;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
-.main__game-info{
-    display: grid;
-    grid-template-columns: 40% 60%;
-    grid-template-rows: 50px auto;
-    grid-template-areas:
-        'title title'
-        'leftInfo rightInfo';
-    margin-bottom: 10px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+.main__game-info {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-template-rows: 50px auto;
+  grid-template-areas:
+    "title title"
+    "leftInfo rightInfo";
+  margin-bottom: 10px;
+  height: 275px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-.main__game-info-title{
-    font-family: "Oswald", sans-serif;
-    grid-area: title;
-    font-size: 30px;
+.main__game-info-title {
+  font-family: "Oswald", sans-serif;
+  grid-area: title;
+  font-size: 30px;
 }
 
-.main__game-info-left{
-    grid-area: leftInfo;
-    padding-right: 20px;
+.main__game-info-left {
+  grid-area: leftInfo;
+  padding-right: 20px;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
 }
 
-.main__game-info-right{
-    grid-area: rightInfo;
+.main__game-info-right {
+  grid-area: rightInfo;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
 }
 
-.main__game-info label{
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: rgba(150, 150, 150, 0.5);
+.main__game-info label {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: rgba(150, 150, 150, 0.5);
 }
 
-.main__game-info li{
-    margin: 5px 0px;
-    list-style: none;
-    /* background-color: rgba(64, 64, 64, 0.5); */
+.main__game-info li {
+  margin: 5px 0px;
+  list-style: none;
+  /* background-color: rgba(64, 64, 64, 0.5); */
 }
 
 /********* Rating Section *********/
+.main__game-ratings {
+  position: absolute;
+  top: 285px;
+  bottom: 10px;
+  right: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
 .main__game-ratings-add-header,
 .main__game-ratings-edit-header,
-.main__game-ratings-all-header{
-    color: whitesmoke;
+.main__game-ratings-all-header {
+  color: whitesmoke;
 }
 
-.main__game-ratings-add{
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
+.main__game-ratings-add {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 }
-
 
 .main__game-ratings-add-review,
-.main__game-ratings-edit-review{
-    height: 125px;
-    color: whitesmoke;
-    resize: none;
-    min-height: 100px;
-    /* background-color:rgb(240, 239, 239) */
-    background-color: rgba(64, 64, 64, 0.5);
-    border: none;
-    border-radius: 8px;
-    margin: 10px 0px;
-    padding: 5px;
+.main__game-ratings-edit-review {
+  height: 125px;
+  color: whitesmoke;
+  resize: none;
+  min-height: 75px;
+  max-height: 125px;
+  height: 75px;
+  /* background-color:rgb(240, 239, 239) */
+  background-color: rgba(64, 64, 64, 0.5);
+  border: none;
+  border-radius: 8px;
+  margin: 10px 0px;
+  padding: 5px;
 }
 
 .main__game-ratings-add-review:focus,
 .main__game-ratings-edit-review:focus {
-    outline: none !important;
-    border: .5px solid cyan;
+  outline: none !important;
+  border: 0.5px solid cyan;
+}
+
+.main__game-ratings-all-container {
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .main__game-ratings-user,
-.main__game-ratings-all{
-    padding: 10px;
-    border: 1px solid rgba(48, 48, 48, 1);
-    margin: 15px 0;
-    border-radius: 5px;
-    background-color: rgba(48, 48, 48, 1);
+.main__game-ratings-all {
+  padding: 10px;
+  border: 1px solid rgba(48, 48, 48, 1);
+  margin: 15px 0;
+  border-radius: 5px;
+  background-color: rgba(48, 48, 48, 1);
 }
 
 .main__game-ratings-user-username,
-.main__game-ratings-all-username{
-    margin-right: 10px;
-    color: rgba(172, 59, 200, .8);
+.main__game-ratings-all-username {
+  margin-right: 10px;
+  color: rgba(172, 59, 200, 0.8);
 }
 
 .main__game-ratings-user-username_and_stars,
-.main__game-ratings-all-username_and_stars{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
+.main__game-ratings-all-username_and_stars {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .main__game-ratings-add-button,
 .main__game-ratings-edit-button,
-.main__game-ratings-delete-button{
-    margin: 10px;
-    font-size: 15px;
-    height: 25px;
-    width: 100px;
-    background-color: darkcyan;
-    color: white;
-    border-radius: 3px;
-    outline: none;
-    border: none;
+.main__game-ratings-delete-button {
+  margin: 10px;
+  font-size: 15px;
+  height: 25px;
+  width: 100px;
+  background-color: darkcyan;
+  color: white;
+  border-radius: 3px;
+  outline: none;
+  border: none;
 }
 
 .main__game-ratings-add-button:hover,
 .main__game-ratings-edit-button:hover,
 .main__game-ratings-delete-button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .main__game-ratings-add-button:active,
 .main__game-ratings-edit-button:active,
 .main__game-ratings-delete-button:active {
-    transform: scale(.95);
+  transform: scale(0.95);
 }
 
-.main__game-ratings-error{
-    color: maroon;
+.main__game-ratings-error {
+  color: maroon;
 }
 
-
-.main__sidebar-status-select{
-    width: 100%;
-    background-color: rgb(0, 139, 139);
-    opacity: .9;
-    color: white;
-    padding: 3px 28px 3px 3px;
-    border: none;
-    font-size: 15px;
-    -webkit-appearance: button;
-    appearance: button;
-    outline: none;
-    transform: none;
+.main__sidebar-status-select {
+  width: 100%;
+  background-color: rgb(0, 139, 139);
+  opacity: 0.9;
+  color: white;
+  padding: 3px 28px 3px 3px;
+  border: none;
+  font-size: 15px;
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+  transform: none;
 }
 
 .main__sidebar-status-select:hover,
-.main__sidebar-status-select:active{
-    outline: none !important;
-    border: none !important;
+.main__sidebar-status-select:active {
+  outline: none !important;
+  border: none !important;
 }
 
 .main__sidebar-status-option {
-    outline: none;
+  outline: none;
 }
 
-.main__game--hidden{
-    display: none;
+.main__game--hidden {
+  display: none;
+}
+
+/** Scroll Bar**/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: rgba(8, 8, 8, 0.8);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(64, 64, 64, 0.9);
+  border-radius: 20px;
 }

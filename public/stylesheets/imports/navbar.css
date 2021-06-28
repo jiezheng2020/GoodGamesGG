@@ -17,21 +17,26 @@
 .navbar {
   display: grid;
   color: white;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: 120px 75px 100px 1fr 100px 100px;
+  grid-template-areas: "logo games mygames . demo auth";
   padding-top: 8px;
   padding-right: 20px;
 }
 
+.nav__logo {
+  grid-area: logo;
+}
+
 .nav__games {
+  grid-area: games;
   text-align: center;
   font-size: 1.1em;
-  grid-column: 2/3;
 }
 
 .nav__mygames {
+  grid-area: mygames;
   text-align: center;
   font-size: 1.1em;
-  grid-column: 3/4;
 }
 
 .nav__mygames:hover,
@@ -39,9 +44,31 @@
   font-weight: bold;
 }
 
+.nav__demo {
+  grid-area: demo;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.nav__demo-btn {
+  font-size: 1.1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(to right, rgb(74, 147, 255), rgb(9, 97, 211));
+  color: white;
+  opacity: 0.9;
+  cursor: pointer;
+  transition: opacity 0.5s;
+}
+
 .nav__links {
   font-size: 1.1em;
-  grid-column-start: end;
+  grid-area: auth;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .nav__logo {
@@ -65,4 +92,22 @@
   color: #ffffff;
   cursor: pointer;
   font-size: 1.1em;
+}
+
+/** Scroll Bar**/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: rgba(8, 8, 8, 0.8);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(64, 64, 64, 0.9);
+  border-radius: 10px;
 }
