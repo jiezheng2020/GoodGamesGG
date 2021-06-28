@@ -7,6 +7,17 @@ body {
 .main__login-container {
   font-family: "Roboto", sans-serif;
   color: rgb(0, 0, 0);
+  position: absolute;
+  top: 50px;
+  bottom: 45px;
+  right: 0;
+  left: 0;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 200px;
+  padding-bottom: 50px;
 }
 
 .form__login {
@@ -25,8 +36,6 @@ h1.head__login {
 }
 
 .sub__login-container {
-  margin: auto;
-  margin-top: 200px;
   width: 550px;
   border-radius: 30px;
   background-color: rgb(43, 43, 43);
