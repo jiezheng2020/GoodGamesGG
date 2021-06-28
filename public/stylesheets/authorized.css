@@ -11,7 +11,7 @@ body {
   background-size: cover;
   opacity: 0.9;
   height: 100vh;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .main__authorized {
@@ -24,6 +24,7 @@ body {
   background-size: cover;
   margin-bottom: 50px;
 }
+
 .welcome__authorized {
   font-family: "Oswald", sans-serif;
   display: flex;

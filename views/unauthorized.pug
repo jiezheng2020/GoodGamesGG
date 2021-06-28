@@ -3,7 +3,6 @@ include includes/utils.pug
 
 append head
     link(rel='stylesheet', href='./stylesheets/home-page.css')
-    //- link(rel='stylesheet', href='./stylesheets/authorized.css')
     script(type="application/javascript" src='/js/demo.js')
 block content
     div.home__main
@@ -13,51 +12,52 @@ block content
         //-     div.home__banner
         //-         //- h1.home__welcome Welcome To GoodGames
         //-         h3.gamesofthemonth Games of the month:
-        div.home__background
-            div.home__background-header Top Playstation 4 Games
-            div#top10
-                each game in ps4Games
-                    div.home__imagecontainer
-                        div.home__images
-                            a(href=`/games/${game.id}`)
-                                +createImg(game, 'home__img')
-                            div.image_writing
-                                span.home__rating #{game.overallRating} / 5 ★
-                                br
-                                a(href=`/games/${game.id}` class='home__title')=game.title
-        div.home__background
-            div.home__background-header Top Xbox One Games
-            div#top10
-                each game in xboxGames
-                    div.home__imagecontainer
-                        div.home__images
-                            a(href=`/games/${game.id}`)
-                                +createImg(game, 'home__img')
-                            div.image_writing
-                                span.home__rating #{game.overallRating} / 5 ★
-                                br
-                                a(href=`/games/${game.id}` class='home__title')=game.title
-        div.home__background
-            div.home__background-header Top PC Games
-            div#top10
-                each game in pcGames
-                    div.home__imagecontainer
-                        div.home__images
-                            a(href=`/games/${game.id}`)
-                                +createImg(game, 'home__img')
-                            div.image_writing
-                                span.home__rating #{game.overallRating} / 5 ★
-                                br
-                                a(href=`/games/${game.id}` class='home__title')=game.title
-        div.home__background
-            div.home__background-header Top Switch Games
-            div#top10
-                each game in switchGames
-                    div.home__imagecontainer
-                        div.home__images
-                            a(href=`/games/${game.id}`)
-                                +createImg(game, 'home__img')
-                            div.image_writing
-                                span.home__rating #{game.overallRating} / 5 ★
-                                br
-                                a(href=`/games/${game.id}` class='home__title')=game.title
+        div.home__games
+            div.home__background
+                div.home__background-header Top Playstation 4 Games
+                div#top10
+                    each game in ps4Games
+                        div.home__imagecontainer
+                            div.home__images
+                                a(href=`/games/${game.id}`)
+                                    +createImg(game, 'home__img')
+                                div.image_writing
+                                    span.home__rating #{game.overallRating} / 5 ★
+                                    br
+                                    a(href=`/games/${game.id}` class='home__title')=game.title
+            div.home__background
+                div.home__background-header Top Xbox One Games
+                div#top10
+                    each game in xboxGames
+                        div.home__imagecontainer
+                            div.home__images
+                                a(href=`/games/${game.id}`)
+                                    +createImg(game, 'home__img')
+                                div.image_writing
+                                    span.home__rating #{game.overallRating} / 5 ★
+                                    br
+                                    a(href=`/games/${game.id}` class='home__title')=game.title
+            div.home__background
+                div.home__background-header Top PC Games
+                div#top10
+                    each game in pcGames
+                        div.home__imagecontainer
+                            div.home__images
+                                a(href=`/games/${game.id}`)
+                                    +createImg(game, 'home__img')
+                                div.image_writing
+                                    span.home__rating #{game.overallRating} / 5 ★
+                                    br
+                                    a(href=`/games/${game.id}` class='home__title')=game.title
+            div.home__background
+                div.home__background-header Top Switch Games
+                div#top10
+                    each game in switchGames
+                        div.home__imagecontainer
+                            div.home__images
+                                a(href=`/games/${game.id}`)
+                                    +createImg(game, 'home__img')
+                                div.image_writing
+                                    span.home__rating #{game.overallRating} / 5 ★
+                                    br
+                                    a(href=`/games/${game.id}` class='home__title')=game.title
