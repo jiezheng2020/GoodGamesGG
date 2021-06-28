@@ -34,7 +34,10 @@
 
 ## Code Highlights
 
+<img src='demoGif.gif'>
+
 ## Future Implementations
+ - AJAX implementation for adding to libraries in Mygames page
  - Search bar to search across all models
  - Having genres on each game to give users more preference options
  - Displaying an accounts page with user information
