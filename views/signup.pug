@@ -32,6 +32,10 @@ block content
                         div(class='form__signup-labels')
                             label Password
                         input(type="password", placeholder="password", name="password", required)
+                    div
+                        div(class='form__signup-labels')
+                            label Confirm Password
+                        input(type="password", placeholder="confirm password", name="confirmpassword", required)
                 div(class="preferences__container")
                     h4.head__console-type Please choose a preferred console type
                     each console in consoles

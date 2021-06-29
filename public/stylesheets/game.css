@@ -52,7 +52,7 @@ body {
   margin-left: 6px;
   padding-left: 2px;
   border-radius: 3px;
-  border-color: rgba(98, 42, 153, 0.719);
+  border-color: rgba(139, 65, 214, 0.719);
 }
 
 .main__sidebar-status:hover {
@@ -61,7 +61,7 @@ body {
   margin-left: 6px;
   padding-left: 2px;
   border-radius: 3px;
-  border-color: rgba(98, 42, 153, 0.719);
+  border-color: rgba(139, 65, 214, 0.719);
 }
 
 .main__sidebar-status-container {
@@ -196,7 +196,7 @@ body {
 .main__game-ratings-user-username,
 .main__game-ratings-all-username {
   margin-right: 10px;
-  color: rgba(172, 59, 200, 0.8);
+  color: #d16beb;
 }
 
 .main__game-ratings-user-username_and_stars,
