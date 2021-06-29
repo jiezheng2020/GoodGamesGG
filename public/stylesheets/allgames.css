@@ -28,6 +28,23 @@ body {
   font-size: 20px;
 }
 
+.main__sidebar-order,
+.main__sidebar-filter-alls,
+.main__sidebar-filter-ratings,
+.main__sidebar-filter--consoles {
+  display: flex;
+  flex-direction: column;
+}
+
+.main__siderbar-header {
+  margin-top: 15px;
+  margin-bottom: 3px;
+}
+
+.main__siderbar-header-first {
+  margin-bottom: 3px;
+}
+
 .main__sidebar-user-library-link,
 .main__sidebar-order-alpha,
 .main__sidebar-order-rating,
@@ -50,22 +67,21 @@ body {
 .main__sidebar-filter-alls,
 .main__sidebar-filter-ratings,
 .main__sidebar-filter--consoles {
-  color: darkcyan;
+  color: #00cccc;
 }
 
 .main__sidebar li:hover {
   text-decoration: underline;
   cursor: pointer;
   color: cyan;
-  /* background: grey; */
-  background-color: rgba(32, 32, 32, 0.6);
+  background-color: rgba(48, 48, 48, 0.6);
 }
 
 .main__sidebar-order--current,
 .main__sidebar-filter--current {
   font-size: 19px;
   color: cyan;
-  background-color: rgba(32, 32, 32, 0.9);
+  background-color: rgba(48, 48, 48, 0.9);
 }
 
 .main__sidebar-libraries li {
