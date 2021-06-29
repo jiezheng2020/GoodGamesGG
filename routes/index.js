@@ -40,11 +40,6 @@ const userValidator = [
         }
       });
     }),
-  check("password")
-    .exists({ checkFalsy: true })
-    .withMessage("Please provide a value for password")
-    .isLength({ min: 6 })
-    .withMessage("Password must be longer than 6 characters"),
   check("userName")
     .exists({ checkFalsy: true })
     .withMessage("Please provide a value for username")
@@ -58,6 +53,18 @@ const userValidator = [
           );
         }
       });
+    }),
+  check("password")
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a value for password")
+    .isLength({ min: 6 })
+    .withMessage("Password must be longer than 6 characters")
+    .custom((value, { req }) => {
+      if (value !== req.body.confirmpassword) {
+        return Promise.reject("Passwords must match");
+      } else {
+        return Promise.resolve();
+      }
     }),
 ];
 

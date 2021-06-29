@@ -317,7 +317,6 @@ module.exports = {
     });
 
     const brentGames = await Promise.all(res);
-    console.log(brentGames);
 
     let brentFinalArray = [];
 

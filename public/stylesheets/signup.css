@@ -80,9 +80,11 @@ h4.head__console-type {
 .console-label {
   color: white;
 }
+
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="confirmpassword"] {
   text-align: left;
   height: 30px;
   margin-top: 5px;
@@ -130,11 +132,22 @@ input[type="checkbox"] {
 }
 .alert.alert-danger {
   margin: 20px 0;
-  padding: 0px 25px 20px 25px;
+  padding: 5px 25px 5px 25px;
   color: white;
   font-weight: normal;
   background-color: red;
-  opacity: 0.8;
+  opacity: 0.92;
   border-radius: 20px;
   width: 500px;
+}
+
+.alert.alert-danger p {
+  margin: 2.5px 0;
+}
+
+.alert.alert-danger li {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 2.5px 0;
 }
