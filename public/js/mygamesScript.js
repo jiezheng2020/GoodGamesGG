@@ -229,7 +229,7 @@ window.addEventListener("DOMContentLoaded", async (event) => {
         } catch (err) {
           // window.location.href = '/error'
         }
-      } else if (parseInt(event.target.value) !== NaN) {
+      } else if (parseInt(event.target.value)) {
         try {
           const res = await fetch(
             `/mygames/libraries/${event.target.value}/${gameId}/delete`,
@@ -248,7 +248,6 @@ window.addEventListener("DOMContentLoaded", async (event) => {
         if (event.target.value === "-- Add to Library --") {
           return;
         }
-
         const allOptions = event.target.querySelectorAll(
           ".main__sidebar-status-option"
         );
