@@ -108,20 +108,22 @@ window.addEventListener("DOMContentLoaded", async (event) => {
   const sidebarOrder = document.querySelector(".main__sidebar-order");
 
   sidebarOrder.addEventListener("click", (event) => {
-    const sortedGameList = mergeSort(currGameList, event.target.id);
-    const currPage = document.querySelector(".main__games-page--current");
+    if (event.target.className.match(/main__sidebar-order-(alpha|rating)$/)) {
+      const sortedGameList = mergeSort(currGameList, event.target.id);
+      const currPage = document.querySelector(".main__games-page--current");
 
-    const pageNum = parseInt(currPage.id.slice(-1));
+      const pageNum = parseInt(currPage.id.slice(-1));
 
-    const currOrder = document.querySelector(".main__sidebar-order--current");
+      const currOrder = document.querySelector(".main__sidebar-order--current");
 
-    if (currOrder !== event.target) {
-      currOrder.classList.remove("main__sidebar-order--current");
-      event.target.classList.add("main__sidebar-order--current");
+      if (currOrder !== event.target) {
+        currOrder.classList.remove("main__sidebar-order--current");
+        event.target.classList.add("main__sidebar-order--current");
+      }
+
+      populateGames(sortedGameList, limit, pageNum);
+      currGameList = sortedGameList;
     }
-
-    populateGames(sortedGameList, limit, pageNum);
-    currGameList = sortedGameList;
   });
 
   /***************************** Sidebar Filters  *****************************/
